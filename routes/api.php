@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/health', function(Request $req) {
-    return 'I\'m Alive and Well!!!';
+// creates Routes in v2
+Route::group(['prefix' => 'v2'], function() {
+    Route::get('/health', function(Request $req) {
+        return 'I\'m Alive and Well!!!';
+    });
 });
+
