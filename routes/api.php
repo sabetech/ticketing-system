@@ -22,5 +22,16 @@ Route::group(['prefix' => 'v2'], function() {
     Route::get('/health', function(Request $req) {
         return 'I\'m Alive and Well!!!';
     });
+
+    Route::post('/login', 'Auth\LoginController@login');
+    Route::post('/register', 'Auth\RegisterController@register');
+
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('/logout', 'Auth\LoginController@logout');
+        Route::get('/user', function(Request $req) {
+            return $req->user();
+        });
+    });
+
 });
 
