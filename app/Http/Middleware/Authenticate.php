@@ -18,4 +18,13 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+
+    public function handle($request, Closure $next, ...$guards)
+    {
+        if (!Auth::guard('api')->check()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        return $next($request);
+    }
 }
