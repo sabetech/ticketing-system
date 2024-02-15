@@ -23,8 +23,8 @@ Route::group(['prefix' => 'v2'], function() {
         return 'I\'m Alive and Well!!!';
     });
 
-    Route::post('/login', 'Auth\LoginController@login');
-    Route::post('/register', 'Auth\RegisterController@register');
+    Route::post('/login', 'Auth\LoginController@login')->name('login.api');;
+    Route::post('/register', 'Auth\RegisterController@register')->name('register.api');;
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/logout', 'Auth\LoginController@logout');
