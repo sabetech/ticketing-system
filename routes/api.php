@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v2'], function() {
             return Auth::user();
         });
 
-        Route::get('/agent/{id}/tickets', ["API\TicketController@getAgentTickets"]);
+        Route::get('/agent/{id}/tickets', "API\TicketController@getAgentTickets");
 
         // Route::resource('/tickets', ["API\TicketController"]);
         // Route::resource('/agents', ["API\TicketController"]);
