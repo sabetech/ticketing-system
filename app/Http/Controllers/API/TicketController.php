@@ -29,7 +29,7 @@ class TicketController extends BaseController {
             $date = date("Y-m-d");
         }
 
-        $tickets = $agent->tickets()->whereDate('issued_date_time', )->get();
+        $tickets = $agent->tickets()->whereDate('issued_date_time', $date)->get();
 
         return $this->sendResponse($tickets, "Tickets retrieved successfully");
 
