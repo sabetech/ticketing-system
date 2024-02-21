@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,12 @@ Route::group(['prefix' => 'v2'], function() {
         Route::get('/user', function(Request $req) {
             return Auth::user();
         });
+
+        Route::get('/agent/{id}/tickets', [API\TicketController::class, getAgentTickets]);
+
+        Route::resource('/tickets', [API\TicketController::class]);
+        Route::resource('/agents', [API\TicketController::class]);
+
     });
 
 });
