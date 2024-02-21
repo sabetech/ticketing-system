@@ -39,6 +39,5 @@ Route::group(['prefix' => 'v2'], function() {
         Route::resource('/agents', [API\TicketController::class]);
 
     });
-
 });
 
