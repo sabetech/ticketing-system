@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v2'], function() {
             return Auth::user();
         });
 
-        Route::get('/agent/{id}/tickets', [API\TicketController::class, getAgentTickets]);
+        Route::get('/agent/{id}/tickets', [API\TicketController::class, "getAgentTickets"]);
 
         Route::resource('/tickets', [API\TicketController::class]);
         Route::resource('/agents', [API\TicketController::class]);
