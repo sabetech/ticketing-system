@@ -34,6 +34,7 @@ Route::group(['prefix' => 'v2'], function() {
         });
 
         Route::get('/agent/{id}/tickets', "API\TicketController@getAgentTickets");
+        Route::get('/agent/{id}/tickets/count', "API\TicketController@getAgentTicketsCount");
 
         // Route::resource('/tickets', ["API\TicketController"]);
         // Route::resource('/agents', ["API\TicketController"]);
