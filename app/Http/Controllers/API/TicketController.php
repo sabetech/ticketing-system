@@ -16,10 +16,10 @@ class TicketController extends BaseController {
 
     }
 
-    public function getAgentTickets(Agent $agent, Request $request) {
+    public function getAgentTickets($id, Request $request) {
 
-        Log::info($agent);
-
+        Log::info($id);
+        $agent = Agent::find($id);
         $tickets = $agent->tickets;
 
         Log::info($tickets);
