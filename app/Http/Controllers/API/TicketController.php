@@ -19,7 +19,7 @@ class TicketController extends BaseController {
     public function getAgentTickets($id, Request $request) {
 
         $agent = Agent::find($id);
-        if ($agent) {
+        if (!$agent) {
             return $this->sendError("Agent not found");
         }
 
@@ -39,7 +39,7 @@ class TicketController extends BaseController {
 
         $agent = Agent::find($id);
         $date = $request->get('date');
-        if ($agent) {
+        if (!$agent) {
             return $this->sendError("Agent not found");
         }
 
@@ -49,6 +49,15 @@ class TicketController extends BaseController {
 
         $count = Ticket::where('agent_name', $agent->id)
                         ->whereDate('issued_date_time', $date)->count();
+
+    }
+
+    public function postTicketSubmit($id, Request $request) {
+        $agent = Agent::find($id);
+
+        if (!$agent) return $this->sendError("Agent not found");
+
+        Ticket::saveTicket($request->all());
 
     }
 }
