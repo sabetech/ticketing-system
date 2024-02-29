@@ -36,7 +36,12 @@ Route::group(['prefix' => 'v2'], function() {
         Route::get('/agent/{id}/tickets', "API\TicketController@getAgentTickets");
         Route::get('/agent/{id}/tickets/count', "API\TicketController@getAgentTicketsCount");
         Route::post('/agent/{id}/ticket-submit', "API\TicketController@postTicketSubmit");
-        Route::get('/rates', "API\RateController@index");
+
+        Route::group(['prefix' => 'rates'], function () {
+            Route::get('/', "API\RateController@index");
+            //Rates mod code goes here
+        });
+
 
         // Route::resource('/tickets', ["API\TicketController"]);
         // Route::resource('/agents', ["API\TicketController"]);
