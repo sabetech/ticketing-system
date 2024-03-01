@@ -9,6 +9,10 @@ class Agent extends Model
     //
     protected $table = 'users';
 
+    public function station(){
+        return $this->belongsTo("\App\Station", "stations_user", "users.id", "stations.id");
+    }
+
     public function tickets(){
         return $this->hasMany("\App\Ticket", "agent_name", "id");
     }
