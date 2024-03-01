@@ -10,6 +10,7 @@ class Station extends Model
     protected $table = 'stations';
 
     public function rates() {
-        // return $this->hasMany('\App\Rate', '');
+
+        return $this->hasMany('\App\Rate', 'station_id', 'id');
     }
 }
