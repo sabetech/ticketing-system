@@ -10,7 +10,7 @@ class Station extends Model
     protected $table = 'stations';
 
     public function agents() {
-        return $this->hasMany('\App\Agent', 'stations_user', 'stations.id', 'users.id');
+        return $this->hasManyThrough('\App\Agent', '\App\StationUser');
     }
 
     public function rates() {
