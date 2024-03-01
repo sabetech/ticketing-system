@@ -13,5 +13,9 @@ class Agent extends Model
         return $this->hasMany("\App\Ticket", "agent_name", "id");
     }
 
+    public function getRates() {
+        $station = $this->station;
 
+        return $station->rates;
+    }
 }
