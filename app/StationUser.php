@@ -11,5 +11,4 @@ class StationUser extends Model
 
 
 
-
 }
