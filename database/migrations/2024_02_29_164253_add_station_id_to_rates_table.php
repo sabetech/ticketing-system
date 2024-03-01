@@ -15,7 +15,7 @@ class AddStationIdToRatesTable extends Migration
     {
         Schema::table('rates', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('station_id')->after('service_type_id')->default(0);
+            $table->unsignedBigInteger('station_id')->after('service_type_id')->default(1);
             $table->foreign('station_id')
                 ->references('id')
                 ->on('stations');
