@@ -58,13 +58,21 @@ class TicketController extends BaseController {
 
         if (!$agent) return $this->sendError("Agent not found");
 
+        $ticketClientId = $request->get('ticket_client_id');
         $ticketUUID = $request->get('ticket_uuid');
         $ticketRateID = $request->get('rate_id');
         $carNumber = $request->get('car_number');
         $issuedDateTime = $request->get('issued_date_time');
         $deviceID = $request->get('device_id');
 
-        Ticket::saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID);
+        $saved = Ticket::saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID);
 
+        if (!$saved) {
+            return $this->sendError("Could Not save Ticket");
+        }
+
+        return $this->sendResponse([
+            'ticket_client_id' => $ticketClientId,
+        ] , "Ticket Saved Successfully");
     }
 }
