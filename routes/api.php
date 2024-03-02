@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,9 @@ Route::group(['prefix' => 'v2'], function() {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/logout', 'Auth\LoginController@logout');
         Route::get('/user', function(Request $req) {
-            return Auth::user();
+            $user = Auth::user();
+            Log::info($user);
+
         });
 
         Route::group(['prefix' => 'agent'], function () {
