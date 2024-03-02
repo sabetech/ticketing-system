@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Agent;
 use App\Ticket;
+use App\Rate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -83,6 +84,7 @@ class TicketController extends BaseController {
         $tickets = $request->get('tickets-log');
 
         Log::info("TICKET LOG::", $tickets);
+        //handle agent id not found..
 
         $bulkTicketSave = [];
         foreach($tickets as $ticket) {
