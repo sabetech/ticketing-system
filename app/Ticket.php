@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Ticket extends Model
 {
@@ -13,7 +14,7 @@ class Ticket extends Model
 
        $ticket = new Ticket;
        $ticket->title = $ticketUUID;
-       $ticket->rate_title = $ticketRate;
+       $ticket->rate_title = $ticketRateID;
        $ticket->car_number = $carNumber;
        $ticket->station_name = $agent->station()->id;
        $ticket->issued_date_time = $issuedDateTime;
@@ -25,7 +26,9 @@ class Ticket extends Model
 
        $ticket->device_id = $deviceID;
 
-       $ticket->save();
+       Log::info("SAVE TICKET::", $ticket);
+
+    //    $ticket->save();
        return true;
 
     }
