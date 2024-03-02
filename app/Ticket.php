@@ -26,7 +26,7 @@ class Ticket extends Model
 
        $ticket->device_id = $deviceID;
 
-       Log::info("SAVE TICKET::", $ticket);
+       Log::info($ticket);
 
     //    $ticket->save();
        return true;
