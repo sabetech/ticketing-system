@@ -101,11 +101,11 @@ class TicketController extends BaseController {
 
             $myTicket->device_id = $ticket['device_id'];
 
-            $bulkTicketSave[] = $myTicket;
+            $bulkTicketSave[] = (array) $myTicket;
         }
 
         Log::info("BULK TICKETS::", $bulkTicketSave);
-        // Ticket::bulkSaveTicket($tickets);
+        Ticket::bulkSaveTicket($tickets);
 
     }
 }
