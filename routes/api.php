@@ -31,7 +31,7 @@ Route::group(['prefix' => 'v2'], function() {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/logout', 'Auth\LoginController@logout');
         Route::get('/user', function(Request $req) {
-            $user = Auth::user();
+            $user = Auth::guard('api')->user();
             Log::info($user);
 
         });
