@@ -59,7 +59,7 @@ class TicketController extends BaseController {
         if (!$agent) return $this->sendError("Agent not found");
 
         $ticketUUID = $request->get('ticket_uuid');
-        $ticketRate = $request->get('rate_id');
+        $ticketRateID = $request->get('rate_id');
         $carNumber = $request->get('car_number');
         $issuedDateTime = $request->get('issued_date_time');
         $deviceID = $request->get('device_id');
