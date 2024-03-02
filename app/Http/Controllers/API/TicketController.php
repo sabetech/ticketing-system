@@ -105,7 +105,7 @@ class TicketController extends BaseController {
         }
 
         Log::info("BULK TICKETS::", $bulkTicketSave);
-        $saveIds = Ticket::bulkSaveTicket($tickets);
+        $saveIds = Ticket::bulkSaveTicket($bulkTicketSave);
 
 
 
