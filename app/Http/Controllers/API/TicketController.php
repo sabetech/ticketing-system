@@ -88,24 +88,26 @@ class TicketController extends BaseController {
 
         $bulkTicketSave = [];
         foreach($tickets as $ticket) {
-            $myTicket = new Ticket;
-            $myTicket->title = $ticket['ticket_uuid'];
-            $myTicket->rate_title = $ticket['rate_id'];
-            $myTicket->car_number = $ticket['car_number'];
-            $myTicket->issued_date_time = $ticket['issued_date_time'];
-            $myTicket->agent_name = $ticket['agent_id'];
+            $myTicket = [];
+            $myTicket['title'] = $ticket['ticket_uuid'];
+            $myTicket['rate_title'] = $ticket['rate_id'];
+            $myTicket['car_number'] = $ticket['car_number'];
+            $myTicket['issued_date_time'] = $ticket['issued_date_time'];
+            $myTicket['agent_name'] = $ticket['agent_id'];
             $rate = Rate::find($ticket['rate_id']);
 
             if (!$rate) return false;
-            $myTicket->amount = $rate->amount;
+            $myTicket['amount'] = $rate->amount;
 
-            $myTicket->device_id = $ticket['device_id'];
+            $myTicket['device_id'] = $ticket['device_id'];
 
-            $bulkTicketSave[] = (array) $myTicket;
+            $bulkTicketSave[] = $myTicket;
         }
 
         Log::info("BULK TICKETS::", $bulkTicketSave);
-        Ticket::bulkSaveTicket($tickets);
+        $saveIds = Ticket::bulkSaveTicket($tickets);
+
+
 
     }
 }

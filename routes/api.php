@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v2'], function() {
         Route::get('/user', function(Request $req) {
             $user = Auth::guard('api')->user();
             Log::info($user);
-
+            return $user;
         });
 
         Route::group(['prefix' => 'agent'], function () {
