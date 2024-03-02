@@ -14,7 +14,6 @@ class Station extends Model
     }
 
     public function rates() {
-
         return $this->hasMany('\App\Rate', 'station_id', 'id');
     }
 }

@@ -10,7 +10,8 @@ class Agent extends Model
     protected $table = 'users';
 
     public function station(){
-        return $this->belongsTo("\App\Station", "stations_user", "stations.id", "user.id");
+
+        return $this->stationUser->station;
     }
 
     public function stationUser() {
