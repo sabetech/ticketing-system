@@ -13,6 +13,10 @@ class Agent extends Model
         return $this->belongsTo("\App\Station", "stations_user", "stations.id", "user.id");
     }
 
+    public function stationUser() {
+        return $this->hasOne("App\StationUser", "user_id", "id");
+    }
+
     public function tickets(){
         return $this->hasMany("\App\Ticket", "agent_name", "id");
     }
