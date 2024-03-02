@@ -23,8 +23,6 @@ class Agent extends Model
     }
 
     public function getRates() {
-        $station = $this->station;
-
-        return $station->rates;
+        return $this->station->rates;
     }
 }
