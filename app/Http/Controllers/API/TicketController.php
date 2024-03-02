@@ -94,9 +94,15 @@ class TicketController extends BaseController {
             $myTicket['car_number'] = $ticket['car_number'];
             $myTicket['issued_date_time'] = $ticket['issued_date_time'];
             $myTicket['agent_name'] = $ticket['agent_id'];
+
+            $agent = Agent::find($ticket['agent_id']);
+            if (!$agent) continue;
+
+            $station = $agent->station();
+            $myTicket['station_name'] = $station->id;
             $rate = Rate::find($ticket['rate_id']);
 
-            if (!$rate) return false;
+            if (!$rate) continue;
             $myTicket['amount'] = $rate->amount;
 
             $myTicket['device_id'] = $ticket['device_id'];
