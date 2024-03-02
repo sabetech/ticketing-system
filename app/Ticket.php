@@ -35,7 +35,7 @@ class Ticket extends Model
 
     public static function bulkSaveTicket($tickets) {
 
-        $idsSaved = Ticket::insertGetId($tickets);
+        $idsSaved = Ticket::insert($tickets);
         Log::info($idsSaved);
 
         return $idsSaved;
