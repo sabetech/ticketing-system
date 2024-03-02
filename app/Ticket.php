@@ -9,7 +9,7 @@ class Ticket extends Model
     //
     protected $table = 'toll_tickets';
 
-    public function saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID) {
+    public static function saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID) {
 
        $ticket = new Ticket;
        $ticket->title = $ticketUUID;
