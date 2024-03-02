@@ -33,4 +33,21 @@ class Ticket extends Model
 
     }
 
+    public function bulkTicketSave($tickets) {
+        $bulkTicketInfo = [];
+        foreach($tickets as $ticket) {
+           $bulkTicketInfo[] = [
+            "title" => $ticket->ticketUUID,
+            "rate_title" => $ticket->ticketRateID,
+            "car_number" => $ticket->carNumber,
+            "station_name" => $ticket->stationId,
+            "issued_date_time" => $ticket->issuedDateTime,
+            "agent_name" => $ticket->agent_id,
+           ];
+        }
+
+        $idsSaved = Ticket::insertGetId($bulkTicketInfo);
+        return $idsSaved;
+    }
+
 }

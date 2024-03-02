@@ -38,10 +38,12 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/{id}/tickets', "API\TicketController@getAgentTickets");
             Route::get('/{id}/tickets/count', "API\TicketController@getAgentTicketsCount");
             Route::post('/{id}/ticket-submit', "API\TicketController@postTicketSubmit");
+            Route::post('/{id}/bulk-sync', "API\TicketController@postSyncTicket");
         });
 
-
-
+        Route::group(['prefix' => 'ticket'], function () {
+            Route::post('/bulk-sync', "API\TicketController@postSyncTicket");
+        });
 
         Route::group(['prefix' => 'rates'], function () {
             Route::get('agent/{id}', "API\RateController@index");

@@ -75,4 +75,17 @@ class TicketController extends BaseController {
             'ticket_client_id' => $ticketClientId,
         ] , "Ticket Saved Successfully");
     }
+
+    public function getTicketParams($ticketInfo) {}
+
+    public function postSyncTicket(Request $request) {
+
+        $tickets = $request->get('tickets-log');
+
+        Log::info("TICKET LOG::", $tickets);
+
+        // Ticket::bulkSaveTicket($tickets);
+
+
+    }
 }
