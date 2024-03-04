@@ -59,21 +59,20 @@ class TicketController extends BaseController {
 
         if (!$agent) return $this->sendError("Agent not found");
 
-        $ticketClientId = $request->get('ticket_client_id');
         $ticketUUID = $request->get('ticket_uuid');
         $ticketRateID = $request->get('rate_id');
         $carNumber = $request->get('car_number');
         $issuedDateTime = $request->get('issued_date_time');
         $deviceID = $request->get('device_id');
 
-        $saved = Ticket::saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID);
+        $savedTicket = Ticket::saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID);
 
-        if (!$saved) {
+        if (!$savedTicket) {
             return $this->sendError("Could Not save Ticket");
         }
 
         return $this->sendResponse([
-            'ticket_client_id' => $ticketClientId,
+            'ticket_uuid' => $savedTicket->title,
         ] , "Ticket Saved Successfully");
     }
 
@@ -121,6 +120,13 @@ class TicketController extends BaseController {
        });
 
         Log::info("\n\nBULK TICKETS::", $bulkTicketSave);
-        // $saveIds = Ticket::bulkSaveTicket($bulkTicketSave);
+
+        if (count($bulkTicketSave) == 0)
+            return $this->sendResponse($ticketTitles, "Tickets were synced already");
+
+       Ticket::bulkSaveTicket($bulkTicketSave);
+
+       return $this->sendResponse($ticketTitles, "Tickets were synced successfully");
+
     }
 }

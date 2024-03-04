@@ -29,7 +29,7 @@ class Ticket extends Model
        Log::info($ticket);
 
         // $ticket->save();
-       return true;
+       return $ticket;
 
     }
 
@@ -38,16 +38,11 @@ class Ticket extends Model
         $chunkedTickets = array_chunk($tickets, 500, true);
 
         foreach($chunkedTickets as $chunkedTicket) {
-            try {
 
-                Ticket::insert($tickets);
-
-            } catch(Exception $ex) {
-                Log::info($ex->message());
-            }
+            Ticket::insert($chunkedTicket);
 
         }
-        return true;
+
     }
 
 }
