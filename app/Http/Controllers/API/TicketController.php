@@ -9,6 +9,7 @@ use App\Ticket;
 use App\Rate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon;
 
 
 class TicketController extends BaseController {
@@ -94,6 +95,8 @@ class TicketController extends BaseController {
             $myTicket['car_number'] = $ticket['car_number'];
             $myTicket['issued_date_time'] = $ticket['issued_date_time'];
             $myTicket['agent_name'] = $ticket['agent_id'];
+            $myTicket['created_at'] = Carbon::now();
+            $myTicket['updated_at'] = Carbon::now();
 
             $agent = Agent::find($ticket['agent_id']);
             if (!$agent) continue;
@@ -113,7 +116,7 @@ class TicketController extends BaseController {
         Log::info("BULK TICKETS::", $bulkTicketSave);
         $saveIds = Ticket::bulkSaveTicket($bulkTicketSave);
 
-        Log::info($saveIds);
+
 
 
 

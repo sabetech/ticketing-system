@@ -35,10 +35,19 @@ class Ticket extends Model
 
     public static function bulkSaveTicket($tickets) {
 
-        $idsSaved = Ticket::insert($tickets);
-        Log::info($idsSaved);
+        $chunkedTickets = array_chunk($tickets, 500, true);
 
-        return $idsSaved;
+        foreach($chunkedTickets as $chunkedTicket) {
+            try {
+
+                Ticket::insert($tickets);
+
+            } catch(Exception $ex) {
+                Log::info($ex->message());
+            }
+
+        }
+        return true;
     }
 
 }
