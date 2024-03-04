@@ -87,6 +87,7 @@ class TicketController extends BaseController {
         //handle agent id not found..
 
         $bulkTicketSave = [];
+        $ticketTitles = [];
         foreach($tickets as $ticket) {
             $myTicket = [];
             $myTicket['title'] = $ticket['ticket_uuid'];
@@ -110,7 +111,12 @@ class TicketController extends BaseController {
             $myTicket['device_id'] = $ticket['device_id'];
 
             $bulkTicketSave[] = $myTicket;
+            $ticketTitles[] = $myTicket['title'];
         }
+
+        $bulkTicketSave = array_filter($bulkTicketSave, function($ticketInfo) use ($ticketTitles) {
+            return array_search($ticketIinfo['title'], $ticketTitles);
+        });
 
         Log::info("BULK TICKETS::", $bulkTicketSave);
         $saveIds = Ticket::bulkSaveTicket($bulkTicketSave);
