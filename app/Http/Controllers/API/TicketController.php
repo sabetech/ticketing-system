@@ -114,8 +114,8 @@ class TicketController extends BaseController {
             $ticketTitles[] = $myTicket['title'];
         }
 
-        $bulkTicketSave = array_filter($bulkTicketSave, function($ticketInfo) use ($ticketTitles) {
-            return array_search($ticketIinfo['title'], $ticketTitles);
+        $bulkTicketSave = array_filter($bulkTicketSave, function($t_info) use ($ticketTitles) {
+            return array_search($t_info['title'], $ticketTitles);
         });
 
         Log::info("BULK TICKETS::", $bulkTicketSave);
