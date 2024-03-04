@@ -120,7 +120,7 @@ class TicketController extends BaseController {
             return !$existingTicketsTitles->contains($ticketItem['title']);
        });
 
-        Log::info("BULK TICKETS::", $bulkTicketSave);
+        Log::info("\n\nBULK TICKETS::", $bulkTicketSave);
         // $saveIds = Ticket::bulkSaveTicket($bulkTicketSave);
     }
 }
