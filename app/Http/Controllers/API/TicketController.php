@@ -68,7 +68,7 @@ class TicketController extends BaseController {
         $savedTicket = Ticket::saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID);
 
         if (!$savedTicket) {
-            return $this->sendError("Could Not save Ticket");
+            return $this->sendError("Could Not save Ticket Or Ticket already saved");
         }
 
         return $this->sendResponse([

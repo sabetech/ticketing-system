@@ -12,24 +12,26 @@ class Ticket extends Model
 
     public static function saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID) {
 
-       $ticket = new Ticket;
-       $ticket->title = $ticketUUID;
-       $ticket->rate_title = $ticketRateID;
-       $ticket->car_number = $carNumber;
-       $ticket->station_name = $agent->station()->id;
-       $ticket->issued_date_time = $issuedDateTime;
-       $ticket->agent_name = $agent->id;
+        if (Ticket::where('title', $ticketUUID)->exists()) return false;
 
-       $rate = Rate::find($ticketRateID);
-       if (!$rate) return false;
-       $ticket->amount = $rate->amount;
+        $ticket = new Ticket;
+        $ticket->title = $ticketUUID;
+        $ticket->rate_title = $ticketRateID;
+        $ticket->car_number = $carNumber;
+        $ticket->station_name = $agent->station()->id;
+        $ticket->issued_date_time = $issuedDateTime;
+        $ticket->agent_name = $agent->id;
 
-       $ticket->device_id = $deviceID;
+        $rate = Rate::find($ticketRateID);
+        if (!$rate) return false;
+        $ticket->amount = $rate->amount;
 
-       Log::info($ticket);
+        $ticket->device_id = $deviceID;
+
+        Log::info($ticket);
 
         // $ticket->save();
-       return $ticket;
+        return $ticket;
 
     }
 
