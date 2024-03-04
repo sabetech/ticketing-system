@@ -117,7 +117,7 @@ class TicketController extends BaseController {
         $existingTicketsTitles = Ticket::whereIn('title', $ticketTitles)->pluck('title');
 
        $bulkTicketSave = array_filter($bulkTicketSave, function ($ticketItem) use ($existingTicketsTitles){
-            return $existingTicketsTitles->contains($ticketItem['title']);
+            return !$existingTicketsTitles->contains($ticketItem['title']);
        });
 
         Log::info("BULK TICKETS::", $bulkTicketSave);
