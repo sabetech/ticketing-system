@@ -9,7 +9,6 @@ use App\Ticket;
 use App\Rate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Carbon;
 
 
 class TicketController extends BaseController {
@@ -95,8 +94,8 @@ class TicketController extends BaseController {
             $myTicket['car_number'] = $ticket['car_number'];
             $myTicket['issued_date_time'] = $ticket['issued_date_time'];
             $myTicket['agent_name'] = $ticket['agent_id'];
-            $myTicket['created_at'] = Carbon::now();
-            $myTicket['updated_at'] = Carbon::now();
+            $myTicket['created_at'] = date("Y-m-d H:i:s");
+            $myTicket['updated_at'] = date("Y-m-d H:i:s");
 
             $agent = Agent::find($ticket['agent_id']);
             if (!$agent) continue;
