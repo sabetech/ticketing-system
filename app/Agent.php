@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use AgentOnlineStatus;
 
 class Agent extends Model
 {
@@ -28,6 +29,18 @@ class Agent extends Model
 
     public function agentOnlineStatus() {
         return $this->hasOne("App\AgentOnlineStatus", "agent_id", "id");
+    }
+
+    public function setLoginTimeStamp() {
+        $onlineStatus = $this->agentOnlineStatus;
+        if (!$onlineStatus) {
+            $onlineStatus = new AgentOnlineStatus();
+            $onlineStatus->agent_id = $this->id;
+            $onlineStatus->loggedin_at = date("Y-m-d H:i:s");
+            $onlineStatus->latest_online_at = date("Y-m-d H:i:s");
+            $onlineStatus->device_id = "Logged In";
+            $onlineStatus->save();
+        }
     }
 
     public function updateOnlineStatus() {

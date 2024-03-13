@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\User;
@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -58,6 +58,16 @@ class LoginController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = ['token' => $token];
+
+                //in the future use Events ... but now .. i'm under pressure ..
+                $agent = Agent::find($user->id);
+                if (!$agent){
+                    $response = ["message" =>'User does not exist'];
+                    return response($response, 422);
+                }
+
+                $agent->setLoginTimeStamp();
+
                 return response($response, 200);
             } else {
                 $response = ["message" => "Password mismatch"];
