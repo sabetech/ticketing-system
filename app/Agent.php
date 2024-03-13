@@ -25,4 +25,18 @@ class Agent extends Model
     public function getRates() {
         return $this->station()->rates;
     }
+
+    public function agentOnlineStatus() {
+        return $this->hasOne("App\AgentOnlineStatus", "agent_id", "id");
+    }
+
+    public function updateOnlineStatus() {
+
+        $onlineStatus = $this->agentOnlineStatus;
+        if ($onlineStatus) {
+            $onlineStatus->latest_online_at = date("Y-m-d H:i:s");
+            $onlineStatus->save();
+        }
+
+    }
 }

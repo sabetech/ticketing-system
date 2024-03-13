@@ -25,7 +25,7 @@ Route::group(['prefix' => 'v2'], function() {
         return 'I\'m Alive and Well!!!';
     });
 
-    // Route::post('/login', 'Auth\LoginController@login')->name('login.api');;
+    Route::post('/login', 'Auth\LoginController@login')->name('login.api');;
     Route::post('/register', 'API\RegisterController@register')->name('register.api');;
 
     Route::group(['middleware' => 'auth:api'], function() {
@@ -42,6 +42,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/{id}/tickets/count', "API\TicketController@getAgentTicketsCount");
             Route::post('/{id}/ticket-submit', "API\TicketController@postTicketSubmit");
             Route::post('/{id}/bulk-sync', "API\TicketController@postSyncTicket");
+            Route::post('/{id}/ping',  "API\AgentController@ping");
         });
 
         Route::group(['prefix' => 'ticket'], function () {
