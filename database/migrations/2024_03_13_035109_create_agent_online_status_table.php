@@ -15,13 +15,13 @@ class CreateAgentOnlineStatusTable extends Migration
     {
         Schema::create('agent_online_status', function (Blueprint $table) {
             $table->increments('id');
+
             $table->unsignedBigInteger('agent_id');
             $table->timestamp('latest_online_at')->nullable();
             $table->timestamp('loggedin_at')->nullable();
             $table->timestamp('loggedout_at')->nullable();
             $table->string('device_id',10)->default('PC')->comment('device being used');
 
-            $table->foreign( 'agent_id' )->references( 'id' )->on( 'users');
             $table->timestamps();
         });
     }
