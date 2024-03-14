@@ -38,7 +38,6 @@ class Agent extends Model
             $onlineStatus->agent_id = $this->id;
             $onlineStatus->loggedin_at = date("Y-m-d H:i:s");
             $onlineStatus->latest_online_at = date("Y-m-d H:i:s");
-            $onlineStatus->device_id = "Logged In";
             $onlineStatus->save();
         }
     }
