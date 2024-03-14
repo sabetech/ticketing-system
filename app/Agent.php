@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use AgentOnlineStatus;
+use App\AgentOnlineStatus;
 
 class Agent extends Model
 {
