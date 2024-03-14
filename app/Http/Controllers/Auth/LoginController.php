@@ -57,7 +57,10 @@ class LoginController extends BaseController
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['token' => $token];
+                $response = [
+                    'token' => $token,
+                    'user' => $user
+                ];
 
                 //in the future use Events ... but now .. i'm under pressure ..
                 $agent = Agent::find($user->id);
