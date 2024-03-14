@@ -84,8 +84,14 @@ class LoginController extends BaseController
     }
 
     public function logout (Request $request) {
-        $token = Auth::guard('api')->user()->token();
-        // $token = $request->user();
+        $user = Auth::guard('api')->user();
+
+        $agent = Agent::find($user->id);
+
+        $agent->setLogoutTimestamp();
+
+        $token = $user->token();
+
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
