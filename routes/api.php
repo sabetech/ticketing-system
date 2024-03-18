@@ -22,7 +22,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // creates Routes in v2
 Route::group(['prefix' => 'v2'], function() {
     Route::get('/health', function(Request $req) {
-        return 'I\'m Alive and Well!!!';
+        return '[GET]I\'m Alive and Well!!!';
+    });
+
+    Route::post('/health', function(Request $req) {
+        return '[POST]I\'m Alive and Well!!!';
     });
 
     Route::post('/login', 'Auth\LoginController@login')->name('login.api');;
