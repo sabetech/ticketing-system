@@ -11,13 +11,14 @@ return [
     | to accept any value.
     |
     */
-   
-    'supportsCredentials' => true,
-    'allowedOrigins' => ['*'],
-    'allowedHeaders' => ['*'],
-    'allowedMethods' => ['*'],
-    'exposedHeaders' => [],
-    'maxAge' => 0,
-    'hosts' => [],
+
+    'paths' => ['api/*'],
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'],
+    'allowed_origins' => ['*'],
+    'allowed_origins_patterns' => [],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => false,
 
 ];
