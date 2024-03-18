@@ -67,9 +67,7 @@ class LoginController extends BaseController
                 $agent = Agent::find($user->id);
                 if (!$agent){
                     $response = ["message" =>'User does not exist'];
-                    return response($response, 422)
-                    ->header('Access-Control-Allow-Origin', '*')
-                    ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+                    return response($response, 422);
                 }
 
                 $agent->setLoginTimeStamp();
@@ -77,15 +75,11 @@ class LoginController extends BaseController
                 return response($response, 200);
             } else {
                 $response = ["message" => "Password mismatch"];
-                return response($response, 422)
-                ->header('Access-Control-Allow-Origin', '*')
-                ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+                return response($response, 422);
             }
         } else {
             $response = ["message" =>'User does not exist'];
-            return response($response, 422)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            return response($response, 422);
         }
     }
 
