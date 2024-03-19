@@ -16,7 +16,7 @@ class AddMoreFieldsToRatesTable extends Migration
         Schema::table('rates', function (Blueprint $table) {
             //
             $table->boolean('on_credit')->after('station_id')->default(false)->comment('field for whether their money is paid at the end of the month');
-            $table->enum('rate_type', ['vehicle', 'trader'])->default('vehicle');
+            $table->enum('rate_type', ['vehicle', 'trader'])->after('on_credit')->default('vehicle');
         });
     }
 
