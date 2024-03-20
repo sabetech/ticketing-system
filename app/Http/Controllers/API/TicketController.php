@@ -65,7 +65,29 @@ class TicketController extends BaseController {
         $issuedDateTime = $request->get('issued_date_time');
         $deviceID = $request->get('device_id');
 
-        $savedTicket = Ticket::saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID);
+        $ticket = new Ticket;
+        $ticket->title = $ticketUUID;
+        $ticket->rate_title = $ticketRateID;
+        $ticket->car_number = $carNumber;
+        $ticket->station_name = $agent->station()->id;
+        $ticket->issued_date_time = $issuedDateTime;
+        $ticket->agent_name = $agent->id;
+        $ticket->device_id = $deviceID;
+
+        $rateType = $request->get('rate_type');
+        $savedTicket = null;
+
+        switch ($rateType) {
+            case 'vehicle':
+                $savedTicket = Ticket::saveTicket($ticket);
+                break;
+            case 'trader':
+                $amount = $request->get('amount');
+                $savedTicket = Ticket::saveTraderPayment($ticket, $amount);
+                break;
+            default:
+
+        }
 
         if (!$savedTicket) {
             return $this->sendError("Could Not save Ticket Or Ticket already saved");

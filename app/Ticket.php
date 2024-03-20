@@ -10,29 +10,34 @@ class Ticket extends Model
     //
     protected $table = 'toll_tickets';
 
-    public static function saveTicket($agent, $ticketUUID, $ticketRateID, $carNumber, $issuedDateTime, $deviceID) {
+    public static function saveTicket($ticket) {
 
-        if (Ticket::where('title', $ticketUUID)->exists()) return false;
+        if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
 
-        $ticket = new Ticket;
-        $ticket->title = $ticketUUID;
-        $ticket->rate_title = $ticketRateID;
-        $ticket->car_number = $carNumber;
-        $ticket->station_name = $agent->station()->id;
-        $ticket->issued_date_time = $issuedDateTime;
-        $ticket->agent_name = $agent->id;
-
-        $rate = Rate::find($ticketRateID);
+        $rate = Rate::find($ticket->rate_title);
         if (!$rate) return false;
         $ticket->amount = $rate->amount;
-
-        $ticket->device_id = $deviceID;
 
         Log::info($ticket);
 
         // $ticket->save();
         return $ticket;
 
+    }
+
+    public static function saveTraderPayment($ticket, $amount) {
+        if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
+
+        $rate = Rate::find($ticket->rate_title);
+        if (!$rate) return false;
+
+        if ($rate->rate_type === 'trader') {
+            $ticket->amount = $amount;
+        }
+
+        Log::info($ticket);
+
+        return $ticket;
     }
 
     public static function bulkSaveTicket($tickets) {
