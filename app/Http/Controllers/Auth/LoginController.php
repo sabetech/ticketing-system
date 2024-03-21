@@ -64,7 +64,6 @@ class LoginController extends BaseController
 
                 $agentInfo = new stdClass;
                 $agentInfo->station = $agent->station();
-                $agentInfo->rates = $agent->getRates();
 
                 $response = [
                     'token' => $token,
