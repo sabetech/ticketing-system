@@ -60,7 +60,7 @@ class Ticket extends Model
 
     public static function getTickets($date) {
 
-        return self::where('issued_date_time', '>=', $date)->get();
+        return self::with('rate')->where('issued_date_time', '>=', $date)->get();
 
     }
 
