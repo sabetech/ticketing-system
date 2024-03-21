@@ -10,6 +10,10 @@ class Ticket extends Model
     //
     protected $table = 'toll_tickets';
 
+    public function rate(){
+        return $this->belongsTo('App\Rate', 'rate_title', 'id');
+    }
+
     public static function saveTicket($ticket) {
 
         if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
