@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Agent;
+use stdClass;
 
 
 class LoginController extends BaseController
