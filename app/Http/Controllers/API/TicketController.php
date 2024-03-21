@@ -103,7 +103,16 @@ class TicketController extends BaseController {
 
         $tickets = Ticket::getTickets($date);
 
-        return  $this->sendResponse($tickets , "Successfully Got All Tickets For Given Date");
+        return $this->sendResponse($tickets , "Successfully Got All Tickets For Given Date");
+    }
+
+    public function getTicketCountByDate(Request $request) {
+        $date = $request->get('date');
+
+        $count = Tickets::getTicketCount($date);
+
+        return $this->sendResponse($count , "Successfully Got The Ticket Count For Given Date");
+
     }
 
     public function postSyncTicket(Request $request) {

@@ -52,6 +52,7 @@ Route::group(['prefix' => 'v2'], function() {
         Route::group(['prefix' => 'ticket'], function () {
             Route::post('/bulk-sync', "API\TicketController@postSyncTicket");
             Route::get('/all', "API\TicketController@getTicketByDate");
+            Route::get('/count', "API\TicketController@getTicketCountByDate");
         });
 
         Route::group(['prefix' => 'rates'], function () {
