@@ -51,6 +51,12 @@ class Ticket extends Model
             Ticket::insert($chunkedTicket);
 
         }
+        return true;
+    }
+
+    public static function getTickets($date) {
+
+        return self::where('issued_date_time', '>=', $date)->get();
 
     }
 

@@ -98,7 +98,13 @@ class TicketController extends BaseController {
         ] , "Ticket Saved Successfully");
     }
 
-    public function getTicketParams($ticketInfo) {}
+    public function getTicketByDate(Request $request) {
+        $date = $request->get('date');
+
+        $tickets = Ticket::getTickets($date);
+
+        return  $this->sendResponse($tickets , "Successfully Got All Tickets For Given Date");
+    }
 
     public function postSyncTicket(Request $request) {
 

@@ -51,16 +51,12 @@ Route::group(['prefix' => 'v2'], function() {
 
         Route::group(['prefix' => 'ticket'], function () {
             Route::post('/bulk-sync', "API\TicketController@postSyncTicket");
+            Route::get('/all', "API\TicketController@getTicketByDate");
         });
 
         Route::group(['prefix' => 'rates'], function () {
             Route::get('agent/{id}', "API\RateController@index");
         });
-
-
-        // Route::resource('/tickets', ["API\TicketController"]);
-        // Route::resource('/agents', ["API\TicketController"]);
-
     });
 });
 
