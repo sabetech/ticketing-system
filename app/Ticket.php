@@ -37,6 +37,8 @@ class Ticket extends Model
 
         Log::info($ticket);
 
+        // $ticket->save();
+
         return $ticket;
     }
 
