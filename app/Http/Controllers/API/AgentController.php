@@ -15,9 +15,9 @@ class AgentController extends BaseController {
         }
 
         $success = $agent->updateOnlineStatus();
-
-
-        return $this->sendResponse('pong', 'Agent is online');
+        if ($success)
+            return $this->sendResponse('pong', 'Agent is online');
+        return $this->sendError('Couldn\'t update Agent online status');
     }
 
 }

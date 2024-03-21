@@ -48,7 +48,9 @@ class Agent extends Model
         if ($onlineStatus) {
             $onlineStatus->latest_online_at = date("Y-m-d H:i:s");
             $onlineStatus->save();
+            return true;
         }
+        return false;
     }
 
     public function setLogoutTimestamp(){
