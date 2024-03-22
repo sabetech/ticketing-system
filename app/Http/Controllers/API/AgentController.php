@@ -33,9 +33,7 @@ class AgentController extends BaseController {
 
     public function agentOnlineStatus(Request $request) {
 
-        $agentOnlineStatus = AgentOnlineStatus::with('agent', function($query){
-            $query->station();
-        })->get();
+        $agentOnlineStatus = AgentOnlineStatus::with('agent')->get();
 
         return $this->sendResponse($agentOnlineStatus, "Agent Statuses fetched successfully");
     }
