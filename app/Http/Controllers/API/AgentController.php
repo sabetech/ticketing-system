@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Agent;
+use App\AgentOnlineStatus;
 
 class AgentController extends BaseController {
 
@@ -28,6 +29,13 @@ class AgentController extends BaseController {
 
         return $this->sendResponse($agentCount , "Successfully Got The Agent Count For Given Date");
 
+    }
+
+    public function agentOnlineStatus(Request $request) {
+
+        $agentOnlineStatus = AgentOnlineStatus::with('agent')->get();
+
+        return $this->sendResponse($agentOnlineStatus, "Agent Statuses fetched successfully");
     }
 
 }
