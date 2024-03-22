@@ -33,7 +33,11 @@ class Agent extends Model
     }
 
     public static function getAgentCountByDate($date) {
-        return Ticket::where('issued_date_time', '>=', $date)->groupBy('agent_name')->count();
+        $distinctValues = Ticket::where('issued_date_time', '>=', $date)
+        ->select(DB::raw('COUNT(DISTINCT agent_name) AS agentCount'))
+        ->first();
+
+        return $distinctValues->agentCount;
     }
 
     public function setLoginTimeStamp() {
