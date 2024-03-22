@@ -33,7 +33,9 @@ class AgentController extends BaseController {
 
     public function agentOnlineStatus(Request $request) {
 
-        $agentOnlineStatus = AgentOnlineStatus::with('agent')->select('users.fname', 'users.lname', 'photo')->get();
+        $agentOnlineStatus = AgentOnlineStatus::with('agent', function($query) {
+            $query->select('users.fname', 'users.lname', 'photo');
+        })->get();
 
 
 
