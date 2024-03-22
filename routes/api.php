@@ -54,6 +54,8 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/all', "API\TicketController@getTicketByDate");
             Route::get('/count', "API\TicketController@getTicketCountByDate");
             Route::get('/revenue', "API\TicketController@calculateTicketRevenueByDate");
+            Route::get('/unpaidAmount', "API\TicketController@calculateUnpaidTickets");
+            Route::get('/unpaidTickets', "API\TicketController@countUnpaidTickets");
             Route::get('/top5', "API\TicketController@getTop5");
         });
 

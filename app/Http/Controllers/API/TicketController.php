@@ -119,6 +119,24 @@ class TicketController extends BaseController {
         $date = $request->get('date');
 
         $revenue = Ticket::calculateRevenue($date);
+
+        return $this->sendResponse($revenue , "Successfully Got The Ticket Revenue For Given Date");
+    }
+
+    public function calculateUnpaidTickets(Request $request) {
+        $date = $request->get('date');
+
+        $unpaidAmount = Ticket::calculateUnpaidTickets($date);
+
+        return $this->sendResponse($unpaidAmount , "Successfully Got The Unpaid Amount For Given Date");
+    }
+
+    public function countUnpaidTickets(Request $request) {
+        $date = $request->get('date');
+
+        $unpaidTickets = Ticket::countUnpaidTickets($date);
+
+        return $this->sendResponse($unpaidTickets , "Successfully Got The Unpaid Tickets For Given Date");
     }
 
     public function postSyncTicket(Request $request) {

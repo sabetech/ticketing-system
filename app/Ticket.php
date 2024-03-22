@@ -70,8 +70,24 @@ class Ticket extends Model
 
     public static function calculateRevenue($date) {
 
-        $tickets = self::where('issued_date_time', '>=', $date)->get();
+        $amountSum = self::where('issued_date_time', '>=', $date)
+                        ->where('paid', 1)->sum('amount');
 
+        return $amountSum;
+    }
+
+    public static function calculateUnpaidTickets($date) {
+        $unpaidAmount = self::where('issued_date_time', '>=', $date)
+                        ->where('paid', 0)->sum('amount');
+
+        return $unpaidAmount;
+    }
+
+    public static function countUnpaidTickets($date) {
+        $unpaidTickets = self::where('issued_date_time', '>=', $date)
+                    ->where('paid', 0)->count();
+
+        return $unpaidAmount;
     }
 
 }
