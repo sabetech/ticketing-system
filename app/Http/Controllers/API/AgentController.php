@@ -20,4 +20,14 @@ class AgentController extends BaseController {
         return $this->sendError('Couldn\'t update Agent online status');
     }
 
+    public function agentCount(Request $request){
+
+        $date = $request->get('date');
+
+        $agentCount = Agent::getAgentCountByDate($date);
+
+        return $this->sendResponse($agentCount , "Successfully Got The Agent Count For Given Date");
+
+    }
+
 }

@@ -47,6 +47,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::post('/{id}/ticket-submit', "API\TicketController@postTicketSubmit");
             Route::post('/{id}/bulk-sync', "API\TicketController@postSyncTicket");
             Route::post('/{id}/ping',  "API\AgentController@ping");
+            Route::get('/count', "API\AgentController@agentCount");
         });
 
         Route::group(['prefix' => 'ticket'], function () {

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\AgentOnlineStatus;
+use App\Ticket;
 
 class Agent extends Model
 {
@@ -29,6 +30,10 @@ class Agent extends Model
 
     public function agentOnlineStatus() {
         return $this->hasOne("App\AgentOnlineStatus", "agent_id", "id");
+    }
+
+    public function getAgentCountByDate($date) {
+        return Ticket::where('issued_date_time', '>=', $date)->groupBy('agent_name')->count();
     }
 
     public function setLoginTimeStamp() {
