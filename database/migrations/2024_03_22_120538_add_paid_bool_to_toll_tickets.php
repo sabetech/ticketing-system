@@ -15,6 +15,7 @@ class AddPaidBoolToTollTickets extends Migration
     {
         Schema::table('toll_tickets', function (Blueprint $table) {
             //
+            $table->boolean('paid')->default(true)->after('amount');
         });
     }
 
@@ -27,6 +28,7 @@ class AddPaidBoolToTollTickets extends Migration
     {
         Schema::table('toll_tickets', function (Blueprint $table) {
             //
+            $table->dropColumn('paid');
         });
     }
 }
