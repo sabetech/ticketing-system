@@ -109,7 +109,7 @@ class TicketController extends BaseController {
     public function getTicketCountByDate(Request $request) {
         $date = $request->get('date');
 
-        $count = Tickets::getTicketCount($date);
+        $count = Ticket::getTicketCount($date);
 
         return $this->sendResponse($count , "Successfully Got The Ticket Count For Given Date");
 
