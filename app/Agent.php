@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\AgentOnlineStatus;
 use App\Ticket;
+use DB;
 
 class Agent extends Model
 {
