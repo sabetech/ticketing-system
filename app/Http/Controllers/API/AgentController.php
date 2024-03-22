@@ -33,7 +33,9 @@ class AgentController extends BaseController {
 
     public function agentOnlineStatus(Request $request) {
 
-        $agentOnlineStatus = AgentOnlineStatus::with('agent')->get();
+        $agentOnlineStatus = AgentOnlineStatus::with('agent')->select('agent.fname', 'agent/lname', 'photo')->get();
+
+
 
         return $this->sendResponse($agentOnlineStatus, "Agent Statuses fetched successfully");
     }
