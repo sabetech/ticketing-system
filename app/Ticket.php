@@ -68,4 +68,10 @@ class Ticket extends Model
         return self::where('issued_date_time', '>=', $date)->count();
     }
 
+    public static function calculateRevenue($date) {
+
+        $tickets = self::where('issued_date_time', '>=', $date)->get();
+
+    }
+
 }

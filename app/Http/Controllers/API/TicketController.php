@@ -115,6 +115,12 @@ class TicketController extends BaseController {
 
     }
 
+    public function calculateTicketRevenueByDate(Request $request) {
+        $date = $request->get('date');
+
+        $revenue = Ticket::calculateRevenue($date);
+    }
+
     public function postSyncTicket(Request $request) {
 
         $tickets = $request->get('tickets-log');
