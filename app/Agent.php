@@ -32,7 +32,7 @@ class Agent extends Model
         return $this->hasOne("App\AgentOnlineStatus", "agent_id", "id");
     }
 
-    public function getAgentCountByDate($date) {
+    public static function getAgentCountByDate($date) {
         return Ticket::where('issued_date_time', '>=', $date)->groupBy('agent_name')->count();
     }
 
