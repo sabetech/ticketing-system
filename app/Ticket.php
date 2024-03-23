@@ -35,9 +35,8 @@ class Ticket extends Model
         $rate = Rate::find($ticket->rate_title);
         if (!$rate) return false;
 
-        if ($rate->rate_type === 'trader') {
-            $ticket->amount = $amount;
-        }
+        $ticket->amount = $amount;
+
 
         Log::info($ticket);
 

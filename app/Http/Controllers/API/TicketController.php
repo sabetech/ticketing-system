@@ -86,6 +86,8 @@ class TicketController extends BaseController {
                 $savedTicket = Ticket::saveTraderPayment($ticket, $amount);
                 break;
             default:
+                $savedTicket = Ticket::saveTicket($ticket);
+
 
         }
 
@@ -137,6 +139,10 @@ class TicketController extends BaseController {
         $unpaidTickets = Ticket::countUnpaidTickets($date);
 
         return $this->sendResponse($unpaidTickets , "Successfully Got The Unpaid Tickets For Given Date");
+    }
+
+    public function getTop5(Request $request) {
+
     }
 
     public function postSyncTicket(Request $request) {
