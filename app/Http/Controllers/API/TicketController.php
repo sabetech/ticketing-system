@@ -110,8 +110,11 @@ class TicketController extends BaseController {
 
     public function getTicketByDateRange(Request $request) {
         $dateRange = $request->get('date_range');
-        list($startDate,$endDate) = explode('-',$dateRange);
         Log::info($dateRange);
+        list($startDate, $endDate) = explode(',',$dateRange);
+
+        $tickets = Ticket::getTicketsFromRange($startDate, $endDate);
+
     }
 
     public function getTicketCountByDate(Request $request) {
