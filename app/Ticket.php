@@ -71,8 +71,6 @@ class Ticket extends Model
 
         $tickets = self::with(['rate', 'agent'])->whereBetween('issued_date_time', [$startDate, $endDate])->get();
 
-        Log::info($tickets);
-
         return $tickets;
 
     }

@@ -115,6 +115,8 @@ class TicketController extends BaseController {
 
         $tickets = Ticket::getTicketsFromRange($startDate, $endDate);
 
+        return $this->sendResponse($tickets, "Successfully Fetched tickets from date range");
+
     }
 
     public function getTicketCountByDate(Request $request) {
