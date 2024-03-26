@@ -108,6 +108,12 @@ class TicketController extends BaseController {
         return $this->sendResponse($tickets , "Successfully Got All Tickets For Given Date");
     }
 
+    public function getTicketByDateRange(Request $request) {
+        $dateRange = $request->get('date_range');
+        list($startDate,$endDate) = explode('-',$dateRange);
+        Log::info($dateRange);
+    }
+
     public function getTicketCountByDate(Request $request) {
         $date = $request->get('date');
 

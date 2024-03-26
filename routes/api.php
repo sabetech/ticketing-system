@@ -54,6 +54,7 @@ Route::group(['prefix' => 'v2'], function() {
         Route::group(['prefix' => 'ticket'], function () {
             Route::post('/bulk-sync', "API\TicketController@postSyncTicket");
             Route::get('/all', "API\TicketController@getTicketByDate");
+            Route::get('/range', "API\TicketController@getTicketByDateRange");
             Route::get('/count', "API\TicketController@getTicketCountByDate");
             Route::get('/revenue', "API\TicketController@calculateTicketRevenueByDate");
             Route::get('/unpaidAmount', "API\TicketController@calculateUnpaidTickets");
