@@ -13,8 +13,9 @@ class Agent extends Model
     protected $table = 'users';
 
     public function station(){
-
-        return $this->stationUser->station;
+        if (isset($this->stationUser))
+            return $this->stationUser->station;
+        return null;
     }
 
     public function stationUser() {
