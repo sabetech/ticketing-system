@@ -49,6 +49,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::post('/{id}/ping',  "API\AgentController@ping");
             Route::get('/count', "API\AgentController@agentCount");
             Route::get('/onlinestatus', "API\AgentController@agentOnlineStatus");
+            Route::get('/all', "API\AgentController@getAllAgents");
         });
 
         Route::group(['prefix' => 'ticket'], function () {

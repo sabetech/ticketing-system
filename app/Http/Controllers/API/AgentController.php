@@ -40,4 +40,17 @@ class AgentController extends BaseController {
         return $this->sendResponse($agentOnlineStatus, "Agent Statuses fetched successfully");
     }
 
+    public function getAllAgents() {
+        $agents = Agent::join('model_has_roles', 'users.id', '=', 'model_id')
+                        ->join('roles', 'roles.id', '=', 'role_id')->get();
+
+        foreach ($agents as &$agent) {
+            $agent->station = $agent->station();
+            $agent->totalTickets = $agent->tickets()->count();
+        }
+
+
+        return $this->sendResponse($agents, "Agents Fetched successfully");
+    }
+
 }
