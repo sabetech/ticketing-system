@@ -45,7 +45,7 @@ class AgentController extends BaseController {
                         ->join('roles', 'roles.id', '=', 'role_id')->get();
 
         foreach ($agents as &$agent) {
-            $agent->station = $agent->station();
+            $agent->stationInfo = $agent->station();
             $agent->totalTickets = $agent->tickets()->count();
         }
 
