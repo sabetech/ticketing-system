@@ -78,10 +78,10 @@ class TicketController extends BaseController {
         $savedTicket = null;
 
         switch ($rateType) {
-            case 'vehicle':
+            case 'fixed':
                 $savedTicket = Ticket::saveTicket($ticket);
                 break;
-            case 'trader':
+            case 'flexible':
                 $amount = $request->get('amount');
                 $savedTicket = Ticket::saveTraderPayment($ticket, $amount);
                 break;
