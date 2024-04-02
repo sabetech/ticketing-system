@@ -13,7 +13,7 @@ class CreateRateV2Table extends Migration
      */
     public function up()
     {
-        Schema::create('rate_v2', function (Blueprint $table) {
+        Schema::create('rates_v2', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->decimal('amount');
