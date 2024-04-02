@@ -45,9 +45,7 @@ class AgentController extends BaseController {
 
         foreach ($agents as &$agent) {
             $agent->stationInfo = $agent->station();
-            $agent->totalTickets = $agent->tickets->count();
         }
-
 
         return $this->sendResponse($agents, "Agents Fetched successfully");
     }
