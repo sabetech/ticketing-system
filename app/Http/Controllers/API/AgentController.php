@@ -41,7 +41,7 @@ class AgentController extends BaseController {
     }
 
     public function getAllAgents() {
-        $agents = Agent::with('tickets')->get();
+        $agents = Agent::all();
 
         foreach ($agents as &$agent) {
             $agent->stationInfo = $agent->station();
