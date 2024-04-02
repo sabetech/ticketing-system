@@ -20,7 +20,7 @@ class CreateRateV2Table extends Migration
             $table->string('icon');
             $table->unsignedInteger('service_type_id');
             $table->unsignedInteger('station_id');
-            $table->enum(['fixed', 'flexible', 'free'], 'rate_type')->default('fixed');
+            $table->enum('rate_type', ['fixed', 'flexible', 'free'])->default('fixed');
             $table->boolean('is_postpaid');
             $table->timestamps();
             $table->softDeletes();
