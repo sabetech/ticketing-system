@@ -63,13 +63,13 @@ class Ticket extends Model
 
     public static function getTickets($date) {
 
-        return self::with('rate')->where('issued_date_time', '>=', $date)->get();
+        return self::with('rates_v2')->where('issued_date_time', '>=', $date)->get();
 
     }
 
     public static function getTicketsFromRange($startDate, $endDate) {
 
-        $tickets = self::with(['rate', 'agent'])->whereBetween('issued_date_time', [$startDate, $endDate])->get();
+        $tickets = self::join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rates_v2', 'agent'])->whereBetween('issued_date_time', [$startDate, $endDate])->get();
 
         return $tickets;
 
