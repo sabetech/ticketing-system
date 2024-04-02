@@ -15,7 +15,19 @@ class CreateRateV2Table extends Migration
     {
         Schema::create('rate_v2', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->decimal('amount');
+            $table->string('icon');
+            $table->unsignedInteger('service_type_id');
+            $table->unsignedInteger('station_id');
+            $table->enum(['fixed', 'flexible', 'free'], 'rate_type')->default('fixed');
+            $table->boolean('is_postpaid');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('service_type_id')->references('id')->on('service_types');
+            $table->foreign('station_id')->references('id')->on('stations');
+
         });
     }
 
