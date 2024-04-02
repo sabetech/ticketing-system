@@ -46,7 +46,7 @@ class AgentController extends BaseController {
 
         foreach ($agents as &$agent) {
             $agent->stationInfo = $agent->station();
-            $agent->totalTickets = $agent->tickets()->count();
+            $agent->totalTickets = $agent->tickets->count();
         }
 
 
