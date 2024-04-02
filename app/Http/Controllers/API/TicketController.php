@@ -110,7 +110,12 @@ class TicketController extends BaseController {
 
     public function getTicketByDateRange(Request $request) {
         $dateRange = $request->get('date_range');
-        Log::info($dateRange);
+
+        if (trim($dateRange) === ',' ) {
+            return $this->sendError("Date Range Error!", ["Set Correct Date Range."]);
+        }
+
+
         list($startDate, $endDate) = explode(',',$dateRange);
 
         $tickets = Ticket::getTicketsFromRange($startDate, $endDate);
