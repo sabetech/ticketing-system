@@ -25,6 +25,13 @@ class RateController extends BaseController
         $rates = $agent->getRates();
 
         return $this->sendResponse($rates, "Rates fetched successfully");
+    }
+
+    public function listRates(Request $request){
+        $input = $request->get('station', null);
+
+        $rates = Rate::getAllRates($input);
+        return $this->sendResponse($rates, 'Rates fetched successfully');
 
     }
 }

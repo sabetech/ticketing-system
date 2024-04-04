@@ -50,6 +50,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/count', "API\AgentController@agentCount");
             Route::get('/onlinestatus', "API\AgentController@agentOnlineStatus");
             Route::get('/all', "API\AgentController@getAllAgents");
+            Route::get('/{id}/detail', "API\AgentController@show");
         });
 
         Route::group(['prefix' => 'ticket'], function () {
@@ -65,6 +66,7 @@ Route::group(['prefix' => 'v2'], function() {
 
         Route::group(['prefix' => 'rates'], function () {
             Route::get('agent/{id}', "API\RateController@index");
+            Route::get('/', "API\RateController@listRates");
         });
     });
 });
