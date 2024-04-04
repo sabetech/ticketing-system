@@ -13,7 +13,7 @@ class Rate extends Model
         return $this->belongsTo('App\Station', 'station_id', 'id');
     }
 
-    public function getAllRates($station = null) {
+    public static function getAllRates($station = null) {
         if ($station == null)
             return Rate::with('station')->where('service_type_id', 1)->get();
 
