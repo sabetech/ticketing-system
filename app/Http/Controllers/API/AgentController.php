@@ -62,6 +62,9 @@ class AgentController extends BaseController {
         $agentTicketInfo = new stdClass;
         $agentTicketInfo->agent = $agent;
 
+        $from = $request->get('from', null);
+        $to   = $request->get('to', null);
+
         if (!$from) {
             $todayStart = Carbon::today()->startOfDay();
             $from = $todayStart->format('Y-m-d H:i:s');
