@@ -71,4 +71,8 @@ class Agent extends Model
             $onlineStatus->save();
         }
     }
+
+    public function getAgentTickets($from, $to) {
+        return $this->tickets()->whereBetween('issued_date_time', [$from, $to])->get();
+    }
 }

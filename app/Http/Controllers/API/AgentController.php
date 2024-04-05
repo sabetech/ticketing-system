@@ -5,6 +5,8 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Agent;
 use App\AgentOnlineStatus;
+use Carbon\Carbon;
+use stdClass;
 
 class AgentController extends BaseController {
 
@@ -48,6 +50,32 @@ class AgentController extends BaseController {
         }
 
         return $this->sendResponse($agents, "Agents Fetched successfully");
+    }
+
+    public function show($id, Request $request) {
+        $agent = Agent::find($id);
+
+        if (!$agent) {
+            return $this->sendError('Agent not found.');
+        }
+
+        $agentTicketInfo = new stdClass;
+        $agentTicketInfo->agent = $agent;
+
+        if (!$from) {
+            $todayStart = Carbon::today()->startOfDay();
+            $from = $todayStart->format('Y-m-d H:i:s');
+        }
+
+        if (!$to) {
+            $todayEnd = Carbon::today()->endOfDay();
+            $to = $todayEnd->format('Y-m-d H:i:s');
+        }
+
+        $agentTicketInfo->tickets = $agent->getAgentTickets($from, $to);
+
+        return $this->sendResponse($agentTicketInfo, "Agent Tickets fetched successfully");
+
     }
 
 }
