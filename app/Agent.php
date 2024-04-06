@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\AgentOnlineStatus;
 use App\Ticket;
 use DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Agent extends Model
 {
+    use SoftDeletes;
     //
     protected $table = 'users';
+
 
     public function station(){
         if (isset($this->stationUser))
