@@ -10,7 +10,7 @@ class UserController extends BaseController
     //
     public function getAllUsers() {
 
-        $users = User::with(['roles'])->get();
+        $users = User::withTrashed()->with(['roles'])->get();
 
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }
