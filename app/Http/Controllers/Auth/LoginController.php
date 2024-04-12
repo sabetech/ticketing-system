@@ -55,7 +55,7 @@ class LoginController extends BaseController
         {
             return response(['errors'=>$validator->errors()->all()], 401);
         }
-        $user = User::where('email', $request->email)->first();
+        $user = User::with(['roles'])->where('email', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
