@@ -101,4 +101,12 @@ class Ticket extends Model
         return $unpaidAmount;
     }
 
+    public static function getThirdPartyTickets($from, $to) {
+
+        $thirdPartyTickets = self::join('rates_v2', 'toll_tickets.rates_title', '=', 'rates_v2.id')->whereBetween('issued_date_time', [$from, $to])
+            ->where('rates_v2.is_postpaid', 1)->get();
+
+        return $thirdPartyTickets;
+    }
+
 }

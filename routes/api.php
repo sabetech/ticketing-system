@@ -40,6 +40,12 @@ Route::group(['prefix' => 'v2'], function() {
             return $user;
         });
 
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/all', 'API\UserController@getAllUsers');
+            Route::get('/{id}/detail', "API\UserController@show");
+
+        });
+
         Route::group(['prefix' => 'agent'], function () {
             Route::get('/{id}/rates', 'API\RateController@getRatesForAgent');
             Route::get('/{id}/tickets', "API\TicketController@getAgentTickets");
@@ -61,6 +67,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/revenue', "API\TicketController@calculateTicketRevenueByDate");
             Route::get('/unpaidAmount', "API\TicketController@calculateUnpaidTickets");
             Route::get('/unpaidTickets', "API\TicketController@countUnpaidTickets");
+            Route::get('/third-party-tickets', "API\TicketController@getThirdPartyTickets");
             Route::get('/top5', "API\TicketController@getTop5");
         });
 

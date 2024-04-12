@@ -157,6 +157,16 @@ class TicketController extends BaseController {
         return $this->sendResponse($unpaidTickets , "Successfully Got The Unpaid Tickets For Given Date");
     }
 
+    public function getThirdPartyTickets(Request $request) {
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        $tickets = Ticket::getThirdPartyTickets($from, $to);
+
+        return $this->sendResponse($tickets , "Successfully Got The Third Party Tickets For Given Date");
+
+    }
+
     public function getTop5(Request $request) {
 
     }
