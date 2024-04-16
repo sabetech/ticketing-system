@@ -87,8 +87,6 @@ class TicketController extends BaseController {
                 break;
             default:
                 $savedTicket = Ticket::saveTicket($ticket);
-
-
         }
 
         if (!$savedTicket) {
@@ -175,7 +173,7 @@ class TicketController extends BaseController {
 
         $tickets = $request->get('tickets-log');
 
-        Log::info("TICKET LOG::", $tickets);
+        Log::info($tickets);
         //handle agent id not found..
 
         $bulkTicketSave = [];
