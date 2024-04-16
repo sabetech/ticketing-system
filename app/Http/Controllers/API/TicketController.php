@@ -85,6 +85,9 @@ class TicketController extends BaseController {
                 break;
             case 'flexible':
                 $amount = $request->get('amount');
+
+                if (!$amount) return $this->sendError("Could not save Ticket!", ["Amount not sent"]);
+
                 $savedTicket = Ticket::saveTraderPayment($ticket, $amount);
                 break;
             default:
