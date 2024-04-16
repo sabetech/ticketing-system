@@ -83,7 +83,7 @@ class Ticket extends Model
         $startOfDay = Carbon::parse($date)->startOfDay();
         $endOfDay = Carbon::parse($date)->endOfDay();
 
-        $amountSum = self::whereBetween('issued_date_time', [$startDate, $endOfDay])
+        $amountSum = self::whereBetween('issued_date_time', [$startOfDay, $endOfDay])
                         ->where('paid', 1)->sum('amount');
 
         return $amountSum;
