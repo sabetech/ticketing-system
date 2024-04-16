@@ -18,16 +18,13 @@ class Ticket extends Model
         return $this->belongsTo('\App\Agent', 'agent_name', 'id');
     }
 
-    public static function saveTicket($ticket) {
+    public static function saveTicket($ticket, $rate) {
 
         if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
 
-        $rate = Rate::find($ticket->rate_title);
-        if (!$rate) return false;
         $ticket->amount = $rate->amount;
 
-        if ($rate->is_postpaid)
-            $ticket->paid = false;
+        $ticket->paid = !$rate->is_postpaid;
 
         Log::info($ticket);
 
@@ -39,11 +36,7 @@ class Ticket extends Model
     public static function saveTraderPayment($ticket, $amount) {
         if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
 
-        $rate = Rate::find($ticket->rate_title);
-        if (!$rate) return false;
-
         $ticket->amount = $amount;
-
 
         Log::info($ticket);
 

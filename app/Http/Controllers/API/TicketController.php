@@ -74,12 +74,14 @@ class TicketController extends BaseController {
         $ticket->agent_name = $agent->id;
         $ticket->device_id = $deviceID;
 
-        $rateType = $request->get('rate_type');
+        $rate = Rate::find($ticket->rate_title);
+        if (!$rate) return $this->sendError("Could not save Ticket!", ["Rate ID not found"]);
+
         $savedTicket = null;
 
-        switch ($rateType) {
+        switch ($rate->rate_type) {
             case 'fixed':
-                $savedTicket = Ticket::saveTicket($ticket);
+                $savedTicket = Ticket::saveTicket($ticket, $rate);
                 break;
             case 'flexible':
                 $amount = $request->get('amount');
@@ -196,7 +198,13 @@ class TicketController extends BaseController {
             $rate = Rate::find($ticket['rate_id']);
 
             if (!$rate) continue;
-            $myTicket['amount'] = $rate->amount;
+
+            if ($rate->rate_type === 'flexible')
+                $myTicket['amount'] = $ticket['amount'];
+            else
+                $myTicket['amount'] = $rate->amount;
+
+            $myTicket['paid'] = !$rate->is_postpaid; // if it's postpaid, the paid is false otherwise true
 
             $myTicket['device_id'] = $ticket['device_id'];
 
