@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Log;
+use Carbon\Carbon;
 
 class Ticket extends Model
 {
@@ -72,26 +73,37 @@ class Ticket extends Model
     }
 
     public static function getTicketCount($date) {
-        return self::where('issued_date_time', '>=', $date)->count();
+        $startOfDay = Carbon::parse($date)->startOfDay();
+        $endOfDay = Carbon::parse($date)->endOfDay();
+
+        return self::whereBetween('issued_date_time',[$startOfDay, $endOfDay])->count();
     }
 
     public static function calculateRevenue($date) {
+        $startOfDay = Carbon::parse($date)->startOfDay();
+        $endOfDay = Carbon::parse($date)->endOfDay();
 
-        $amountSum = self::where('issued_date_time', '>=', $date)
+        $amountSum = self::whereBetween('issued_date_time', [$startDate, $endOfDay])
                         ->where('paid', 1)->sum('amount');
 
         return $amountSum;
     }
 
     public static function calculateUnpaidTickets($date) {
-        $unpaidAmount = self::where('issued_date_time', '>=', $date)
+        $startOfDay = Carbon::parse($date)->startOfDay();
+        $endOfDay = Carbon::parse($date)->endOfDay();
+
+        $unpaidAmount = self::whereBetween('issued_date_time',[$startOfDay, $endOfDay])
                         ->where('paid', 0)->sum('amount');
 
         return $unpaidAmount;
     }
 
     public static function countUnpaidTickets($date) {
-        $unpaidTickets = self::where('issued_date_time', '>=', $date)
+        $startOfDay = Carbon::parse($date)->startOfDay();
+        $endOfDay = Carbon::parse($date)->endOfDay();
+
+        $unpaidTickets = self::whereBetween('issued_date_time', [$startOfDay, $endDate])
                     ->where('paid', 0)->count();
 
         return $unpaidAmount;
