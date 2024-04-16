@@ -173,7 +173,7 @@ class TicketController extends BaseController {
 
         $tickets = $request->get('tickets-log');
 
-        Log::info($tickets);
+        Log::info("TICKET LOG::", $tickets);
         //handle agent id not found..
 
         $bulkTicketSave = [];
