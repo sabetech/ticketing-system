@@ -26,6 +26,9 @@ class Ticket extends Model
         if (!$rate) return false;
         $ticket->amount = $rate->amount;
 
+        if ($rate->is_postpaid)
+            $ticket->paid = false;
+
         Log::info($ticket);
 
         $ticket->save();
