@@ -15,4 +15,17 @@ class UserController extends BaseController
 
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }
+
+    public function deleteUser($id, Request $request) {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+            return $this->sendResponse($user, 'User deleted successfully.');
+        }else {
+            return $this->sendError("User Not Found");
+        }
+
+    }
+
 }
