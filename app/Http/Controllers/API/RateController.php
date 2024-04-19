@@ -55,7 +55,7 @@ class RateController extends BaseController
         $rate->title = $title;
         $rate->amount = $amount;
         $rate->station_id = $stationId;
-        $rate->is_postpaid = $is_postpaid;
+        $rate->is_postpaid = $is_postpaid == "false" ? false : true;
         $rate->rate_type = $rate_type;
         $rate->service_type_id = 1;
         $rate->icon = $path;
