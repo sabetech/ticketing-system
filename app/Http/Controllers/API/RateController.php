@@ -39,7 +39,7 @@ class RateController extends BaseController
     public function create(Request $request) {
         $title = $request->get('title');
         $amount = $request->get('amount');
-        $stationId = $request->get('station_id');
+        $stationId = $request->get('station');
         $rate_type = $request->get('rate_type');
         $is_postpaid = $request->get('is_postpaid');
 
