@@ -45,7 +45,7 @@ class RateController extends BaseController
 
         $file = $request->file('rate_image');
         $filename = time() . '.' . $file->getClientOriginalExtension();
-        $path = Storage::disk('uploads')->put($filename, file_get_contents($file));
+        $path = Storage::disk('local')->put($filename, file_get_contents($file));
 
         $rate = new Rate();
         $rate->title = $title;
