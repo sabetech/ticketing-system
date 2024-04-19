@@ -7,6 +7,7 @@ use App\Rate;
 use App\Agent;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Storage;
+use Log;
 
 class RateController extends BaseController
 {
