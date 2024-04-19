@@ -34,4 +34,30 @@ class RateController extends BaseController
         return $this->sendResponse($rates, 'Rates fetched successfully');
 
     }
+
+    public function create(Request $request) {
+        $title = $request->get('title');
+        $amount = $request->get('amount');
+        $stationId = $request->get('station_id');
+        $rate_type = $request->get('rate_type');
+        $is_postpaid = $request->get('is_postpaid');
+
+        $file = $request->file('rate-image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $path = Storage::disk('uploads')->put($filename, file_get_contents($file));
+
+        $rate = new Rate();
+        $rate->title = $title;
+        $rate->amount = $amount;
+        $rate->station_id = $stationId;
+        $rate->is_postpaid = $is_postpaid;
+        $rate->rate_type = $rate_type;
+        $rate->service_type_id = 1;
+        $rate->icon = $path;
+
+        $rate->save();
+
+        return $this->sendResponse($rate, 'Rate created successfully');
+
+     }
 }

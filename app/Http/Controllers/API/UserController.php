@@ -25,7 +25,6 @@ class UserController extends BaseController
         }else {
             return $this->sendError("User Not Found");
         }
-
     }
 
 }

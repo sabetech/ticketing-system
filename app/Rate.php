@@ -10,6 +10,7 @@ class Rate extends Model
     use SoftDeletes;
     //
     protected $table = "rates_v2";
+    protected $guarded = ['id'];
 
     public function station() {
         return $this->belongsTo('App\Station', 'station_id', 'id');

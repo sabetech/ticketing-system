@@ -75,6 +75,9 @@ Route::group(['prefix' => 'v2'], function() {
         Route::group(['prefix' => 'rates'], function () {
             Route::get('agent/{id}', "API\RateController@index");
             Route::get('/', "API\RateController@listRates");
+            Route::post('/{id}/delete', "API\RateController@delete");
+            Route::post('/create', "API\RateController@create");
+            Route::post('/{id}/edit', "API\RateController@edit");
         });
     });
 });
