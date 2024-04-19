@@ -37,6 +37,9 @@ class RateController extends BaseController
     }
 
     public function create(Request $request) {
+
+        Log::info("REQUEST TO CREATE::", $request->all());
+
         $title = $request->get('title');
         $amount = $request->get('amount');
         $stationId = $request->get('station');
