@@ -42,7 +42,7 @@ class RateController extends BaseController
         $rate_type = $request->get('rate_type');
         $is_postpaid = $request->get('is_postpaid');
 
-        $file = $request->file('rate-image');
+        $file = $request->file('rate_image');
         $filename = time() . '.' . $file->getClientOriginalExtension();
         $path = Storage::disk('uploads')->put($filename, file_get_contents($file));
 
