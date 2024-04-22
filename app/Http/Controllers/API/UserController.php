@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\User;
 use App\Role;
 use Illuminate\Support\Facades\Storage;
+use Validator;
 use Log;
 
 class UserController extends BaseController
@@ -20,7 +21,18 @@ class UserController extends BaseController
     }
 
     public function createUser(Request $request) {
-        $user = new User;
+        $validator = Validator::make($request->all(), [
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => 'required|email|unique',
+            'password' => 'required',
+            'username' => 'required|unique',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
         $input = $request->all();
 
         Log::info($input);
