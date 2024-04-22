@@ -31,6 +31,7 @@ class RateController extends BaseController
 
     public function listRates(Request $request){
         $input = $request->get('station', null);
+        $isPostpaid = $request->get('postpaid');
 
         $rates = Rate::getAllRates($input);
         return $this->sendResponse($rates, 'Rates fetched successfully');
