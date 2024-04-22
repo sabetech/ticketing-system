@@ -26,7 +26,7 @@ class UserController extends BaseController
             'lname' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
-            'username' => 'required|unique',
+            'username' => 'required|unique:users,username',
         ]);
 
         if($validator->fails()){
