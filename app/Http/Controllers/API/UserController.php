@@ -45,7 +45,7 @@ class UserController extends BaseController
             $filename = time() . '.' . $file->getClientOriginalExtension();
             Storage::disk('local')->put($filename, file_get_contents($file));
         }else {
-            $filename = "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
+            $filename = "img/unknown.png";
         }
 
         $input['photo'] = $filename;
