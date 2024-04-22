@@ -45,7 +45,7 @@ class User extends Authenticatable
     }
 
     public function assignRole($roleId) {
-        ModelHasRoles::createOrUpdate([
+        ModelHasRoles::updateOrCreate([
             'role_id' => $roleId,
             'model_type' => 'App\User',
             'model_id' => $this->id
