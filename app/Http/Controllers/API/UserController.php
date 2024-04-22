@@ -30,7 +30,7 @@ class UserController extends BaseController
 
     public function roles(Request $request) {
 
-        $roles = Role::select('id', 'name')->all();
+        $roles = Role::select('id', 'name')->get();
 
         return $this->sendResponse($roles, 'Roles retrieved successfully.');
 
