@@ -48,7 +48,7 @@ class UserController extends BaseController
             $filename = "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
         }
 
-        $input['user_image'] = $filename;
+        $input['photo'] = $filename;
 
         unset($input['role']);
         $user = User::create($input);
