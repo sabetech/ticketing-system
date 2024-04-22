@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\User;
 use App\Role;
 use Illuminate\Support\Facades\Storage;
+use Log;
 
 class UserController extends BaseController
 {
@@ -21,6 +22,8 @@ class UserController extends BaseController
     public function createUser(Request $request) {
         $user = new User;
         $input = $request->all();
+
+        Log::info($input);
 
         $input['password'] = bcrypt($input['password']);
 
