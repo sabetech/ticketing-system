@@ -81,11 +81,10 @@ Route::group(['prefix' => 'v2'], function() {
             Route::post('/create', "API\RateController@create");
             Route::post('/{id}/edit', "API\RateController@edit");
         });
+    });
 
-        Route::group(['prefix' => 'station'], function () {
-            Route::get('/all', "API\StationController@listRates");
-
-        });
+    Route::group(['prefix' => 'station'], function () {
+        Route::get('/all', "API\StationController@getAllStations");
     });
 });
 
