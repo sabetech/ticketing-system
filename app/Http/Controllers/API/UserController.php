@@ -17,6 +17,13 @@ class UserController extends BaseController
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }
 
+    public function createUser(Request $request) {
+        $user = new User;
+        $request->get('username');
+
+
+    }
+
     public function deleteUser($id, Request $request) {
         $user = User::find($id);
 

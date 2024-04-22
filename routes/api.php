@@ -44,6 +44,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/all', 'API\UserController@getAllUsers');
             Route::get('/{id}/detail', "API\UserController@show");
             Route::get('/{id}/delete', 'API\UserController@deleteUser');
+            Route::post('/create', 'API\UserController@createUser');
             Route::get('/roles', 'API\UserController@roles');
 
         });
@@ -79,6 +80,11 @@ Route::group(['prefix' => 'v2'], function() {
             Route::post('/{id}/delete', "API\RateController@delete");
             Route::post('/create', "API\RateController@create");
             Route::post('/{id}/edit', "API\RateController@edit");
+        });
+
+        Route::group(['prefix' => 'station'], function () {
+            Route::get('/all', "API\StationController@listRates");
+
         });
     });
 });
