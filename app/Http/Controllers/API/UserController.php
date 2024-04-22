@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\User;
+use App\Models\Role;
 
 class UserController extends BaseController
 {
@@ -29,7 +30,7 @@ class UserController extends BaseController
 
     public function roles(Request $request) {
 
-        $roles = \Spatie\Permission\Models\Role::all();
+        $roles = Role::select('id', 'name')->all();
 
         return $this->sendResponse($roles, 'Roles retrieved successfully.');
 
