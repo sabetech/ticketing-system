@@ -27,4 +27,12 @@ class UserController extends BaseController
         }
     }
 
+    public function roles(Request $request) {
+
+        $roles = \Spatie\Permission\Models\Role::all();
+
+        return $this->sendResponse($roles, 'Roles retrieved successfully.');
+
+    }
+
 }
