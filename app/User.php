@@ -44,4 +44,12 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role', 'model_has_roles', 'model_id', 'role_id');
     }
 
+    public function assignRole($roleId) {
+        ModelHasRoles::createOrUpdate([
+            'role_id' => $roleId,
+            'model_type' => 'App\User',
+            'model_id' => $this->id
+        ]);
+    }
+
 }

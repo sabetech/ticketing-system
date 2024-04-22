@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\User;
 use App\Role;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends BaseController
 {
@@ -19,9 +20,26 @@ class UserController extends BaseController
 
     public function createUser(Request $request) {
         $user = new User;
-        $request->get('username');
+        $input = $request->all();
 
+        $input['password'] = bcrypt($input['password']);
 
+        $filename = "";
+        if ($request->hasFile('user_image')) {
+            $file = $request->file('user_image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            Storage::disk('local')->put($filename, file_get_contents($file));
+        }else {
+            $filename = "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
+        }
+
+        $input['user_image'] = $filename;
+
+        unset($input['role']);
+        $user = User::create($input);
+        $user->assignRole($request->get('role'));
+
+        return $this->sendResponse($user, 'User created successfully.');
     }
 
     public function deleteUser($id, Request $request) {
