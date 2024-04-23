@@ -15,7 +15,7 @@ class UpdateForeignKeyOnTollTicketsTable extends Migration
     {
         //
         Schema::table('toll_tickets', function (Blueprint $table) {
-            $table->dropForeign(['toll_tickets_rate_title_foreign']);
+            $table->dropForeign(['rate_title']);
 
             $table->foreign('rate_title')
                 ->references('id')
