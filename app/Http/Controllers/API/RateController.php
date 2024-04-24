@@ -72,9 +72,8 @@ class RateController extends BaseController
         Log::info($dateRange);
         $date_range = json_decode($dateRange);
 
-        return;
         $amount = $request->get('amount');
-        $rateTitle = $request->get('client');
+        $rateTitle = $request->get('client_id');
 
         $numberOfTicketsPaidFor = Ticket::makePayment($date_range, $amount, $rateTitle);
 
