@@ -77,7 +77,7 @@ class RateController extends BaseController
         $rateTitle = $request->get('client_id');
 
         Log::info($request->all());
-
+return;
         $numberOfTicketsPaidFor = Ticket::makePayment($date_range, $amount, $rateTitle);
 
         //for this date range, get all the unpaid tickets and set to paid=true
