@@ -129,7 +129,7 @@ class Ticket extends Model
         $count = 0;
 
         foreach($totalTicketsForRateClient as $unPaidTicket) {
-            if ($count > $numberOfTickets) {
+            if ($count >= $numberOfTickets) {
                 break;
             }
             $unPaidTicket->paid = 1;
