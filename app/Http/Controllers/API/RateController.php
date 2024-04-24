@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Rate;
 use App\Agent;
+use App\Ticket;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Storage;
 use Log;
