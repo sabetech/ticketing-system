@@ -70,12 +70,13 @@ class RateController extends BaseController
     public function makePayment(Request $request) {
         $dateRange = $request->get('dateRange');
         Log::info($dateRange);
+        $date_range = json_decode($dateRange);
 
         return;
         $amount = $request->get('amount');
         $rateTitle = $request->get('client');
 
-        $numberOfTicketsPaidFor = Ticket::makePayment($dateRange, $amount, $rateTitle);
+        $numberOfTicketsPaidFor = Ticket::makePayment($date_range, $amount, $rateTitle);
 
         //for this date range, get all the unpaid tickets and set to paid=true
 
