@@ -125,7 +125,7 @@ class Ticket extends Model
                                         ->where('rate_title', $rateTitle)
                                         ->where('paid', 0)->orderBy('issued_date_time')->get();
 
-        $numberOfTickets = int($amount / $rate->amount);
+        $numberOfTickets = intval($amount / $rate->amount);
         $count = 0;
 
         foreach($totalTicketsForRateClient as $unPaidTicket) {
