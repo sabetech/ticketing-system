@@ -66,4 +66,19 @@ class RateController extends BaseController
         return $this->sendResponse($rate, 'Rate created successfully');
 
      }
+
+    public function makePayment(Request $request) {
+        $dateRange = $request->get('dateRange');
+        Log::info($dateRange);
+
+        return;
+        $amount = $request->get('amount');
+        $rateTitle = $request->get('client');
+
+        $numberOfTicketsPaidFor = Ticket::makePayment($dateRange, $amount, $rateTitle);
+
+        //for this date range, get all the unpaid tickets and set to paid=true
+
+        return $this->sendResponse(['number_of_tickets_paid' => $numberOfTicketsPaidFor], 'Tickets Paid successfully');
+    }
 }

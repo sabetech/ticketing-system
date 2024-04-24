@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Log;
 use Carbon\Carbon;
+use App\Rate;
 
 class Ticket extends Model
 {
@@ -115,6 +116,29 @@ class Ticket extends Model
             ->where('rates_v2.is_postpaid', 1)->orderBy('toll_tickets.issued_date_time', 'desc')->get();
 
         return $thirdPartyTickets;
+    }
+
+    public static function makePayment($dateRange, $amount, $rateTitle) {
+        $rate = Rate::find($rateTitle);
+
+        $totalTicketsForRateClient = self::whereBetween('issued_date_time',[$dateRange->from, $dateRange->to])
+                                        ->where('rate_title', $rateTitle)
+                                        ->where('paid', 0)->orderBy('issued_date_time')->get();
+
+        $numberOfTickets = int($amount / $rate->amount);
+        $count = 0;
+
+        foreach($totalTicketsForRateClient as $unPaidTicket) {
+            if ($count > $numberOfTickets) {
+                break;
+            }
+            $unPaidTicket->paid = 1;
+            $unPaidTicket->save();
+            $count++;
+        }
+
+        return $count;
+
     }
 
 }

@@ -80,6 +80,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::post('/{id}/delete', "API\RateController@delete");
             Route::post('/create', "API\RateController@create");
             Route::post('/{id}/edit', "API\RateController@edit");
+            Route::post('/makepayment', 'API\RateController@makePayment');
         });
     });
 
