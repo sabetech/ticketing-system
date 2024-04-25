@@ -43,7 +43,9 @@ class UserController extends BaseController
         if ($request->hasFile('user_image')) {
             $file = $request->file('user_image');
             $filename = time() . '.' . $file->getClientOriginalExtension();
+
             Storage::disk('local')->put($filename, file_get_contents($file));
+
         }else {
             $filename = "img/unknown.png";
         }

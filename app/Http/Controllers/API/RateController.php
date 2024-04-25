@@ -49,9 +49,7 @@ class RateController extends BaseController
         $rate_type = $request->get('rate_type');
         $is_postpaid = $request->get('is_postpaid');
 
-        $file = $request->file('rate_image');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        Storage::disk('storage')->put($filename, file_get_contents($file));
+        $filename = $request->rate_image->store('img/rates');
 
         $rate = new Rate();
         $rate->title = $title;
