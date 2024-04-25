@@ -66,6 +66,12 @@ class RateController extends BaseController
 
      }
 
+    public function delete($id, Request $request) {
+        $rate = Rate::where('id', $id)->delete();
+
+        return $this->sendResponse($rate, 'Rate has been deleted successfully');
+    }
+
     public function edit($id, Request $request) {
         Log::info("REQUEST TO EDIT::", $request->all());
 
