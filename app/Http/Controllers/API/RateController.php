@@ -49,7 +49,7 @@ class RateController extends BaseController
         $rate_type = $request->get('rate_type');
         $is_postpaid = $request->get('is_postpaid');
 
-        $filename = $request->rate_image->store('img/rates');
+        $filename = $request->rate_image->store('public/img/rates');
 
         $rate = new Rate();
         $rate->title = $title;
