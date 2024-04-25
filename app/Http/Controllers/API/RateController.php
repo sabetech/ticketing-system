@@ -68,9 +68,45 @@ class RateController extends BaseController
 
      }
 
+    public function edit($id, Request $request) {
+        Log::info("REQUEST TO EDIT::", $request->all());
+
+        $title = $request->get('title');
+        $amount = $request->get('amount');
+        $rate_type = $request->get('rate_type');
+        $is_postpaid = $request->get('is_postpaid');
+        $filename = '';
+        if ($request->hasFile('rate_image')) {
+            $file = $request->file('rate_image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            Storage::disk('local')->put($filename, file_get_contents($file));
+            $rate = Rate::where('id', $id)->update([
+                'title' => $title,
+                'amount' => $amount,
+                'is_postpaid' => $is_postpaid == "false" ? false : true,
+                'rate_type' => $rate_type,
+                'service_type_id' => 1,
+                'icon' => $filename
+            ]);
+
+            return $this->sendResponse($rate, 'Rate updated successfully');
+
+        }
+
+        $rate = Rate::where('id', $id)->update([
+            'title' => $title,
+            'amount' => $amount,
+            'is_postpaid' => $is_postpaid == "false" ? false : true,
+            'rate_type' => $rate_type,
+            'service_type_id' => 1,
+        ]);
+
+        return $this->sendResponse($rate, 'Rate updated successfully');
+    }
+
     public function makePayment(Request $request) {
         $dateRange = $request->get('dateRange');
-        Log::info($dateRange);
+
         $date_range = json_decode($dateRange);
 
         $amount = $request->get('amount');
