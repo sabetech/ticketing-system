@@ -41,13 +41,9 @@ class UserController extends BaseController
 
         $filename = "";
         if ($request->hasFile('user_image')) {
-            $file = $request->file('user_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-
-            Storage::disk('local')->put($filename, file_get_contents($file));
-
+            $filename = $request->rate_image->store('public/img/profiles');
         }else {
-            $filename = "img/unknown.png";
+            $filename = "public/img/unknown.png";
         }
 
         $input['photo'] = $filename;
