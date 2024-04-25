@@ -75,9 +75,7 @@ class RateController extends BaseController
         $is_postpaid = $request->get('is_postpaid');
         $filename = '';
         if ($request->hasFile('rate_image')) {
-            $file = $request->file('rate_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            Storage::disk('local')->put($filename, file_get_contents($file));
+            $filename = $request->rate_image->store('public/img/rates');
             $rate = Rate::where('id', $id)->update([
                 'title' => $title,
                 'amount' => $amount,
