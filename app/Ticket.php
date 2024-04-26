@@ -141,4 +141,11 @@ class Ticket extends Model
 
     }
 
+    public function getTaskforceTicketsByDateRange($form, $to) {
+        $taskForceTickets = self::join('rates_v2', 'rates_v2.id', '=', 'tickets.rate_titile')
+            ->where('rates_v2.id', 4180)->get();
+
+        return $taskForceTickets;
+    }
+
 }

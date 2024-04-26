@@ -231,4 +231,12 @@ class TicketController extends BaseController {
        return $this->sendResponse($ticketTitles, "Tickets were synced successfully");
 
     }
+
+    public function getTaskforceTicketsByDateRange(Request $request) {
+        $dateRange = $request->get('dateRange');
+        $dateRange = json_decode($dateRange);
+        $tickets = Ticket::getTaskforceTicketsByDateRange($dateRange->from, $dateRange->to);
+
+        return $this->sendResponse($tickets, 'Taskforce tickets retrieved successfully');
+    }
 }
