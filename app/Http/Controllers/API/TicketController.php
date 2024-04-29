@@ -271,15 +271,15 @@ class TicketController extends BaseController {
 
         if ($rate = Rate::find($request->get('rate'))) {
             $ticket->rate_title = $request->get('rate');
-            return $this->sendError("Could not find Rate to modify");
         }
 
         $ticket->car_number = $request->get('car_number');
+
         if ($agent = Agent::find($request->get('agent'))) {
             $ticket->agent = $agent;
-        }else {
-            return $this->sendError("Could not find Agent");
         }
+
+        $ticket->save();
 
         return $this->sendResponse($ticket, 'Ticket is Deleted Successfully!');
     }
