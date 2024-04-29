@@ -283,6 +283,4 @@ class TicketController extends BaseController {
 
         return $this->sendResponse($ticket, 'Ticket is Deleted Successfully!');
     }
-
-
 }
