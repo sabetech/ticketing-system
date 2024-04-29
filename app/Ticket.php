@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Log;
 use Carbon\Carbon;
 use App\Rate;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
+    use SoftDeletes;
     //
     protected $table = 'toll_tickets';
 

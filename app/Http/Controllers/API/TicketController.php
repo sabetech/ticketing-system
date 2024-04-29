@@ -248,6 +248,18 @@ class TicketController extends BaseController {
         return $this->sendResponse($tickets, 'Taskforce tickets retrieved successfully');
     }
 
+    public function deleteTicket($id, Request $request) {
+
+        $ticket = Ticket::find($id);
+        if ($ticket) {
+            $ticket->delete();
+            return $this->sendResponse($ticket, 'Ticket is Deleted Successfully!');
+        }
+
+        return $this->sendError("Could not find delete Ticket");
+
+    }
+
 
 
 }
