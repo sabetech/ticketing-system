@@ -252,6 +252,9 @@ class TicketController extends BaseController {
 
         $ticket = Ticket::find($id);
         if ($ticket) {
+
+            Log::info("Deleting: " . $id);
+
             $ticket->delete();
             return $this->sendResponse($ticket, 'Ticket is Deleted Successfully!');
         }
