@@ -232,11 +232,22 @@ class TicketController extends BaseController {
 
     }
 
+    public function getAgentAggregate() {
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        Ticket::getAgentAggregate($from, $to);
+    }
+
     public function getTaskforceTicketsByDateRange(Request $request) {
-        $dateRange = $request->get('dateRange');
-        $dateRange = json_decode($dateRange);
-        $tickets = Ticket::getTaskforceTicketsByDateRange($dateRange->from, $dateRange->to);
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        $tickets = Ticket::getTaskforceTicketsByDateRange($from, $to);
 
         return $this->sendResponse($tickets, 'Taskforce tickets retrieved successfully');
     }
+
+
+
 }

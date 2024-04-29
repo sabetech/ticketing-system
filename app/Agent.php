@@ -78,4 +78,8 @@ class Agent extends Model
     public function getAgentTickets($from, $to) {
         return $this->tickets()->with('rate')->whereBetween('issued_date_time', [$from, $to])->get();
     }
+
+    public function getAgentAggregate($from, $to) {
+        return $this->tickets()->whereBetween('issued_date_time', [$from, $to])->get();
+    }
 }

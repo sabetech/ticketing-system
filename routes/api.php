@@ -67,11 +67,12 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/all', "API\TicketController@getTicketByDate");
             Route::get('/range', "API\TicketController@getTicketByDateRange");
             Route::get('/count', "API\TicketController@getTicketCountByDate");
+            Route::get('/taskforce', 'API\TicketController@getTaskforceTicketsByDateRange');
             Route::get('/revenue', "API\TicketController@calculateTicketRevenueByDate");
             Route::get('/unpaidAmount', "API\TicketController@calculateUnpaidTickets");
             Route::get('/unpaidTickets', "API\TicketController@countUnpaidTickets");
             Route::get('/third-party-tickets', "API\TicketController@getThirdPartyTickets");
-            Route::get('/top5', "API\TicketController@getTop5");
+            Route::get('/agentaggregates', "API\TicketController@getAgentAggregate");
         });
 
         Route::group(['prefix' => 'rates'], function () {
