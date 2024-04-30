@@ -23,7 +23,7 @@ class StationController extends BaseController
         $stations = Station::all();
 
         foreach($stations as $station) {
-            $stationData[$station->name] = $station->tickets()->whereBetween('issued_date_time', [$from, $to])->get();
+            $stationData[$station->name] = $station->tickets()->whereBetween('issued_date_time', [$from, $to])->with('rate')->get();
         }
 
         return $this->sendResponse($stationData, 'Stations retrieved successfully.');
