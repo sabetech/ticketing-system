@@ -14,4 +14,15 @@ class StationController extends BaseController
 
         return $this->sendResponse($stations, 'Stations retrieved successfully.');
     }
+
+    public function getStationsSummary($from, $to) {
+        $stationData = [];
+        $stations = Station::all();
+
+        foreach($stations as $station) {
+            $stationData[] = $station->tickets()->whereBetween('issued_date_time', [$from, $to])->get();
+        }
+
+        return $this->sendResponse($stationData, 'Stations retrieved successfully.');
+    }
 }

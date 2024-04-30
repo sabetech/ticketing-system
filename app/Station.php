@@ -16,4 +16,8 @@ class Station extends Model
     public function rates() {
         return $this->hasMany('\App\Rate', 'station_id', 'id');
     }
+
+    public function tickets() {
+        return $this->hasMany('\App\Ticket', 'station_name', 'id');
+    }
 }
