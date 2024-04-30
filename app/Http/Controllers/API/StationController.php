@@ -15,7 +15,10 @@ class StationController extends BaseController
         return $this->sendResponse($stations, 'Stations retrieved successfully.');
     }
 
-    public function getStationsSummary($from, $to) {
+    public function getStationsSummary(Request $request) {
+        $from = $request->get('from');
+        $to = $request->get('to');
+
         $stationData = [];
         $stations = Station::all();
 
