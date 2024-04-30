@@ -90,6 +90,7 @@ Route::group(['prefix' => 'v2'], function() {
 
     Route::group(['prefix' => 'station'], function () {
         Route::get('/all', "API\StationController@getAllStations");
+        Route::get('/summary', "API\StationController@getStationsSummary");
     });
 });
 
