@@ -61,7 +61,7 @@ class AgentController extends BaseController {
 
         $agentTicketInfo = new stdClass;
         $agentTicketInfo->agent = $agent;
-        $agentTicketInfo->station = $agent->stationUser->station;
+        $agent->stationUser->station;
 
         $from = $request->get('from', null);
         $to   = $request->get('to', null);
