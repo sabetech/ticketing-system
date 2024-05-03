@@ -144,8 +144,40 @@ class Ticket extends Model
     }
 
     public static function getTaskforceTicketsByDateRange($form, $to) {
-        $taskForceTickets = self::join('rates_v2', 'rates_v2.id', '=', 'toll_tickets.rate_title')
-            ->where('rates_v2.title', 'LIKE', 'Taskforce%')->get();
+        $taskForceTickets = self::with(['rate', 'agent'])
+                                ->where('rates_v2.title', 'LIKE', 'Taskforce%')
+                                ->whereBetween('issued_date_time', [$form, $to])
+                                ->select([
+                                            'toll_tickets.id',
+                                            'toll_tickets.title',
+                                            'toll_tickets.rate_title',
+                                            'toll_tickets.car_number',
+                                            'toll_tickets.issued_date_time',
+                                            'toll_tickets.agent_name',
+                                            'toll_tickets.amount',
+                                            'rates_v2.title',
+                                            'users.username',
+                                            'users.fname',
+                                            'users.lname',
+                                            'users.phone',
+                                ])->get();
+
+        // $taskForceTickets = self::join('rates_v2', 'rates_v2.id', '=', 'toll_tickets.rate_title')
+        //     ->where('rates_v2.title', 'LIKE', 'Taskforce%')
+        //     ->whereBetween('issued_date_time', [$form, $to])
+        //     ->select([
+        //         'toll_tickets.id',
+        //         'toll_tickets.title',
+        //         'toll_tickets.rate_title',
+        //         'toll_tickets.car_number',
+        //         'toll_tickets.issued_date_time',
+        //         'toll_tickets.agent_name',
+        //         'toll_tickets.amount',
+        //         ''
+
+        //         ])
+
+        //     ->get();
 
         return $taskForceTickets;
     }
