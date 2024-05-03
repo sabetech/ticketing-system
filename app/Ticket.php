@@ -163,6 +163,7 @@ class Ticket extends Model
         //                         ])->get();
 
         $taskForceTickets = self::join('rates_v2', 'rates_v2.id', '=', 'toll_tickets.rate_title')
+                                ->join('users', 'users.id', '=', 'toll_tickets.agent_name')
             ->where('rates_v2.title', 'LIKE', 'Taskforce%')
             ->whereBetween('issued_date_time', [$form, $to])
             ->select([
