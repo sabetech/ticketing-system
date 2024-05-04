@@ -53,6 +53,11 @@ class Agent extends Model
             $onlineStatus->loggedin_at = date("Y-m-d H:i:s");
             $onlineStatus->latest_online_at = date("Y-m-d H:i:s");
             $onlineStatus->save();
+        }else {
+            $onlineStatus->latest_online_at = date("Y-m-d H:i:s");
+            $onlineStatus->loggedin_at = date("Y-m-d H:i:s");
+            $onlineStatus->loggedout_at = null;
+            $onlineStatus->save();
         }
     }
 

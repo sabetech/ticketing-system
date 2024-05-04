@@ -78,7 +78,12 @@ class LoginController extends BaseController
                     return response($response, 401);
                 }
 
-                $agent->setLoginTimeStamp();
+                //if user is agent, set login timestamp
+                $roles = $user->roles;
+
+                if ($roles && $roles[0].name === "agent") {
+                    $agent->setLoginTimeStamp();
+                }
 
                 return response($response, 200);
             } else {
