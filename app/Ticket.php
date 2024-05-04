@@ -168,13 +168,13 @@ class Ticket extends Model
         return $taskForceTickets;
     }
 
-    public static function getTicketsGroupByAgents($from = null, $to = null) {
+    public static function getTicketsGroupByAgents($date) {
 
-        if (!$from) {
+        if (!$date) {
             $date = date('Y-m-d');
-            $from = Carbon::parse($date)->startOfDay();
-            $to = Carbon::parse($date)->endOfDay();
         }
+        $from = Carbon::parse($date)->startOfDay();
+        $to = Carbon::parse($date)->endOfDay();
 
         $ticketsByAgent = self::join('users', 'users.id', '=', 'toll_tickets.agent_name')
                             ->whereBetween('issued_date_time', [$from, $to])

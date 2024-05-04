@@ -285,8 +285,9 @@ class TicketController extends BaseController {
     }
 
     public function getTicketsByAgents(Request $request) {
+        $date = $request->get('date');
 
-        $ticketsByAgent = Ticket::getTicketsGroupByAgents();
+        $ticketsByAgent = Ticket::getTicketsGroupByAgents($date);
 
         return $this->sendResponse($ticketsByAgent, 'Tickets By Agent Totals');
 
