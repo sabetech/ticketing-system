@@ -271,6 +271,7 @@ class TicketController extends BaseController {
 
         if ($rate = Rate::find($request->get('rate'))) {
             $ticket->rate_title = $request->get('rate');
+            $ticket->amount = $rate->amount;
         }
 
         $ticket->car_number = $request->get('car_number');
