@@ -182,7 +182,6 @@ class Ticket extends Model
                             ->groupBy('toll_tickets.agent_name', 'users.fname')->get();
 
 
-
         return $ticketsByAgent;
     }
 
