@@ -75,6 +75,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/agentaggregates', "API\TicketController@getAgentAggregate");
             Route::delete('/{id}/delete', "API\TicketController@deleteTicket");
             Route::post('/{id}/edit', 'API\TicketController@editTicket');
+            Route::get('/by-agents', 'API\TicketController@getTicketsByAgents');
         });
 
         Route::group(['prefix' => 'rates'], function () {

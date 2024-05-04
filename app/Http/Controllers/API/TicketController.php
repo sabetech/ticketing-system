@@ -283,4 +283,13 @@ class TicketController extends BaseController {
 
         return $this->sendResponse($ticket, 'Ticket is Deleted Successfully!');
     }
+
+    public function getTicketsByAgents(Request $request) {
+
+        $ticketsByAgent = Ticket::getTicketsGroupByAgents();
+
+        return $this->sendResponse($ticketsByAgent, 'Tickets By Agent Totals');
+
+    }
+
 }

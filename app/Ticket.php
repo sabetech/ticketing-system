@@ -167,4 +167,20 @@ class Ticket extends Model
         return $taskForceTickets;
     }
 
+    public static function getTicketsGroupByAgents($from = null, $to = null) {
+
+        if (!$from) {
+            $date = date('Y-m-d');
+            $from = Carbon::parse($date)->startOfDay();
+            $to = Carbon::parse($date)->endOfDay();
+        }
+
+        $ticketsByAgent = self::join('users', 'users.id', '=', 'toll_tickets.agent_name')
+                            ->whereBetween('issued_date_time', [$from, $to])
+                            ->select(DB::raw('sum(toll_tickets.amount) as total, count(toll_tickets.id) as tickets_issued'))
+                            ->groupBy('toll_tickets.agent_name');
+
+        return $ticketsByAgent;
+    }
+
 }
