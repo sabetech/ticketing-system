@@ -178,8 +178,10 @@ class Ticket extends Model
 
         $ticketsByAgent = self::join('users', 'users.id', '=', 'toll_tickets.agent_name')
                             ->whereBetween('issued_date_time', [$from, $to])
-                            ->select(DB::raw('sum(toll_tickets.amount) as total, count(toll_tickets.id) as tickets_issued'))
-                            ->groupBy('toll_tickets.agent_name');
+                            ->select('toll_tickets.agent_name', 'users.fname', DB::raw('sum(toll_tickets.amount) as total, count(toll_tickets.id) as tickets_issued'))
+                            ->groupBy('toll_tickets.agent_name', 'users.fname')->get();
+
+
 
         return $ticketsByAgent;
     }
