@@ -7,6 +7,7 @@ use Log;
 use Carbon\Carbon;
 use App\Rate;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 class Ticket extends Model
 {
