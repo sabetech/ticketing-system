@@ -282,7 +282,7 @@ class TicketController extends BaseController {
 
         $ticket->save();
 
-        return $this->sendResponse($ticket, 'Ticket is Deleted Successfully!');
+        return $this->sendResponse($ticket, 'Ticket is Edited Successfully!');
     }
 
     public function getTicketsByAgents(Request $request) {
