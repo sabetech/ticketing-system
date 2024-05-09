@@ -98,6 +98,9 @@ class TicketController extends BaseController {
             return $this->sendError("Could Not save Ticket Or Ticket already saved");
         }
 
+        //can use an event for this .. but for now ...
+        $agent->updateOnlineStatus();
+
         return $this->sendResponse([
             'ticket_uuid' => $savedTicket->title,
         ] , "Ticket Saved Successfully");
