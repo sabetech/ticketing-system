@@ -55,8 +55,12 @@ class Ticket extends Model
         $chunkedTickets = array_chunk($tickets, 500, true);
 
         foreach($chunkedTickets as $chunkedTicket) {
+            try {
+                Ticket::insertOrIgnore($chunkedTicket);
+            }catch(\Illuminate\Database\QueryException $e) {
+                Log::info("COULD NOT INSERT BECAUSE OF ::", $e->getMessage());
+            }
 
-            DB::table('toll_tickets')->insertOrIgnore($chunkedTicket);
 
         }
         return true;
