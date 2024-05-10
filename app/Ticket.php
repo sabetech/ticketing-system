@@ -56,7 +56,7 @@ class Ticket extends Model
 
         foreach($chunkedTickets as $chunkedTicket) {
 
-            Ticket::insert($chunkedTicket);
+            Ticket::insertOrIgnore($chunkedTicket);
 
         }
         return true;
