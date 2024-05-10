@@ -56,7 +56,7 @@ class Ticket extends Model
 
         foreach($chunkedTickets as $chunkedTicket) {
 
-            Ticket::insertOrIgnore($chunkedTicket);
+            DB::table('toll_tickets')->insertOrIgnore($chunkedTicket);
 
         }
         return true;
