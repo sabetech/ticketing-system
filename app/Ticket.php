@@ -56,7 +56,7 @@ class Ticket extends Model
 
         foreach($chunkedTickets as $chunkedTicket) {
             try {
-                Ticket::insertOrIgnore($chunkedTicket);
+                Ticket::insert($chunkedTicket);
             }catch(\Illuminate\Database\QueryException $e) {
                 Log::info("COULD NOT INSERT BECAUSE OF ::", $e->getMessage());
             }
