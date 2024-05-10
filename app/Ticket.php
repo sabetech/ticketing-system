@@ -58,7 +58,7 @@ class Ticket extends Model
             try {
                 Ticket::insert($chunkedTicket);
             }catch(\Illuminate\Database\QueryException $e) {
-                Log::info("COULD NOT INSERT BECAUSE OF ::", $e->getMessage());
+                Log::info($e->getMessage());
             }
 
 
