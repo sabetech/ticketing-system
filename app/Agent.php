@@ -87,9 +87,7 @@ class Agent extends Model
     }
 
     public function getAgentTickets($from, $to) {
-        return $this->tickets()->with(['rate' => function ($query) {
-            $query->select('title', 'icon', 'station_id', 'rate_type', 'is_postpaid');
-        }])->whereBetween('issued_date_time', [$from, $to])->orderBy('issued_date_time', 'desc')
+        return $this->tickets()->with(['rate'])->whereBetween('issued_date_time', [$from, $to])->orderBy('issued_date_time', 'desc')
         ->get();
     }
 
