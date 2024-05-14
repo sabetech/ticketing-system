@@ -43,7 +43,7 @@ class AgentController extends BaseController {
     }
 
     public function getAllAgents() {
-        $agents = Agent::all();
+        $agents = Agent::filterByRole('agent');
 
         foreach ($agents as &$agent) {
             $agent->stationInfo = $agent->station();

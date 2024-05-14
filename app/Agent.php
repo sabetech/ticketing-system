@@ -14,6 +14,17 @@ class Agent extends Model
     //
     protected $table = 'users';
 
+    public static function filterByRole($role) {
+        return self::join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+                ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->where('roles.name', $role)
+                ->select('users.*', 'roles.name')
+                ->get();
+    }
+
+    public function roles() {
+        return $this->belongsToMany('App\Role', 'model_has_roles', 'model_id', 'role_id');
+    }
 
     public function station(){
         if (isset($this->stationUser))
