@@ -88,7 +88,7 @@ class Agent extends Model
 
     public function getAgentTickets($from, $to) {
         return $this->tickets()->with('rate')->whereBetween('issued_date_time', [$from, $to])->orderBy('issued_date_time', 'desc')
-        ->select('agent_name', 'toll_tickets.amount', 'car_number', 'toll_tickets.id as id', 'issued_date_time', 'device_id', 'paid', 'rates_v2.title', 'rates_v2.icon', 'rates_v2.is_postpaid')
+        ->select('agent_name', 'toll_tickets.amount', 'car_number', 'toll_tickets.id as id', 'issued_date_time', 'device_id', 'paid')
         ->get();
     }
 
