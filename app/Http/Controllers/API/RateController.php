@@ -30,6 +30,16 @@ class RateController extends BaseController
         return $this->sendResponse($rates, "Rates fetched successfully");
     }
 
+    public function updateRatesForAgent($id, Request $request) {
+        $agent = Agent::find($id);
+
+        if (!$agent) return $this->sendError("Agent not found");
+
+
+
+
+    }
+
     public function listRates(Request $request){
         $input = $request->get('station', null);
         $isPostpaid = $request->get('postpaid', false);

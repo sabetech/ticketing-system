@@ -26,6 +26,10 @@ class Agent extends Model
         return $this->belongsToMany('App\Role', 'model_has_roles', 'model_id', 'role_id');
     }
 
+    public function agentRates() {
+        return $this->belongsToMany('App\Rate', 'rate_agent_jxn', 'agent_id', 'rate_id');
+    }
+
     public function station(){
         if (isset($this->stationUser))
             return $this->stationUser->station;

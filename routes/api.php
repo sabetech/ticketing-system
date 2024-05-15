@@ -51,6 +51,7 @@ Route::group(['prefix' => 'v2'], function() {
 
         Route::group(['prefix' => 'agent'], function () {
             Route::get('/{id}/rates', 'API\RateController@getRatesForAgent');
+            Route::post('/{id}/rates', 'API\RateController@updateRatesForAgent');
             Route::get('/{id}/tickets', "API\TicketController@getAgentTickets");
             Route::get('/{id}/tickets/count', "API\TicketController@getAgentTicketsCount");
             Route::post('/{id}/ticket-submit', "API\TicketController@postTicketSubmit");
