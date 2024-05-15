@@ -32,11 +32,13 @@ class RateController extends BaseController
 
     public function updateRatesForAgent($id, Request $request) {
         $agent = Agent::find($id);
-
+        $rateIds =  $request->get('rateIds');
         if (!$agent) return $this->sendError("Agent not found");
 
-
-
+        Log::info($rateIds);
+        //remove every instance of the agent id
+        //
+        return;
 
     }
 
