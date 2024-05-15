@@ -47,7 +47,13 @@ class Agent extends Model
     public function getRates() {
         $rates = $this->station()->rates;
 
-
+        if ($this->agentRates->count() > 0) {
+            $rates = $rates->filter(function($rate) {
+                return $this->agentRates->contains(function($val) {
+                    return $val->id === $rate->id;
+                });
+            });
+        }
 
         //check junction table and filter ...
         return $rates;
