@@ -48,9 +48,9 @@ class Agent extends Model
         $rates = $this->station()->rates;
 
         if ($this->agentRates->count() > 0) {
-            $rates = $rates->filter(function($rate) {
-                return $this->agentRates->contains($rate);
-            });
+
+            return $this->agentRates;
+
         }
 
         //check junction table and filter ...
