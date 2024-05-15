@@ -49,7 +49,7 @@ class Agent extends Model
 
         if ($this->agentRates->count() > 0) {
             $rates = $rates->filter(function($rate) {
-                return $this->agentRates->contains(function($val) {
+                return $this->agentRates->contains(function($val) use ($rate) {
                     return $val->id === $rate->id;
                 });
             });
