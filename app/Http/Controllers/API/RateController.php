@@ -37,8 +37,17 @@ class RateController extends BaseController
 
         Log::info($rateIds);
         //remove every instance of the agent id
+        AgentRate::where('agent_id', $agent->id)->delete();
+
         //
-        return;
+        foreach($rateIds as $rateId) {
+            AgentRate::create([
+                'agent_id' => $agent->id,
+                'rate_id' => $rateId
+            ]);
+        }
+
+        return $this->sendResponse($rates, "Agent Rates Configured Successfully");
 
     }
 
