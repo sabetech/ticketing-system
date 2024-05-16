@@ -33,25 +33,21 @@ class RateController extends BaseController
 
     public function updateRatesForAgent($id, Request $request) {
         $agent = Agent::find($id);
-        $rateIds =  $request->get('rateIds');
+        $rateId =  $request->get('rateId');
         if (!$agent) return $this->sendError("Agent not found");
 
-        Log::info($rateIds);
-        $rateIds = explode(",", $rateIds);
+        Log::info($rateId);
 
-        //remove every instance of the agent id
-        AgentRate::where('agent_id', $agent->id)->delete();
-        //
-        foreach($rateIds as $rateId) {
-            if ($rateId === "") continue;
-
-            AgentRate::create([
-                'agent_id' => $agent->id,
-                'rate_id' => $rateId
-            ]);
+        if (AgentRate::where('agent_id', $agent->id)->where('rate_id', $rateId)->delete()) {
+            return $this->sendResponse($rateId, "Agent Rate removed Successfully");
         }
 
-        return $this->sendResponse([], "Agent Rates Configured Successfully");
+        AgentRate::create([
+            'agent_id' => $agent->id,
+            'rate_id' => $rateId
+        ]);
+
+        return $this->sendResponse($rateId, "Agent Rates Added Successfully");
 
     }
 

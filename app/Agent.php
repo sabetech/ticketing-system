@@ -53,7 +53,6 @@ class Agent extends Model
 
         }
 
-        //check junction table and filter ...
         return $rates;
 
     }
