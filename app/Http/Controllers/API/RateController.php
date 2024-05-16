@@ -49,7 +49,7 @@ class RateController extends BaseController
             ]);
         }
 
-        return $this->sendResponse($rates, "Agent Rates Configured Successfully");
+        return $this->sendResponse([], "Agent Rates Configured Successfully");
 
     }
 
