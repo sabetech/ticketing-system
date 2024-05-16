@@ -43,6 +43,8 @@ class RateController extends BaseController
         $rateIds = explode(",", $rateIds);
         //
         foreach($rateIds as $rateId) {
+            if ($rateId === "") continue;
+
             AgentRate::create([
                 'agent_id' => $agent->id,
                 'rate_id' => $rateId
