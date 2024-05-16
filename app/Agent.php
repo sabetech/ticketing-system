@@ -49,7 +49,7 @@ class Agent extends Model
 
         if ($this->agentRates->count() > 0) {
 
-            return $this->agentRates;
+            return $rates->merge($this->agentRates);
 
         }
 

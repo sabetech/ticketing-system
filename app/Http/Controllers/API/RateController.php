@@ -37,10 +37,10 @@ class RateController extends BaseController
         if (!$agent) return $this->sendError("Agent not found");
 
         Log::info($rateIds);
+        $rateIds = explode(",", $rateIds);
+
         //remove every instance of the agent id
         AgentRate::where('agent_id', $agent->id)->delete();
-
-        $rateIds = explode(",", $rateIds);
         //
         foreach($rateIds as $rateId) {
             if ($rateId === "") continue;
