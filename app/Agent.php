@@ -7,6 +7,7 @@ use App\AgentOnlineStatus;
 use App\Ticket;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Agent extends Model
 {
@@ -47,11 +48,21 @@ class Agent extends Model
     public function getRates() {
         $rates = $this->station()->rates;
 
-        if ($this->agentRates->count() > 0) {
+        //get who is logged in ...
+        $user = Auth::user();
+        $roles = $user->roles;
+        //if admin .. return all
+        //if agent .. return $this->agentRates
+        if ($roles[0] !== 'agent') {
+            if ($this->agentRates->count() > 0) {
 
-            return $rates->merge($this->agentRates);
+                return $rates->merge($this->agentRates);
 
+            }
+        }else {
+            return $this->agentRates;
         }
+
 
         return $rates;
 

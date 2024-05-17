@@ -41,7 +41,7 @@ class UserController extends BaseController
 
         $filename = "";
         if ($request->hasFile('user_image')) {
-            $filename = $request->rate_image->store('public/img/profiles');
+            $filename = $request->user_image->store('public/img/profiles');
         }else {
             $filename = "public/img/profiles/unknown.png";
         }
