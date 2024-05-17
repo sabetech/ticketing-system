@@ -57,8 +57,9 @@ class Agent extends Model
         if (!$user) {
             return [];
         }
+
         $roles = $user->roles;
-        if ($roles[0] !== 'agent') {
+        if ($roles[0]->name !== 'agent') {
             if ($this->agentRates->count() > 0) {
 
                 return $rates->merge($this->agentRates);
