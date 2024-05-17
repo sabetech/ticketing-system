@@ -8,6 +8,7 @@ use App\Ticket;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class Agent extends Model
 {
