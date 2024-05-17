@@ -66,11 +66,10 @@ class Agent extends Model
 
             }
         }else {
-            return $this->agentRates;
+            if ($this->agentRates->count() > 0)
+                return $this->agentRates;
+
         }
-
-
-
 
         return $rates;
 
