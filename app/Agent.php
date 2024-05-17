@@ -54,19 +54,19 @@ class Agent extends Model
 
         Log::info($user);
 
-        if ($user)
-            $roles = $user->roles;
-        //if admin .. return all
-        //if agent .. return $this->agentRates
-        if ($roles[0] !== 'agent') {
+        // if ($user)
+        //     $roles = $user->roles;
+        // //if admin .. return all
+        // //if agent .. return $this->agentRates
+        // if ($roles[0] !== 'agent') {
             if ($this->agentRates->count() > 0) {
 
                 return $rates->merge($this->agentRates);
 
             }
-        }else {
-            return $this->agentRates;
-        }
+        // }else {
+        //     return $this->agentRates;
+        // }
 
 
         return $rates;
