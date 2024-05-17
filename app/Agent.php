@@ -50,20 +50,20 @@ class Agent extends Model
         $rates = $this->station()->rates;
 
         //get who is logged in ...
-        $user = Auth::user();
-
+        $user = Auth::guard('api')->user();
         Log::info($user);
+        Log::info($user->roles);
 
         // if ($user)
         //     $roles = $user->roles;
         // //if admin .. return all
         // //if agent .. return $this->agentRates
         // if ($roles[0] !== 'agent') {
-            if ($this->agentRates->count() > 0) {
+        if ($this->agentRates->count() > 0) {
 
-                return $rates->merge($this->agentRates);
+            return $rates->merge($this->agentRates);
 
-            }
+        }
         // }else {
         //     return $this->agentRates;
         // }
