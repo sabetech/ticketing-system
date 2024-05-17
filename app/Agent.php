@@ -50,7 +50,11 @@ class Agent extends Model
 
         //get who is logged in ...
         $user = Auth::user();
-        $roles = $user->roles;
+
+        Log::info($user);
+
+        if ($user)
+            $roles = $user->roles;
         //if admin .. return all
         //if agent .. return $this->agentRates
         if ($roles[0] !== 'agent') {
