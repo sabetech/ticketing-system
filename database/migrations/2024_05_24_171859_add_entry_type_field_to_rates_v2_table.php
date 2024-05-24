@@ -15,6 +15,7 @@ class AddEntryTypeFieldToRatesV2Table extends Migration
     {
         Schema::table('rates_v2', function (Blueprint $table) {
             //
+            $table->enum('entry_identifier', ['car_number', 'phone_number'])->default('car_number')->after('is_postpaid');
         });
     }
 
@@ -27,6 +28,7 @@ class AddEntryTypeFieldToRatesV2Table extends Migration
     {
         Schema::table('rates_v2', function (Blueprint $table) {
             //
+            $table->dropColumn('entry_identifier');
         });
     }
 }
