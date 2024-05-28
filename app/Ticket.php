@@ -212,13 +212,13 @@ class Ticket extends Model
 
         switch($field) {
             case 'car_number':
-                $results = self::where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                $results = self::with('rates_v2')->where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'agent':
-                $results = self::where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                $results = self::with('rates_v2')->where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'ticket_id':
-                $results = self::where('title', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                $results = self::with('rates_v2')->where('title', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
         }
 
