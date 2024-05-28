@@ -210,6 +210,9 @@ class Ticket extends Model
     public static function search($searchTerm, $field){
         $results = null;
 
+        Log::info("SEARCH TERM:: ".$searchTerm);
+        Log::info("Field:: ".$field);
+
         switch($field) {
             case 'car_number':
                 $results = self::where('car_number', 'LIKE', "$searchTerm")->orderBy('issued_date_time', 'desc')->get();
@@ -221,8 +224,6 @@ class Ticket extends Model
                 $results = self::where('title', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
         }
-
-        Log::info("REsults::", $results);
 
         return $results;
     }
