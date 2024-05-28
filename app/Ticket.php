@@ -189,10 +189,7 @@ class Ticket extends Model
         return $ticketsByAgent;
     }
 
-    public static function search($searchTerm, $field) {
-
-        Log::info("searching::". $searchTerm);
-        Log::info("Field::". $field);
+    public static function searchAutoCompleteTickets($searchTerm, $field) {
 
         $results = [];
         switch($field) {
@@ -210,4 +207,20 @@ class Ticket extends Model
         return $results;
     }
 
+    public static function search($searchTerm, $field){
+        $results = null;
+        switch($field) {
+            case 'car_number':
+                $results = self::where('car_number', 'LIKE', "$searchTerm")->orderBy('issued_date_time', 'desc')->get();
+                break;
+            case 'agent':
+                $results = self::where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                break;
+            case 'ticket_id':
+                $results = self::where('title', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                break;
+        }
+
+        return $results;
+    }
 }

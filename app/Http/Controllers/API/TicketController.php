@@ -121,7 +121,6 @@ class TicketController extends BaseController {
             return $this->sendError("Date Range Error!", ["Set Correct Date Range."]);
         }
 
-
         list($startDate, $endDate) = explode(',',$dateRange);
 
         $tickets = Ticket::getTicketsFromRange($startDate, $endDate);
@@ -297,14 +296,23 @@ class TicketController extends BaseController {
 
     }
 
+    public function searchAutoCompleteTickets(Request $request) {
+        $searchTerm = $request->get('searchTerm');
+        $field = $request->get('field');
+
+        $tickets = Ticket::searchAutoCompleteTickets($searchTerm, $field);
+
+        return $this->sendResponse($tickets, 'Search Results');
+
+    }
+
     public function searchTickets(Request $request) {
         $searchTerm = $request->get('searchTerm');
         $field = $request->get('field');
 
-        $tickets = Ticket::search($searchTerm, $field);
+        $tickets = Ticket::search($field, $searchTerm);
 
         return $this->sendResponse($tickets, 'Search Results');
-
     }
 
 }
