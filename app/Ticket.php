@@ -197,7 +197,7 @@ class Ticket extends Model
         $results = [];
         switch($field) {
             case 'car_number':
-                $results = self::where('car_number', 'LIKE', "$searchTerm%")->orderBy('issued_date_time', 'desc')->take(10)->pluck('car_number')->unique()->toArray();
+                $results = self::where('car_number', 'LIKE', "$searchTerm%")->orderBy('issued_date_time', 'desc')->take(10)->pluck('car_number')->toArray();
                 break;
             case 'agent':
                 $results = Agent::where('fname', 'LIKE', "$searchTerm%")->orWhere('lname', 'LIKE', "$searchTerm%")->take(10)->pluck('fname')->toArray();
@@ -207,7 +207,7 @@ class Ticket extends Model
                 break;
         }
 
-        return $results;
+        return array_unique($results);
     }
 
 }
