@@ -216,6 +216,7 @@ class Ticket extends Model
         switch($field) {
             case 'car_number':
                 $results = self::where('car_number', 'LIKE', "$searchTerm")->orderBy('issued_date_time', 'desc')->get();
+                Log::info("DO UG ETH::", $results);
                 break;
             case 'agent':
                 $results = self::where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
