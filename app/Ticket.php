@@ -68,7 +68,7 @@ class Ticket extends Model
 
     public static function getTickets($date) {
 
-        return self::with('rates_v2')->where('issued_date_time', '>=', $date)->orderBy('issued_date_time', 'desc')->get();
+        return self::with('rate')->where('issued_date_time', '>=', $date)->orderBy('issued_date_time', 'desc')->get();
 
     }
 
@@ -212,13 +212,13 @@ class Ticket extends Model
 
         switch($field) {
             case 'car_number':
-                $results = self::with('rates_v2')->where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'agent':
-                $results = self::with('rates_v2')->where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'ticket_id':
-                $results = self::with('rates_v2')->where('title', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('title', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
         }
 
