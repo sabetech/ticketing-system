@@ -197,7 +197,7 @@ class Ticket extends Model
                 $results = self::where('car_number', 'LIKE', "$searchTerm%")->distinct('car_number')->orderBy('issued_date_time', 'desc')->take(10)->pluck('car_number')->toArray();
                 break;
             case 'agent':
-                $results = Agent::where('fname', 'LIKE', "$searchTerm%")->orWhere('lname', 'LIKE', "$searchTerm%")->take(10)->pluck('fname')->toArray();
+                $results = Agent::where('fname', 'LIKE', "$searchTerm%")->orWhere('lname', 'LIKE', "$searchTerm%")->select(DB::raw('CONCAT(last_name, first_name) AS full_name'))->take(10)->pluck('full_name')->toArray();
                 break;
             case 'ticket_id':
                 $results = self::where('title', 'LIKE', "$searchTerm%")->orderBy('issued_date_time', 'desc')->take(10)->pluck('title')->toArray();
@@ -215,6 +215,7 @@ class Ticket extends Model
                 $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'agent':
+                // $agentId = Agent::where('fname', 'LIKE', '')
                 $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'ticket_id':
