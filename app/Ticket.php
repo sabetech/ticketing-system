@@ -212,7 +212,8 @@ class Ticket extends Model
 
         Log::info("SEARCH TERM:: ".$searchTerm);
         Log::info("Field:: ".$field);
-        Log::info("Compare:: ".$field == 'car_number');
+        Log::info("TRUE OR FALSE");
+        Log::info($field == 'car_number');
 
         switch($field) {
             case 'car_number':
