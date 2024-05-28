@@ -210,15 +210,9 @@ class Ticket extends Model
     public static function search($searchTerm, $field){
         $results = null;
 
-        Log::info("SEARCH TERM:: ".$searchTerm);
-        Log::info("Field:: ".$field);
-        Log::info("TRUE OR FALSE");
-        Log::info($field == 'car_number');
-
         switch($field) {
             case 'car_number':
                 $results = self::where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
-                Log::info("DO UG ETH::", $results);
                 break;
             case 'agent':
                 $results = self::where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
