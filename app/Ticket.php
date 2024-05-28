@@ -20,7 +20,7 @@ class Ticket extends Model
     }
 
     public function agent(){
-        return $this->belongsTo('\App\Agent', 'agent_name', 'id');
+        return $this->belongsTo('\App\Agent', 'agent_name', 'id')->withTrashed();
     }
 
     public static function saveTicket($ticket, $rate) {
