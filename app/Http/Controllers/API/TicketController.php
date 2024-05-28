@@ -297,4 +297,14 @@ class TicketController extends BaseController {
 
     }
 
+    public function searchTickets(Request $request) {
+        $searchTerm = $request->get('searchTerm');
+        $field = $request->get('field');
+
+        $tickets = Ticket::search($searchTerm, $field);
+
+        return $this->sendResponse($tickets, 'Search Results');
+
+    }
+
 }

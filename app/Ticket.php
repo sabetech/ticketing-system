@@ -189,4 +189,25 @@ class Ticket extends Model
         return $ticketsByAgent;
     }
 
+    public static function search($searchTerm, $field) {
+
+        Log::info("searching::", $searchTerm);
+        Log::info("Field::", $field);
+
+        $results = [];
+        switch($field) {
+            case 'car_number':
+                $results = self::where('car_number', 'LIKE', "$searchTerm%")->take(10)->pluck('car_number')->toArray();
+                break;
+            case 'agent':
+                $results = Agent::where('fname', 'LIKE', "$searchTerm%")->orWhere('lname', 'LIKE', "$searchTerm%")->take(10)->pluck('fname')->toArray();
+                break;
+            case 'ticket_id':
+                $results = self::where('title', 'LIKE', "$searchTerm%")->take(10)->pluck('title')->toArray();
+                break;
+        }
+
+        return $results;
+    }
+
 }
