@@ -191,8 +191,8 @@ class Ticket extends Model
 
     public static function search($searchTerm, $field) {
 
-        Log::info("searching::", $searchTerm);
-        Log::info("Field::", $field);
+        Log::info("searching::". $searchTerm);
+        Log::info("Field::". $field);
 
         $results = [];
         switch($field) {
