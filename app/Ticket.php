@@ -212,10 +212,11 @@ class Ticket extends Model
 
         Log::info("SEARCH TERM:: ".$searchTerm);
         Log::info("Field:: ".$field);
+        Log::info("Compare:: ".$field == 'car_number');
 
         switch($field) {
             case 'car_number':
-                $results = self::where('car_number', 'LIKE', "$searchTerm")->orderBy('issued_date_time', 'desc')->get();
+                $results = self::where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 Log::info("DO UG ETH::", $results);
                 break;
             case 'agent':
