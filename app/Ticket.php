@@ -197,7 +197,7 @@ class Ticket extends Model
                 $results = self::where('car_number', 'LIKE', "$searchTerm%")->distinct('car_number')->orderBy('issued_date_time', 'desc')->take(10)->pluck('car_number')->toArray();
                 break;
             case 'agent':
-                $results = Agent::where('fname', 'LIKE', "$searchTerm%")->orWhere('lname', 'LIKE', "$searchTerm%")->select(DB::raw('CONCAT(lname, fname) AS full_name'))->take(10)->pluck('full_name')->toArray();
+                $results = Agent::where('fname', 'LIKE', "$searchTerm%")->orWhere('lname', 'LIKE', "$searchTerm%")->select(DB::raw('CONCAT(fname," ",lname) AS full_name'))->take(10)->pluck('full_name')->toArray();
                 break;
             case 'ticket_id':
                 $results = self::where('title', 'LIKE', "$searchTerm%")->orderBy('issued_date_time', 'desc')->take(10)->pluck('title')->toArray();
