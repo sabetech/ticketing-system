@@ -310,7 +310,7 @@ class TicketController extends BaseController {
         $searchTerm = $request->get('searchTerm');
         $field = $request->get('field');
 
-        $tickets = Ticket::search($field, $searchTerm);
+        $tickets = Ticket::search($searchTerm, $field);
 
         return $this->sendResponse($tickets, 'Search Results');
     }
