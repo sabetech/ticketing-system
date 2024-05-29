@@ -215,8 +215,9 @@ class Ticket extends Model
                 $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('car_number', 'LIKE', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'agent':
-                // $agentId = Agent::where('fname', 'LIKE', '')
-                $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('agent_name', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
+                $id = explode(" ", $searchTerm)[0];
+                $agentId = Agent::whereId($id)->withTrashed()->first()->id;
+                $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('agent_name', $agentId)->orderBy('issued_date_time', 'desc')->get();
                 break;
             case 'ticket_id':
                 $results = self::select('toll_tickets.id as id', 'toll_tickets.*', 'stations.id as station_id', 'stations.name')->join('stations', 'stations.id', '=', 'toll_tickets.station_name')->with(['rate', 'agent'])->where('title', $searchTerm)->orderBy('issued_date_time', 'desc')->get();
