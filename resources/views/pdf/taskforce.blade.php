@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($sales as $taskforceInfo)
+          @foreach($data as $taskforceInfo)
             <?php
                 $totalAmount += floatval($taskforceInfo->amount);
                 $totalNumberOfTaskforceTickets++;
