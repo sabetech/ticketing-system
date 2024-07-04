@@ -4,7 +4,7 @@
 	<title>Taskforce Report</title>
 </head>
 <body>
-	<h1>Report for Taskforce - {{ $pdfInfo->from }} - {{ $pdfInfo->to }}</h1>
+	<h1>{{ $title }}</h1>
     <?php
         $totalAmount = 0;
         $totalNumberOfTaskforceTickets = 0;
@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($pdfInfo->data as $taskforceInfo)
+          @foreach($sales as $taskforceInfo)
             <?php
                 $totalAmount += floatval($taskforceInfo->amount);
                 $totalNumberOfTaskforceTickets++;
