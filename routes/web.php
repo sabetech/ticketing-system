@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/download-taskforce-report', 'API\TicketController@exportTaskforce');

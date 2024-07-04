@@ -9,7 +9,8 @@ use App\Ticket;
 use App\Rate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
+use PDF;
+use stdClass;
 
 class TicketController extends BaseController {
 
@@ -315,4 +316,24 @@ class TicketController extends BaseController {
         return $this->sendResponse($tickets, 'Search Results');
     }
 
+    public function exportTaskforce(Request $request) {
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        $result = Ticket::getTaskforceTicketsByDateRange($from, $to);
+
+        $pdfInfo = new stdClass;
+        $pdfInfo->data = $result;
+        $pdfInfo->from = $from;
+        $pdfInfo->to = $to;
+
+        $pdf = PDF::loadView('pdf.taskforce', $pdfInfo);
+
+        // Finally, you can download the file using download function
+        return $pdf->download('Taskforce_Report.pdf');
+
+    }
+
+
 }
+
