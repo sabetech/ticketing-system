@@ -34,8 +34,12 @@
             text-align: center,
             width: '20%'
         }
-        .qty_sold {
+        .car_number {
             text-align: center
+        }
+        .agent {
+            text-align: center;
+            padding: 10px
         }
 
     </style>
@@ -53,8 +57,8 @@
           <tr>
             <th>Date Time Issued</th>
             <th>Car Number</th>
-            <th>Amount</th>
-            <th>Agent</th>
+            <th class="amount">Amount</th>
+            <th class="agent">Agent</th>
           </tr>
         </thead>
         <tbody>
@@ -65,9 +69,9 @@
             ?>
             <tr>
               <td class="date_time">{{ $taskforceInfo->issued_date_time }}</td>
-              <td>{{ $taskforceInfo->car_number }}</td>
+              <td class="car_number">{{ $taskforceInfo->car_number }}</td>
               <td class="amount">{{ $taskforceInfo->amount }}</td>
-              <td>{{ $taskforceInfo->fname ." ". $taskforceInfo->lname}}</td>
+              <td class="agent">{{ $taskforceInfo->fname ." ". $taskforceInfo->lname}}</td>
             </tr>
           @endforeach
         </tbody>
