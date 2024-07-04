@@ -326,8 +326,12 @@ class TicketController extends BaseController {
         $pdfInfo->data = $result;
         $pdfInfo->from = $from;
         $pdfInfo->to = $to;
+        $data = [  // Data to be passed to the PDF view
+            'title' => 'Report for Taskforce: ' . date("d/m/Y", strtotime($from)) .' - ' . date("d/m/Y", strtotime($to)),
+            'data' => $result
+        ];
 
-        $pdf = PDF::loadView('pdf.taskforce', $pdfInfo);
+        $pdf = PDF::loadView('pdf.taskforce', $data);
 
         // Finally, you can download the file using download function
         return $pdf->download('Taskforce_Report.pdf');
