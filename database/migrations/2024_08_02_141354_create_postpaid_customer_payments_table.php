@@ -18,8 +18,8 @@ class CreatePostpaidCustomerPaymentsTable extends Migration
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('postpaid_customers');
             $table->decimal('amount_paid', 8, 2);
-            $table->float('discount', 1, 2)->default(0.00);
-            $table->float('witholding_tax', 1, 2)->default(0.00);
+            $table->float('discount', 4, 2)->default(0.00);
+            $table->float('witholding_tax', 4, 2)->default(0.00);
             $table->decimal('gross_expected_amount', 8, 2);
             $table->date('start_date');
             $table->date('end_date');
