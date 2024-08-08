@@ -206,7 +206,7 @@ class TicketController extends BaseController {
             if (!$rate) continue;
 
             if ($rate->rate_type === 'flexible')
-                $myTicket['amount'] = $ticket['amount'];
+                $myTicket['amount'] = floatval($ticket['amount']);
             else
                 $myTicket['amount'] = $rate->amount;
 
