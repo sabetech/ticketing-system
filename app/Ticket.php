@@ -41,7 +41,7 @@ class Ticket extends Model
     public static function saveTraderPayment($ticket, $amount) {
         if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
 
-        $ticket->amount = floatval($amount);
+        $ticket->amount = floatval(str_replace(',', '', $amount));
 
         Log::info($ticket);
 
