@@ -276,6 +276,8 @@ class TicketController extends BaseController {
             $ticket->rate_title = $request->get('rate');
         }
 
+        Log::info(["Rate" => $rate]);
+
         if ($rate->rate_type === 'flexible')
             $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
         else
