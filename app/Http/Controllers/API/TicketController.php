@@ -274,8 +274,12 @@ class TicketController extends BaseController {
 
         if ($rate = Rate::find($request->get('rate'))) {
             $ticket->rate_title = $request->get('rate');
-            $ticket->amount = $rate->amount;
         }
+
+        if ($rate->rate_type === 'flexible')
+            $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
+        else
+            $ticket->amount = $rate->amount;
 
         $ticket->car_number = $request->get('car_number');
 
