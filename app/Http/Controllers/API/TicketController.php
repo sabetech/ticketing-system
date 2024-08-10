@@ -272,23 +272,20 @@ class TicketController extends BaseController {
             return $this->sendError("Could not find Ticket to edit");
         }
 
-        Log::info(["Request Info:: ", $request->all()]);
+        Log::info(["Request Info:: " => $request->all()]);
 
         if ($rate = Rate::find($request->get('rate'))) {
             $ticket->rate_title = $request->get('rate');
+            if ($rate->rate_type === 'flexible')
+                $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
+            else
+                $ticket->amount = $rate->amount;
         }
-
-        Log::info(["Rate" => $rate]);
-
-        if ($rate->rate_type === 'flexible')
-            $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
-        else
-            $ticket->amount = $rate->amount;
 
         $ticket->car_number = $request->get('car_number');
 
         if ($agent = Agent::find($request->get('agent'))) {
-            $ticket->agent = $agent;
+            $ticket->agent = $agent->id;
         }
 
         $ticket->save();
