@@ -272,6 +272,8 @@ class TicketController extends BaseController {
             return $this->sendError("Could not find Ticket to edit");
         }
 
+        Log::info(["Request Info:: ", $request->all()]);
+
         if ($rate = Rate::find($request->get('rate'))) {
             $ticket->rate_title = $request->get('rate');
         }
