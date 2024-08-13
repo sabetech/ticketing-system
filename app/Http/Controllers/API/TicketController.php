@@ -272,13 +272,14 @@ class TicketController extends BaseController {
         if ($tickets) {
             try{
                 Log::info("Deleting: " . $tickets);
-                Ticket::destroy($tickets);
+                Ticket::whereIn('id', $tickets)->delete();
                 return $this->sendResponse($tickets, 'Tickets are Deleted Successfully!');
             }catch(Exception $e) {
                 Log::info($e->getMessage());
                 return $this->sendError("Could not find delete Tickets");
             }
         }
+        return $this->sendError("An Error occured deleting tickets");
     }
 
     public function editTicket($id, Request $request) {
