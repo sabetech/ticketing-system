@@ -307,7 +307,7 @@ class TicketController extends BaseController {
                     $ticket->amount = $rate->amount;
             }
         }
-        $ticket->issue_date_time = $request->get('issue_date_time');
+        $ticket->issued_date_time = $request->get('issued_date_time');
 
         $ticket->car_number = $request->get('car_number');
 
