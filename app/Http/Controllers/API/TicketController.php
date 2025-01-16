@@ -7,7 +7,6 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Agent;
 use App\Ticket;
 use App\Rate;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use PDF;
 use stdClass;
@@ -90,6 +89,22 @@ class TicketController extends BaseController {
 
         if ($field === 'Agents') {
             $results = Agent::where('fname', 'LIKE', "%$value%")->orWhere('lname', 'LIKE', "%$value%")->select(DB::raw('CONCAT(id," ",fname," ",lname) AS full_name'))->take(10)->pluck('full_name');
+        }
+
+        if ($field === 'Ticket ID') {
+            $results = Ticket::where('title', 'LIKE', "%$value%")->orderBy('issued_date_time', 'desc')->take(10)->pluck('title');
+        }
+
+        if ($field === 'Rate') {
+            $results = Rate::where('title', 'LIKE', "%$value%")->orderBy('id', 'desc')->take(10)->pluck('title');
+        }
+
+        if ($field === 'Station') {
+            $results = DB::table('stations')->where('name', 'LIKE', "%$value%")->orderBy('id', 'desc')->take(10)->pluck('name');
+        }
+
+        if ($field === 'Rate Category') {
+            $results = ['fixed', 'flexible', 'postpaid'];
         }
 
         return $this->sendResponse($results, 'Tickets retrieved successfully');
