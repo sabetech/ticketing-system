@@ -81,7 +81,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/searchAutoComplete', 'API\TicketController@searchAutoCompleteTickets');
             Route::get('/search', 'API\TicketController@searchTickets');
             Route::get('/', 'API\TicketController@index');
-            Route::get('/indexes', 'API\TickerController@indexes');
+            Route::get('/indexes', 'API\TicketController@indexes');
 
 
         });
