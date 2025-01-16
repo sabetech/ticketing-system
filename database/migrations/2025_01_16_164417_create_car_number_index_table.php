@@ -15,6 +15,7 @@ class CreateCarNumberIndexTable extends Migration
     {
         Schema::create('car_number_index', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('car_number')->unique();
             $table->timestamps();
         });
     }

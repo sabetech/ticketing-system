@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Ticket;
+use DB;
 
 class UpdateCarNumberIndexes extends Command
 {
@@ -11,7 +13,7 @@ class UpdateCarNumberIndexes extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'app:index_car_numbers';
 
     /**
      * The console command description.
@@ -38,5 +40,13 @@ class UpdateCarNumberIndexes extends Command
     public function handle()
     {
         //
+        //Get all car numbers in chunks of 1000 insert them into the car_number_index table
+        $carNumbers = Ticket::select('car_number')->chunk(1000, function($carNumbers) {
+            foreach($carNumbers as $carNumber) {
+                // DB::table('car_number_index')->insertOrIgnore(['car_number' => $carNumber->car_number]);
+                DB::insert('insert ignore into car_number_index (car_number) values (?)', [$carNumber->car_number]);
+            }
+        });
+
     }
 }
