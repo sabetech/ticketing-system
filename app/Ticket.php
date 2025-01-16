@@ -23,6 +23,23 @@ class Ticket extends Model
         return $this->belongsTo('\App\Agent', 'agent_name', 'id')->withTrashed();
     }
 
+    //Create event for new Ticket save
+    protected static function boot() {
+        parent::boot();
+
+        static::created(function($ticket) {
+            Log::info(['Ticket Created' => $ticket]);
+        });
+
+        static::updated(function($ticket) {
+            Log::info(['Ticket Updated' => $ticket]);
+        });
+
+        static::deleted(function($ticket) {
+            Log::info(['Ticket Deleted' => $ticket]);
+        });
+    }
+
     public static function saveTicket($ticket, $rate) {
 
         if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
