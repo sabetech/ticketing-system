@@ -77,6 +77,10 @@ class TicketController extends BaseController {
     public function indexes(Request $request) {
         $field = $request->get('field');
 
+        if (!$field) {
+            return $this->sendError("Field not set");
+        }
+
         $tickets = Ticket::orderBy('created_at', 'desc')->distinct()->take(100)->pluck($field);
 
         return $this->sendResponse($tickets, 'Tickets retrieved successfully');
