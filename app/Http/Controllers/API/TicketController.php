@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use PDF;
 use stdClass;
+use DB;
 
 class TicketController extends BaseController {
 
@@ -76,14 +77,22 @@ class TicketController extends BaseController {
 
     public function indexes(Request $request) {
         $field = $request->get('field');
+        $value = $request->get('value');
 
         if (!$field) {
             return $this->sendError("Field not set");
         }
 
-        $tickets = Ticket::orderBy('created_at', 'desc')->distinct()->take(100)->pluck($field);
+        $results = [];
+        if ($field === 'Car Number') {
+            $results = DB::table('car_number_index')->where('car_number','LIKE', "%$value%")->orderBy('id', 'desc')->take(10)->pluck('car_number');
+        }
 
-        return $this->sendResponse($tickets, 'Tickets retrieved successfully');
+        if ($field === 'Agents') {
+            $results = Agent::where('fname', 'LIKE', "%$value%")->orWhere('lname', 'LIKE', "%$value%")->select(DB::raw('CONCAT(id," ",fname," ",lname) AS full_name'))->take(10)->pluck('full_name');
+        }
+
+        return $this->sendResponse($results, 'Tickets retrieved successfully');
 
     }
 

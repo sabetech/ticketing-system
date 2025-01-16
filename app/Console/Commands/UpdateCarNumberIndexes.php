@@ -20,7 +20,7 @@ class UpdateCarNumberIndexes extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'This command will index all car numbers in the car_number_index table';
 
     /**
      * Create a new command instance.
@@ -47,7 +47,6 @@ class UpdateCarNumberIndexes extends Command
             $count += 1000;
             $this->info("Processing chunk of 1000 car numbers: $count/$total");
             foreach($carNumbers as $carNumber) {
-                // DB::table('car_number_index')->insertOrIgnore(['car_number' => $carNumber->car_number]);
                 DB::insert('insert ignore into car_number_index (car_number) values (?)', [$carNumber->car_number]);
             }
         });
