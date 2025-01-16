@@ -14,8 +14,72 @@ use stdClass;
 
 class TicketController extends BaseController {
 
-    public function index() {
-        //get all tickets here ...
+    // public function index(Request $request) {
+    //     //get all tickets here ...
+    //     /*
+    //         Filters:
+    //             issued_date_time
+    //             car_number
+    //             TicketID
+    //             Rate
+    //             Agent
+    //             Station
+    //             Rate Category
+    //     */
+
+    //     $dateRange = $request->get('date_range', null);
+    //     $carNumber = $request->get('car_number', null);
+    //     $ticketID = $request->get('ticket_id', null);
+    //     $agent = $request->get('agent', null);
+    //     $station = $request->get('station', null);
+    //     $rate = $request->get('rate', null);
+    //     $rateCategory = $request->get('rate_category', null);
+
+    //     $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate, $rateCategory) {
+    //         if ($dateRange) {
+    //             $query->whereBetween('issued_date_time', $dateRange);
+    //         }
+
+    //         if ($carNumber) {
+    //             $query->where('car_number', $carNumber);
+    //         }
+
+    //         if ($ticketID) {
+    //             $query->where('title', $ticketID);
+    //         }
+
+    //         if ($agent) {
+    //             $agent = Agent::whereId($agent)->withTrashed()->first()->id;
+    //             $query->where('agent_name', $agent);
+    //         }
+
+    //         if ($station) {
+    //             $query->where('station_name', $station);
+    //         }
+
+    //         if ($rate) {
+    //             $query->where('rate_title', $rate);
+    //         }
+
+    //         if ($rateCategory) {
+    //             $rateArray = Rate::where('rate_type', $rateCategory)->pluck('id')->toArray();
+    //             $query->whereIn('rate_category', $rateCategory);
+    //         }
+    //     });
+
+    //     $tickets->paginate(10);
+
+    //     return $this->sendResponse($tickets, 'Tickets retrieved successfully');
+
+
+    // }
+
+    public function indexes(Request $request) {
+        $field = $request->get('field');
+
+        $tickets = Ticket::orderBy('created_at', 'desc')->distinct()->take(100)->pluck($field);
+
+        return $this->sendResponse($tickets, 'Tickets retrieved successfully');
 
     }
 

@@ -80,6 +80,10 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/by-agents', 'API\TicketController@getTicketsByAgents');
             Route::get('/searchAutoComplete', 'API\TicketController@searchAutoCompleteTickets');
             Route::get('/search', 'API\TicketController@searchTickets');
+            Route::get('/', 'API\TicketController@index');
+            Route::get('/indexes', 'API\TickerController@indexes');
+
+
         });
 
         Route::group(['prefix' => 'rates'], function () {
@@ -98,4 +102,3 @@ Route::group(['prefix' => 'v2'], function() {
         Route::get('/summary', "API\StationController@getStationsSummary");
     });
 });
-
