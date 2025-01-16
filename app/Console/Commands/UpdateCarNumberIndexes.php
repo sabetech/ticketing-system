@@ -39,9 +39,13 @@ class UpdateCarNumberIndexes extends Command
      */
     public function handle()
     {
+        $count = 0;
+        $total = Ticket::count();
         //
         //Get all car numbers in chunks of 1000 insert them into the car_number_index table
-        $carNumbers = Ticket::select('car_number')->chunk(1000, function($carNumbers) {
+        Ticket::select('car_number')->chunk(1000, function($carNumbers) use (&$count, $total) {
+            $count += 1000;
+            $this->info("Processing chunk of 1000 car numbers: $count/$total");
             foreach($carNumbers as $carNumber) {
                 // DB::table('car_number_index')->insertOrIgnore(['car_number' => $carNumber->car_number]);
                 DB::insert('insert ignore into car_number_index (car_number) values (?)', [$carNumber->car_number]);
