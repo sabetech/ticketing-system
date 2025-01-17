@@ -70,9 +70,7 @@ class TicketController extends BaseController {
             }
         });
 
-        $tickets = $tickets->paginate(50);
-
-        Log::info($tickets);
+        $tickets = $tickets->orderBy('created_at', 'desc')->paginate(50);
 
         return $this->sendResponse($tickets, 'Tickets retrieved successfully');
 
