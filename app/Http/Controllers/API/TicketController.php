@@ -72,7 +72,7 @@ class TicketController extends BaseController {
 
         $tickets = $tickets->paginate(50);
 
-        Log::info("Tickets::", $tickets);
+        Log::info($tickets);
 
         return $this->sendResponse($tickets, 'Tickets retrieved successfully');
 
