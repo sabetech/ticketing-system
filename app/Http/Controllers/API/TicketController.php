@@ -14,65 +14,67 @@ use DB;
 
 class TicketController extends BaseController {
 
-    // public function index(Request $request) {
-    //     //get all tickets here ...
-    //     /*
-    //         Filters:
-    //             issued_date_time
-    //             car_number
-    //             TicketID
-    //             Rate
-    //             Agent
-    //             Station
-    //             Rate Category
-    //     */
+    public function index(Request $request) {
+        //get all tickets here ...
+        /*
+            Filters:
+                issued_date_time
+                car_number
+                TicketID
+                Rate
+                Agent
+                Station
+                Rate Category
+        */
 
-    //     $dateRange = $request->get('date_range', null);
-    //     $carNumber = $request->get('car_number', null);
-    //     $ticketID = $request->get('ticket_id', null);
-    //     $agent = $request->get('agent', null);
-    //     $station = $request->get('station', null);
-    //     $rate = $request->get('rate', null);
-    //     $rateCategory = $request->get('rate_category', null);
+        Log::info("Request for Tickets::", $request->all());
 
-    //     $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate, $rateCategory) {
-    //         if ($dateRange) {
-    //             $query->whereBetween('issued_date_time', $dateRange);
-    //         }
+        $dateRange = $request->get('date_range', null);
+        $carNumber = $request->get('car_number', null);
+        $ticketID = $request->get('ticket_id', null);
+        $agent = $request->get('agent', null);
+        $station = $request->get('station', null);
+        $rate = $request->get('rate', null);
+        $rateCategory = $request->get('rate_category', null);
 
-    //         if ($carNumber) {
-    //             $query->where('car_number', $carNumber);
-    //         }
+        $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate, $rateCategory) {
+            Log::info(["date Range", $dateRange]);
+            if ($dateRange) {
+                $query->whereBetween('issued_date_time', $dateRange);
+            }
 
-    //         if ($ticketID) {
-    //             $query->where('title', $ticketID);
-    //         }
+            if ($carNumber) {
+                $query->where('car_number', $carNumber);
+            }
 
-    //         if ($agent) {
-    //             $agent = Agent::whereId($agent)->withTrashed()->first()->id;
-    //             $query->where('agent_name', $agent);
-    //         }
+            if ($ticketID) {
+                $query->where('title', $ticketID);
+            }
 
-    //         if ($station) {
-    //             $query->where('station_name', $station);
-    //         }
+            if ($agent) {
+                $agent = Agent::whereId($agent)->withTrashed()->first()->id;
+                $query->where('agent_name', $agent);
+            }
 
-    //         if ($rate) {
-    //             $query->where('rate_title', $rate);
-    //         }
+            if ($station) {
+                $query->where('station_name', $station);
+            }
 
-    //         if ($rateCategory) {
-    //             $rateArray = Rate::where('rate_type', $rateCategory)->pluck('id')->toArray();
-    //             $query->whereIn('rate_category', $rateCategory);
-    //         }
-    //     });
+            if ($rate) {
+                $query->where('rate_title', $rate);
+            }
 
-    //     $tickets->paginate(10);
+            if ($rateCategory) {
+                $rateArray = Rate::where('rate_type', $rateCategory)->pluck('id')->toArray();
+                $query->whereIn('rate_category', $rateCategory);
+            }
+        });
 
-    //     return $this->sendResponse($tickets, 'Tickets retrieved successfully');
+        $tickets->paginate(50);
 
+        return $this->sendResponse($tickets, 'Tickets retrieved successfully');
 
-    // }
+    }
 
     public function indexes(Request $request) {
         $field = $request->get('field');
