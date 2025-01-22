@@ -23,6 +23,10 @@ class Ticket extends Model
         return $this->belongsTo('\App\Agent', 'agent_name', 'id')->withTrashed();
     }
 
+    public function station(){
+        return $this->belongsTo('\App\Station', 'station_name', 'id');
+    }
+
     public static function saveTicket($ticket, $rate) {
 
         if (Ticket::where('title', $ticket->title)->exists()) return false; //it means ticket has already been saved
