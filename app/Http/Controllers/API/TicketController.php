@@ -65,12 +65,12 @@ class TicketController extends BaseController {
             }
 
             if ($rateCategory) {
-                $rateArray = Rate::where('rate_type', $rateCategory)->pluck('id')->toArray();
+                // $rateArray = Rate::where('rate_type', $rateCategory)->pluck('id')->toArray();
                 $query->whereIn('rate_category', $rateCategory);
             }
         });
 
-        $tickets = $tickets->orderBy('created_at', 'desc')->paginate(50);
+        $tickets = $tickets->with(['rate', 'agent', 'station'])->orderBy('created_at', 'desc')->paginate(50);
 
         return $this->sendResponse($tickets, 'Tickets retrieved successfully');
 
