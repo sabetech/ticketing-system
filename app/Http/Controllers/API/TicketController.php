@@ -29,7 +29,7 @@ class TicketController extends BaseController {
 
         Log::info("Request for Tickets::", $request->all());
 
-        $dateRange = $request->get('date_range', null);
+        $dateRange = $request->get('dateRange', null);
         $carNumber = $request->get('car_number', null);
         $ticketID = $request->get('ticket_id', null);
         $agent = $request->get('agent', null);
@@ -37,9 +37,13 @@ class TicketController extends BaseController {
         $rate = $request->get('rate', null);
         $rateCategory = $request->get('rate_category', null);
 
+        Log::info("Initial date Range::", $dateRange);
+
         $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate, $rateCategory) {
-            Log::info(["date Range", $dateRange]);
+            Log::info(["date Range" => $dateRange]);
             if ($dateRange) {
+                $dateRange = explode(',', $dateRange);
+
                 $query->whereBetween('issued_date_time', $dateRange);
             }
 
