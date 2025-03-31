@@ -37,7 +37,7 @@ class TicketController extends BaseController {
         $rate = $request->get('rate', null);
         $rateCategory = $request->get('rate_category', null);
 
-        Log::info("Initial date Range::", $dateRange);
+        Log::info(["Initial date Range::" => $dateRange]);
 
         $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate, $rateCategory) {
             Log::info(["date Range" => $dateRange]);
