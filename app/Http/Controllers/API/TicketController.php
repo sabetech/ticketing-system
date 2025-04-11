@@ -113,7 +113,7 @@ class TicketController extends BaseController {
         $totalRevenue = $tickets->where('paid', true)->sum('amount');
         $totalUnpaid = $tickets->where('paid', false)->sum('amount');
         $totalUnpaidTickets = $tickets->where('paid', false)->count();
-        $totalAgents = $tickets->distinct('agent_name')->count('agent_name');
+        $totalAgents = $tickets->groupBy('agent_name')->count('agent_name');
 
         return $this->sendResponse([
             'ticket_count' => $ticketCount,
