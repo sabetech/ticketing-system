@@ -110,7 +110,7 @@ class TicketController extends BaseController {
             }
         });
         $ticketCount = $tickets->count();
-        $totalRevenue = $tickets->where('paid', true)->sum('amount');
+        $totalRevenue = (clone $tickets)->where('paid', true)->sum('amount');
         $totalUnpaid = (clone $tickets)->where('paid', false)->sum('amount');
         $totalUnpaidTickets = (clone $tickets)->where('paid', false)->count();
         $totalAgents = (clone $tickets)->distinct('agent_name')->count('agent_name');
