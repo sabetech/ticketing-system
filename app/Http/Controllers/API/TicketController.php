@@ -37,13 +37,10 @@ class TicketController extends BaseController {
         $rate = $request->get('rate', null);
         $rateCategory = $request->get('rate_category', null);
 
-        Log::info(["Initial date Range::" => $dateRange]);
-
         $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate, $rateCategory) {
             Log::info(["date Range" => $dateRange]);
             if ($dateRange) {
                 $dateRange = explode(',', $dateRange);
-
                 $query->whereBetween('issued_date_time', $dateRange);
             }
 
@@ -77,6 +74,54 @@ class TicketController extends BaseController {
         $tickets = $tickets->with(['rate', 'agent', 'station'])->orderBy('created_at', 'desc')->paginate(50);
 
         return $this->sendResponse($tickets, 'Tickets retrieved successfully');
+
+    }
+
+    public function getAggregates(Request $request) {
+
+        $dateRange = $request->get('dateRange', null);
+        $carNumber = $request->get('car_number', null);
+        $ticketID = $request->get('ticket_id', null);
+        $agent = $request->get('agent', null);
+        $station = $request->get('station', null);
+        $rate = $request->get('rate', null);
+
+        $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate) {
+            if ($dateRange) {
+                $dateRange = explode(',', $dateRange);
+                $query->whereBetween('issued_date_time', $dateRange);
+            }
+
+            if ($carNumber) {
+                $query->where('car_number', $carNumber);
+            }
+            if ($ticketID) {
+                $query->where('title', $ticketID);
+            }
+            if ($agent) {
+                $agent = Agent::whereId($agent)->withTrashed()->first()->id;
+                $query->where('agent_name', $agent);
+            }
+            if ($station) {
+                $query->where('station_name', $station);
+            }
+            if ($rate) {
+                $query->where('rate_title', $rate);
+            }
+        });
+        $ticketCount = $tickets->count();
+        $totalRevenue = $tickets->where('paid', true)->sum('amount');
+        $totalUnpaid = $tickets->where('paid', false)->sum('amount');
+        $totalUnpaidTickets = $tickets->where('paid', false)->count();
+        $totalAgents = $tickets->distinct('agent_name')->count('agent_name');
+
+        return $this->sendResponse([
+            'ticket_count' => $ticketCount,
+            'total_revenue' => $totalRevenue,
+            'total_unpaid' => $totalUnpaid,
+            'total_unpaid_tickets' => $totalUnpaidTickets,
+            'total_agents' => $totalAgents,
+        ], 'Ticket Count retrieved successfully');
 
     }
 

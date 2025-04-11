@@ -47,7 +47,7 @@ class UpdateCarNumberIndexes extends Command
             $count += 1000;
             $this->info("Processing chunk of 1000 car numbers: $count/$total");
             foreach($carNumbers as $carNumber) {
-                DB::insert('insert ignore into car_number_index (car_number) values (?)', [$carNumber->car_number]);
+                DB::insert('insert ignore into car_number_index (car_number, created_at, updated_at) values (?, ?, ?)', [$carNumber->car_number, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
             }
         });
 

@@ -38,6 +38,10 @@ class Ticket extends Model
         Log::info($ticket);
 
         $ticket->save();
+
+        //update the car_number_index table
+        DB::insert('insert ignore into car_number_index (car_number, created_at, updated_at) values (?, ?, ?)', [$ticket->car_number, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
+
         return $ticket;
 
     }
@@ -51,6 +55,8 @@ class Ticket extends Model
 
         $ticket->save();
 
+        DB::insert('insert ignore into car_number_index (car_number, created_at, updated_at) values (?, ?, ?)', [$ticket->car_number, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
+
         return $ticket;
     }
 
@@ -61,6 +67,7 @@ class Ticket extends Model
         foreach($chunkedTickets as $chunkedTicket) {
             try {
                 Ticket::insert($chunkedTicket);
+                DB::insert('insert ignore into car_number_index (car_number, created_at, updated_at) values (?, ?, ?)', [$chunkedTicket['car_number'], date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
             }catch(\Illuminate\Database\QueryException $e) {
                 Log::info($e->getMessage());
             }
