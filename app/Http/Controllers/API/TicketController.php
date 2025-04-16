@@ -458,7 +458,7 @@ class TicketController extends BaseController {
             $ticket->agent = $agent->id;
         }
 
-        $ticket->save();
+        // $ticket->save();
 
         return $this->sendResponse($ticket, 'Ticket is Edited Successfully!');
     }
