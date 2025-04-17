@@ -66,8 +66,7 @@ class TicketController extends BaseController {
             }
 
             if ($rateCategory) {
-                // $rateArray = Rate::where('rate_type', $rateCategory)->pluck('id')->toArray();
-                $query->whereIn('rate_category', $rateCategory);
+                $query->where('rate_category', $rateCategory);
             }
         });
 
