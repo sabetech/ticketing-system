@@ -437,7 +437,16 @@ class TicketController extends BaseController {
         $ticket->issued_date_time = $request->get('issued_date_time');
         $ticket->car_number = $request->get('car_number');
         $ticket->rate_title = $request->get('rate_id');
-        $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
+
+        if ($rate = Rate::find($ticket->rate_title)) {
+            if ($rate->rate_type === 'flexible') {
+                $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
+            } else {
+                $ticket->amount = $rate->amount;
+            }
+        }else{
+            $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
+        }
 
         if ($agent = Agent::find($request->get('agent'))) {
             $ticket->agent = $agent->id;
