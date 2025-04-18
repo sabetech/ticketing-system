@@ -38,7 +38,7 @@ class TicketController extends BaseController {
         $rateCategory = $request->get('rate_category', null);
 
         $tickets = Ticket::where(function ($query) use ($dateRange, $carNumber, $ticketID, $agent, $station, $rate, $rateCategory) {
-            Log::info(["date Range" => $dateRange]);
+
             if ($dateRange) {
                 $dateRange = explode(',', $dateRange);
                 $query->whereBetween('issued_date_time', $dateRange);
