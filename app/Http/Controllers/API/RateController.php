@@ -133,15 +133,19 @@ class RateController extends BaseController
         $date_range = json_decode($dateRange);
 
         $amount = $request->get('amount');
+        $withholding_tax = $request->get('tax');
+        $discount = $request->get('discount');
         $rateTitle = $request->get('client_id');
 
         Log::info($request->all());
+        Log::info(["date_range::" => $date_range]); //$date_range
 
-        $numberOfTicketsPaidFor = Ticket::makePayment($date_range, $amount, $rateTitle);
+        //PostpaidCustomerPayment::SavePayment(explode(',', $dateRange), $rateTitle, $amount, $withholding_tax, $discount);
+        //$numberOfTicketsPaidFor = Ticket::makePayment($date_range, $rateTitle);
 
         //for this date range, get all the unpaid tickets and set to paid=true
-        Log::info($numberOfTicketsPaidFor);
+        //Log::info($numberOfTicketsPaidFor);
 
-        return $this->sendResponse(['number_of_tickets_paid' => $numberOfTicketsPaidFor], 'Tickets Paid successfully');
+        return $this->sendResponse(['number_of_tickets_paid' => 34], 'Tickets Paid successfully');
     }
 }

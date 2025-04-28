@@ -150,27 +150,15 @@ class Ticket extends Model
         return $thirdPartyTickets;
     }
 
-    public static function makePayment($dateRange, $amount, $rateTitle) {
+    public static function makePayment($dateRange, $rateTitle) {
         $rate = Rate::find($rateTitle);
 
         $totalTicketsForRateClient = self::whereBetween('issued_date_time',[$dateRange->from, $dateRange->to])
                                         ->where('rate_title', $rateTitle)
-                                        ->where('paid', 0)->orderBy('issued_date_time')->get();
+                                        ->where('paid', 0)
+                                        ->update('paid', 1);
 
-        $numberOfTickets = intval($amount / $rate->amount);
-        $count = 0;
-
-        foreach($totalTicketsForRateClient as $unPaidTicket) {
-            if ($count >= $numberOfTickets) {
-                break;
-            }
-            $unPaidTicket->paid = 1;
-            $unPaidTicket->save();
-            $count++;
-        }
-
-        return $count;
-
+        return $totalTicketsForRateClient;
     }
 
     public static function getTaskforceTicketsByDateRange($form, $to) {

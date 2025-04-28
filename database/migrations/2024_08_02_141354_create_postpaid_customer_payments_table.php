@@ -24,7 +24,6 @@ class CreatePostpaidCustomerPaymentsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('net_expected_amount', 8, 2);
-            $table->decimal('balance', 8, 2)->default(0.00);
             $table->date('date');
             $table->time('time');
             $table->timestamps();
