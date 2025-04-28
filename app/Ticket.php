@@ -139,6 +139,7 @@ class Ticket extends Model
                 'toll_tickets.issued_date_time',
                 'toll_tickets.agent_name',
                 'toll_tickets.amount',
+                'toll_tickets.paid',
                 'rates_v2.id as rate_id',
                 'rates_v2.title as rate_title',
                 'rates_v2.is_postpaid',
