@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Rate;
+use App\PostpaidCustomer;
 
 class GeneratePostpaidCustomers extends Command
 {
@@ -11,7 +13,7 @@ class GeneratePostpaidCustomers extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'app:generate-postpaid-customers';
 
     /**
      * The console command description.
@@ -38,5 +40,15 @@ class GeneratePostpaidCustomers extends Command
     public function handle()
     {
         //
+        $rates = Rate::where('is_postpaid', true)->get();
+        foreach($rates as $rate) {
+            PostpaidCustomer::create([
+                'name' => $rate->title,
+                'rate_id' => $rate->id,
+                'station_id' => $rate->station->id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
     }
 }
