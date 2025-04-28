@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PostpaidCustomerPayment extends Model
 {
+    protected $guarded = [];
+
     //
     public static function SavePayment($dateRange, $rateTitle, $amount, $withholding_tax, $discount) {
 
