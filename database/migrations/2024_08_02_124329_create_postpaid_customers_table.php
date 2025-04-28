@@ -19,7 +19,7 @@ class CreatePostpaidCustomersTable extends Migration
             $table->unsignedInteger('station_id');
             $table->unsignedInteger('rate_id');
             $table->foreign('station_id')->references('id')->on('stations');
-            $table->foreign('rate_id')->references('id')->on('rates');
+            $table->foreign('rate_id')->references('id')->on('rates_v2');
             $table->timestamps();
         });
     }
