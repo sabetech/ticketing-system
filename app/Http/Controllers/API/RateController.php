@@ -8,7 +8,7 @@ use App\AgentRate;
 use App\Agent;
 use App\Ticket;
 use App\Http\Controllers\API\BaseController as BaseController;
-use Illuminate\Support\Facades\Storage;
+use App\PostpaidCustomerPayment;
 use Log;
 
 class RateController extends BaseController
@@ -133,19 +133,20 @@ class RateController extends BaseController
         $date_range = json_decode($dateRange);
 
         $amount = $request->get('amount');
-        $withholding_tax = $request->get('tax');
-        $discount = $request->get('discount');
+        $withholding_tax = $request->get('tax',0);
+        $discount = $request->get('discount',0);
         $rateTitle = $request->get('client_id');
 
         Log::info($request->all());
-        Log::info(["date_range::" => $date_range]); //$date_range
+        $withholding_tax = floatval($withholding_tax) / 100;
+        $discount = floatval($discount) / 100;
 
-        //PostpaidCustomerPayment::SavePayment(explode(',', $dateRange), $rateTitle, $amount, $withholding_tax, $discount);
-        //$numberOfTicketsPaidFor = Ticket::makePayment($date_range, $rateTitle);
+        PostpaidCustomerPayment::SavePayment($date_range, $rateTitle, $amount, $withholding_tax, $discount);
+        $result = Ticket::makePayment($date_range, $rateTitle);
 
         //for this date range, get all the unpaid tickets and set to paid=true
-        //Log::info($numberOfTicketsPaidFor);
+        Log::info($result);
 
-        return $this->sendResponse(['number_of_tickets_paid' => 34], 'Tickets Paid successfully');
+        return $this->sendResponse($result, 'Tickets Paid successfully');
     }
 }

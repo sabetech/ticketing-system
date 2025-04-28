@@ -151,7 +151,6 @@ class Ticket extends Model
     }
 
     public static function makePayment($dateRange, $rateTitle) {
-        $rate = Rate::find($rateTitle);
 
         $totalTicketsForRateClient = self::whereBetween('issued_date_time',[$dateRange->from, $dateRange->to])
                                         ->where('rate_title', $rateTitle)
