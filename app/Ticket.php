@@ -155,7 +155,7 @@ class Ticket extends Model
         $totalTicketsForRateClient = self::whereBetween('issued_date_time',[$dateRange->from, $dateRange->to])
                                         ->where('rate_title', $rateTitle)
                                         ->where('paid', 0)
-                                        ->update('paid', 1);
+                                        ->update(['paid' => 1]);
 
         return $totalTicketsForRateClient;
     }
