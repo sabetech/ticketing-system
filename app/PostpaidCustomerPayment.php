@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PostpaidCustomerPayment extends Model
 {
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     //
     public static function SavePayment($dateRange, $rateTitle, $amount, $withholding_tax, $discount) {
@@ -23,5 +23,14 @@ class PostpaidCustomerPayment extends Model
             'date' => date("Y-m-d"),
             'time' => date("H:i:s")
         ]);
+    }
+
+    public static function getPaymentHistory($dateRange) {
+        $payments = PostpaidCustomerPayment::where('date', '>=', $dateRange->from)
+            ->where('date', '<=', $dateRange->to)
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return $payments;
     }
 }

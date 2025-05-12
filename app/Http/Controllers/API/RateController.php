@@ -149,4 +149,12 @@ class RateController extends BaseController
 
         return $this->sendResponse($result, 'Tickets Paid successfully');
     }
+
+    public function getPaymentHistory(Request $request) {
+        $dateRange = $request->get('dateRange');
+
+        $result = PostpaidCustomerPayment::getPaymentHistory($dateRange);
+
+        return $this->sendResponse($result, 'History Fetched Successfully');
+    }
 }
