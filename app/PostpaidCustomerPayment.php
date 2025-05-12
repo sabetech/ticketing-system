@@ -8,6 +8,9 @@ class PostpaidCustomerPayment extends Model
 {
     protected $guarded = ['id'];
 
+    public function customer() {
+        return $this->belongsTo('App\Rate', 'customer_id', 'id');
+    }
     //
     public static function SavePayment($dateRange, $rateTitle, $amount, $withholding_tax, $discount) {
 
@@ -25,9 +28,9 @@ class PostpaidCustomerPayment extends Model
         ]);
     }
 
-    public static function getPaymentHistory($dateRange) {
-        $payments = PostpaidCustomerPayment::where('date', '>=', $dateRange->from)
-            ->where('date', '<=', $dateRange->to)
+    public static function getPaymentHistory($from, $to) {
+        $payments = PostpaidCustomerPayment::with('customer')->where('date', '>=', $from)
+            ->where('date', '<=', $to)
             ->orderBy('date', 'desc')
             ->get();
 
