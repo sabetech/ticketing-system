@@ -151,9 +151,10 @@ class RateController extends BaseController
     }
 
     public function getPaymentHistory(Request $request) {
-        $dateRange = $request->get('dateRange');
+        $from = $request->get('from');
+        $to = $request->get('to');
 
-        $result = PostpaidCustomerPayment::getPaymentHistory($dateRange);
+        $result = PostpaidCustomerPayment::getPaymentHistory($from, $to);
 
         return $this->sendResponse($result, 'History Fetched Successfully');
     }
