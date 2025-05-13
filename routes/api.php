@@ -95,6 +95,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::post('/{id}/edit', "API\RateController@edit");
             Route::delete('/{id}', "API\RateController@delete");
             Route::post('/makepayment', 'API\RateController@makePayment');
+            Route::get('/paymentHistory', 'API\RateController@getPaymentHistory');
         });
     });
 
