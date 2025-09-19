@@ -220,6 +220,14 @@ class TicketController extends BaseController {
         $rate = Rate::find($ticket->rate_title);
         if (!$rate) return $this->sendError("Could not save Ticket!", ["Rate ID not found"]);
 
+        if ($rate->rate_type === 'fixed' && $rate->is_postpaid) {
+            //validate car number and issued date time
+            //car number should be in the format GR-1234-20
+            if (!preg_match('/^[A-Z]{2}-\d{1,4}-(\d{2}|[A-Z])$/', strtoupper($ticket->car_number))) {
+                return $this->sendError("Could not save Ticket!", ["Car Number format invalid"]);
+            }
+        }
+
         $savedTicket = null;
 
         switch ($rate->rate_type) {
