@@ -224,6 +224,7 @@ class TicketController extends BaseController {
             //validate car number and issued date time
             //car number should be in the format GR-1234-20
             if (!preg_match('/^[A-Z]{2}-\d{1,4}-(\d{2}|[A-Z])$/', strtoupper($ticket->car_number))) {
+                Log::error("Invalid Car Number: " . $ticket->car_number);
                 return $this->sendError("Could not save Ticket!", ["Car Number format invalid"]);
             }
         }
