@@ -28,4 +28,22 @@ class StationController extends BaseController
 
         return $this->sendResponse($stationData, 'Stations retrieved successfully.');
     }
+
+    public function getStationsSummary_test(Request $request) {
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        // Single optimized query with eager loading
+        $stations = Station::with(['tickets' => function ($query) use ($from, $to) {
+                $query->whereBetween('issued_date_time', [$from, $to])
+                    ->with('rate')
+                    ->select('id', 'station_id', 'issued_date_time', 'rate_id'); // Select only needed columns
+            }])
+            ->get(['id', 'name']); // Select only needed columns
+
+        // Transform to desired format
+        $stationData = $stations->pluck('tickets', 'name')->toArray();
+
+    return $this->sendResponse($stationData, 'Stations retrieved successfully.');
+    }
 }
