@@ -37,7 +37,7 @@ class StationController extends BaseController
         $stations = Station::with(['tickets' => function ($query) use ($from, $to) {
                 $query->whereBetween('issued_date_time', [$from, $to])
                     ->with('rate')
-                    ->select('id', 'station_id', 'issued_date_time', 'rate_id'); // Select only needed columns
+                    ->select('id', 'station_name', 'issued_date_time', 'rate_id', 'rate.title', 'rate.icon'); // Select only needed columns
             }])
             ->get(['id', 'name']); // Select only needed columns
 
