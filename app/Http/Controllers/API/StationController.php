@@ -39,8 +39,8 @@ class StationController extends BaseController
         ->join('stations', 'toll_tickets.station_name', '=', 'stations.id')
         ->join('rates_v2', 'toll_tickets.rate_title', '=', 'rates_v2.id')
         ->whereBetween('toll_tickets.issued_date_time', [$from, $to])
-        ->select('stations.id as station_id', 'stations.name','rates_v2.id as rate_id','rates_v2.title', 'rates_v2.icon',DB::raw('COUNT(*) as ticket_count'),DB::raw('SUM(toll_tickets.amount)as total_amount'))
-        ->groupBy('stations.id', 'stations.name', 'rates_v2.id', 'rates_v2.title', 'rates_v2.icon')
+        ->select('stations.id as station_id', 'stations.name','rates_v2.id as rate_id','rates_v2.title', 'rates_v2.icon', 'rates_v2.rate_type', 'rates_v2.is_postpaid', DB::raw('COUNT(*) as ticket_count'),DB::raw('SUM(toll_tickets.amount)as total_amount'))
+        ->groupBy('stations.id', 'stations.name', 'rates_v2.id', 'rates_v2.title', 'rates_v2.icon', 'rates_v2.rate_type', 'rates_v2.is_postpaid')
         ->orderBy('stations.name')
         ->orderBy('rates_v2.title')
         ->get();
