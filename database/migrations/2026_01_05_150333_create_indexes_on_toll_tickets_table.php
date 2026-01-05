@@ -13,9 +13,19 @@ class CreateIndexesOnTollTicketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('indexes_on_toll_tickets', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::table('toll_tickets', function (Blueprint $table) {
+            $table->index('issued_date_time');
+            $table->index('station_name');
+            $table->index('rate_title');
+        });
+        Schema::table('stations', function (Blueprint $table) {
+            // Covering index to avoid table lookups
+            $table->index(['id', 'name']);
+        });
+
+        Schema::table('rates_v2', function (Blueprint $table) {
+            // Covering index to avoid table lookups
+            $table->index(['id', 'title', 'icon']);
         });
     }
 
