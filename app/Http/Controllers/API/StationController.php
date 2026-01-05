@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Station;
+use DB;
 
 class StationController extends BaseController
 {
@@ -33,17 +34,17 @@ class StationController extends BaseController
         $from = $request->get('from');
         $to = $request->get('to');
 
-        // Single optimized query with eager loading
-        $stations = Station::with(['tickets' => function ($query) use ($from, $to) {
-                $query->whereBetween('issued_date_time', [$from, $to])
-                    ->with('rate')
-                    ->select('id', 'station_name', 'issued_date_time', 'rate_id', 'rate.title', 'rate.icon'); // Select only needed columns
-            }])
-            ->get(['id', 'name']); // Select only needed columns
+        // Single optimized query
+        $results = DB::table('toll_tickets')
+        ->join('stations', 'toll_tickets.station_name', '=', 'stations.id')
+        ->join('rates_v2', 'toll_tickets.rate_title', '=', 'rates_v2.id')
+        ->whereBetween('toll_tickets.issued_date_time', [$from, $to])
+        ->select('stations.id as station_id', 'stations.name','rates_v2.id as rate_id','rates_v2.title', 'rates_v2.icon',DB::raw('COUNT(*) as ticket_count'),DB::raw('SUM(toll_tickets.amount)as total_amount'))
+        ->groupBy('stations.id', 'stations.name', 'rates_v2.id', 'rates_v2.title', 'rates_v2.icon')
+        ->orderBy('stations.name')
+        ->orderBy('rates_v2.title')
+        ->get();
 
-        // Transform to desired format
-        $stationData = $stations->pluck('tickets', 'name')->toArray();
-
-    return $this->sendResponse($stationData, 'Stations retrieved successfully.');
+    return $this->sendResponse($results, 'Stations Summary retrieved successfully.');
     }
 }
