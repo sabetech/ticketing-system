@@ -102,6 +102,5 @@ Route::group(['prefix' => 'v2'], function() {
     Route::group(['prefix' => 'station'], function () {
         Route::get('/all', "API\StationController@getAllStations");
         Route::get('/summary', "API\StationController@getStationsSummary");
-        Route::get('/summary_test', "API\StationController@getStationsSummary_test");
     });
 });

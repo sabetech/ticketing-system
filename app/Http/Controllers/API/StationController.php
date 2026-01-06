@@ -20,20 +20,6 @@ class StationController extends BaseController
         $from = $request->get('from');
         $to = $request->get('to');
 
-        $stationData = [];
-        $stations = Station::all();
-
-        foreach($stations as $station) {
-            $stationData[$station->name] = $station->tickets()->whereBetween('issued_date_time', [$from, $to])->with('rate')->get();
-        }
-
-        return $this->sendResponse($stationData, 'Stations retrieved successfully.');
-    }
-
-    public function getStationsSummary_test(Request $request) {
-        $from = $request->get('from');
-        $to = $request->get('to');
-
         // Single optimized query
         $results = DB::table('toll_tickets')
         ->join('rates_v2', 'toll_tickets.rate_title', '=', 'rates_v2.id')
