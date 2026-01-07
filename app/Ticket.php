@@ -193,8 +193,9 @@ class Ticket extends Model
         $to = Carbon::parse($date)->endOfDay();
 
         $ticketsByAgent = self::join('users', 'users.id', '=', 'toll_tickets.agent_name')
+                            ->leftJoin('agent_online_status', 'agent_online_status.agent_id', '=', 'toll_tickets.agent_name')
                             ->whereBetween('issued_date_time', [$from, $to])
-                            ->select('toll_tickets.agent_name', 'users.fname', DB::raw('sum(toll_tickets.amount) as total, count(toll_tickets.id) as tickets_issued'))
+                            ->select('toll_tickets.agent_name', 'users.fname', DB::raw('sum(toll_tickets.amount) as total, count(toll_tickets.id) as tickets_issued'), 	'loggedin_at', 'loggedout_at')
                             ->groupBy('toll_tickets.agent_name', 'users.fname')->get();
 
 
