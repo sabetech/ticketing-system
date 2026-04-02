@@ -94,7 +94,6 @@ class UserController extends BaseController
 
             unset($input['role']);
             $user->update($input);
-            $user->assignRole($request->get('role'));
 
             return $this->sendResponse($user, 'User updated successfully.');
         }else {
