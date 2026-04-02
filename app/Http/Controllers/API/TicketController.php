@@ -70,7 +70,7 @@ class TicketController extends BaseController {
             }
         });
 
-        $tickets = $tickets->with(['rate', 'agent', 'station'])->orderBy('created_at', 'desc')->paginate(50);
+        $tickets = $tickets->with(['rate', 'agent', 'station'])->orderBy('issued_at', 'desc')->paginate(50); ///// change the order
 
         return $this->sendResponse($tickets, 'Tickets retrieved successfully');
 
