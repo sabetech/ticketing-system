@@ -43,7 +43,7 @@ Route::group(['prefix' => 'v2'], function() {
         Route::group(['prefix' => 'users'], function () {
             Route::get('/all', 'API\UserController@getAllUsers');
             Route::get('/{id}/detail', "API\UserController@show");
-            Route::get('/{id}/delete', 'API\UserController@deleteUser');
+            Route::delete('/{id}/delete', 'API\UserController@deleteUser');
             Route::post('/create', 'API\UserController@createUser');
             Route::get('/roles', 'API\UserController@roles');
 
