@@ -76,4 +76,30 @@ class UserController extends BaseController
 
     }
 
+    public function editUser($id, Request $request) {
+        $user = User::find($id);
+
+        if ($user) {
+            $input = $request->all();
+
+            if (isset($input['password'])) {
+                $input['password'] = bcrypt($input['password']);
+            }
+
+            if ($request->hasFile('user_image')) {
+                Storage::delete($user->photo);
+                $filename = $request->user_image->store('public/img/profiles');
+                $input['photo'] = $filename;
+            }
+
+            unset($input['role']);
+            $user->update($input);
+            $user->assignRole($request->get('role'));
+
+            return $this->sendResponse($user, 'User updated successfully.');
+        }else {
+            return $this->sendError("User Not Found");
+        }
+    }   
+
 }

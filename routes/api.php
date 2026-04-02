@@ -46,6 +46,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::delete('/{id}/delete', 'API\UserController@deleteUser');
             Route::post('/create', 'API\UserController@createUser');
             Route::get('/roles', 'API\UserController@roles');
+            Route::put('/{id}/edit', 'API\UserController@editUser');
 
         });
 
