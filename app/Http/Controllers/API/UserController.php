@@ -102,4 +102,15 @@ class UserController extends BaseController
         }
     }   
 
+    public function restoreUser($id, Request $request) {
+        $user = User::withTrashed()->find($id);
+
+        if ($user) {
+            $user->restore();
+            return $this->sendResponse($user, 'User restored successfully.');
+        }else {
+            return $this->sendError("User Not Found");
+        }
+    }
+
 }

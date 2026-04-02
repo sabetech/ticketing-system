@@ -47,6 +47,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::post('/create', 'API\UserController@createUser');
             Route::get('/roles', 'API\UserController@roles');
             Route::put('/{id}/edit', 'API\UserController@editUser');
+            Route::post('/{id}/restore', 'API\UserController@restoreUser');
 
         });
 
