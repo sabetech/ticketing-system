@@ -15,7 +15,10 @@ class ModifyPostpaidCustomerPaymentsTable extends Migration
     {
         Schema::table('postpaid_customer_payments', function (Blueprint $table) {
             $table->renameColumn('start_date', 'start_date_time');
-            $table->renameColumn('end_date', 'end_date_time');
+            $table->renameColumn('end_date', 'end_date_time'); 
+        });
+
+        Schema::table('postpaid_customer_payments', function (Blueprint $table) {
             $table->dateTime('start_date_time')->change();
             $table->dateTime('end_date_time')->change();
         });
