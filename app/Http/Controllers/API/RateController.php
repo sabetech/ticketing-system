@@ -130,6 +130,8 @@ class RateController extends BaseController
     public function makePayment(Request $request) {
         $dateRange = $request->get('dateRange');
 
+        Log::info("Date Range log", $dateRange);
+
         $date_range = json_decode($dateRange);
 
         $amount = $request->get('amount');
