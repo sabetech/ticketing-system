@@ -14,20 +14,25 @@ class PostpaidCustomerPayment extends Model
     //
     public static function SavePayment($dateRange, $rateTitle, $amount, $withholding_tax, $discount) {
 
-        $grossExpectedAmount = PostpaidCustomerPayment::where('customer_id', $rateTitle)
-            ->where('start_date_time', '>=', $dateRange->from)
-            ->where('end_date_time', '<=', $dateRange->to)
-            ->sum('net_expected_amount');
+        $tickets = Ticket::getThirdPartyTickets($dateRange->from, $dateRange->to);
+
+        //get amount to be paid the $tickets
+        $ticketsTotal = 0;
+        foreach ($tickets as $ticket) {
+            $ticketsTotal += floatval($ticket->amount);
+        }
+
+        $netExpectedAmount = $ticketsTotal - ($ticketsTotal * $discount) - ($ticketsTotal * $withholding_tax);
 
         PostpaidCustomerPayment::create([
             'customer_id' => $rateTitle,
             'amount_paid' => $amount,
             'discount' => $discount,
             'witholding_tax' => $withholding_tax,
-            'gross_expected_amount' => 0,
+            'gross_expected_amount' => $ticketsTotal,
             'start_date_time' => $dateRange->from,
             'end_date_time' => $dateRange->to,
-            'net_expected_amount' => 0,
+            'net_expected_amount' => $netExpectedAmount,
             'date' => date("Y-m-d"),
             'time' => date("H:i:s")
         ]);
