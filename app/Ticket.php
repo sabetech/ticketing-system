@@ -128,10 +128,16 @@ class Ticket extends Model
 
     public static function getThirdPartyTickets($from, $to, $rate_title) {
 
-        $thirdPartyTickets = self::join('rates_v2', 'toll_tickets.rate_title', '=', 'rates_v2.id')->whereBetween('issued_date_time', [$from, $to])
-            ->where('rates_v2.is_postpaid', 1)->orderBy('toll_tickets.issued_date_time', 'desc')
-            ->where('toll_tickets.rate_title', $rate_title)
-            ->with(['rate', 'agent'])
+        $query = self::join('rates_v2', 'toll_tickets.rate_title', '=', 'rates_v2.id')
+            ->whereBetween('issued_date_time', [$from, $to])
+            ->where('rates_v2.is_postpaid', 1)
+            ->orderBy('toll_tickets.issued_date_time', 'desc');
+
+        if ($rate_title) {
+            $query->where('toll_tickets.rate_title', $rate_title);
+        }
+
+        $thirdPartyTickets = $query->with(['rate', 'agent'])
             ->select([
                 'toll_tickets.id',
                 'toll_tickets.title',
