@@ -14,7 +14,7 @@ class PostpaidCustomerPayment extends Model
     //
     public static function SavePayment($dateRange, $rateTitle, $amount, $withholding_tax, $discount) {
 
-        $tickets = Ticket::getThirdPartyTickets($dateRange->from, $dateRange->to);
+        $tickets = Ticket::getThirdPartyTickets($dateRange->from, $dateRange->to, $rateTitle);
 
         //get amount to be paid the $tickets
         $ticketsTotal = 0;
