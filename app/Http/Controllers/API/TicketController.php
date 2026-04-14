@@ -317,8 +317,9 @@ class TicketController extends BaseController {
     public function getThirdPartyTickets(Request $request) {
         $from = $request->get('from');
         $to = $request->get('to');
+        $rate_title = $request->get('rate_title');
 
-        $tickets = Ticket::getThirdPartyTickets($from, $to);
+        $tickets = Ticket::getThirdPartyTickets($from, $to, $rate_title);
 
         return $this->sendResponse($tickets , "Successfully Got The Third Party Tickets For Given Date");
 
