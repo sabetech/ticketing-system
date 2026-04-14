@@ -128,11 +128,7 @@ class RateController extends BaseController
     }
 
     public function makePayment(Request $request) {
-        $dateRange = $request->get('dateRange');
-
-        Log::info("Date Range log", $dateRange);
-
-        $date_range = json_decode($dateRange);
+        $dateRange = (object)$request->get('dateRange');
 
         $amount = $request->get('amount');
         $withholding_tax = $request->get('tax',0);
@@ -143,8 +139,8 @@ class RateController extends BaseController
         $withholding_tax = floatval($withholding_tax) / 100;
         $discount = floatval($discount) / 100;
 
-        PostpaidCustomerPayment::SavePayment($date_range, $rateTitle, $amount, $withholding_tax, $discount);
-        $result = Ticket::makePayment($date_range, $rateTitle);
+        PostpaidCustomerPayment::SavePayment($dateRange, $rateTitle, $amount, $withholding_tax, $discount);
+        $result = Ticket::makePayment($dateRange, $rateTitle);
 
         //for this date range, get all the unpaid tickets and set to paid=true
         Log::info($result);
