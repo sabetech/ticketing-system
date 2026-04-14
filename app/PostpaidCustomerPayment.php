@@ -19,7 +19,6 @@ class PostpaidCustomerPayment extends Model
         //get amount to be paid the $tickets
         $ticketsTotal = 0;
         foreach ($tickets as $ticket) {
-            if ($ticket->rate_title !== $rateTitle) continue;
             $ticketsTotal += floatval($ticket->amount);
         }
 
