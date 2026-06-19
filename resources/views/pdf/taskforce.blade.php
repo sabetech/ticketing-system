@@ -46,7 +46,7 @@
 </head>
 <body>
     <div class="main">
-        <img src="{{ public_path('taskforce-logo.jpeg') }}" alt="Traffic Logo" style="width: 100px; height: auto; display: block; margin: 0 auto;">
+        <img src="{{ public_path('taskforce-logo.jpeg') }}" alt="Traffic Logo" style="width: 200px; height: auto; display: block; margin: 0 auto;">
         <h3 style="text-align: center">{{$title}}</h3>
 
         <?php
