@@ -273,9 +273,11 @@ class TicketController extends BaseController {
             return $this->sendError("Date Range Error!", ["Set Correct Date Range."]);
         }
 
+        $rateTitle = $request->get('rate_title', null);
+
         list($startDate, $endDate) = explode(',',$dateRange);
 
-        $tickets = Ticket::getTicketsFromRange($startDate, $endDate);
+        $tickets = Ticket::getTicketsFromRange($startDate, $endDate, $rateTitle);
 
         return $this->sendResponse($tickets, "Successfully Fetched tickets from date range");
 
