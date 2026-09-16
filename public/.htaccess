@@ -19,3 +19,11 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# CORS preflight must reach Laravel (cPanel/shared Apache).
+# App\Http\Middleware\Cors is authoritative for Access-Control-Allow-*
+# headers — do NOT set them here to avoid duplicates. This only ensures
+# correct caching behaviour at the Apache layer.
+<IfModule mod_headers.c>
+    Header merge Vary Origin
+</IfModule>
