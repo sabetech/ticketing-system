@@ -9,6 +9,10 @@ class StationUser extends Model
     //
     protected $table = 'stations_user';
 
+    protected $fillable = ['user_id', 'stations_id'];
+
+    public $timestamps = false;
+
     public function agent(){
         return $this->belongsTo("\App\Agent", "user_id", "id");
     }

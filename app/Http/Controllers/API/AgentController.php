@@ -3,8 +3,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Agent;
 use App\AgentOnlineStatus;
+use App\Station;
+use App\StationUser;
 use Carbon\Carbon;
 use stdClass;
 
@@ -61,7 +65,9 @@ class AgentController extends BaseController {
 
         $agentTicketInfo = new stdClass;
         $agentTicketInfo->agent = $agent;
-        $agent->stationUser->station;
+        if ($agent->stationUser) {
+            $agent->stationUser->station;
+        }
 
         $from = $request->get('from', null);
         $to   = $request->get('to', null);
@@ -80,6 +86,48 @@ class AgentController extends BaseController {
 
         return $this->sendResponse($agentTicketInfo, "Agent Tickets fetched successfully");
 
+    }
+
+    public function updateStation($id, Request $request) {
+        $me = Auth::guard('api')->user();
+        $myRole = $me && $me->roles && $me->roles->count() > 0
+            ? strtolower($me->roles[0]->name)
+            : null;
+
+        if (!in_array($myRole, ['admin', 'supervisor'])) {
+            return $this->sendError('Unauthorized. Only Admin or Supervisor can change an agent station.', [], 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'station_id' => 'required|integer|exists:stations,id',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
+
+        $agent = Agent::find($id);
+
+        if (!$agent) {
+            return $this->sendError('Agent not found.');
+        }
+
+        $isAgent = $agent->roles->contains(function ($role) {
+            return strtolower($role->name) === 'agent';
+        });
+
+        if (!$isAgent) {
+            return $this->sendError('User is not an agent.');
+        }
+
+        StationUser::updateOrCreate(
+            ['user_id' => $agent->id],
+            ['stations_id' => $request->get('station_id')]
+        );
+
+        $station = Station::find($request->get('station_id'));
+
+        return $this->sendResponse($station, 'Agent station updated successfully.');
     }
 
 }

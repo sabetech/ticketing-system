@@ -62,6 +62,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/count', "API\AgentController@agentCount");
             Route::get('/onlinestatus', "API\AgentController@agentOnlineStatus");
             Route::get('/all', "API\AgentController@getAllAgents");
+            Route::put('/{id}/station', "API\AgentController@updateStation");
             Route::get('/{id}/detail', "API\AgentController@show");
         });
 
