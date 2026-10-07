@@ -5,6 +5,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Agent;
 use App\AgentOnlineStatus;
 use App\Station;
@@ -128,10 +129,14 @@ class AgentController extends BaseController {
             return $this->sendError('User is not an agent.');
         }
 
-        StationUser::updateOrCreate(
-            ['user_id' => $agent->id],
-            ['stations_id' => $request->get('station_id')]
-        );
+        DB::transaction(function () use ($agent, $request) {
+        StationUser::where('user_id', $agent->id)->delete();
+
+        StationUser::create([
+                'user_id' => $agent->id,
+                'stations_id' => $request->get('station_id'),
+            ]);
+        });
 
         $station = Station::find($request->get('station_id'));
 
