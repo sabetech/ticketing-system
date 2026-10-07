@@ -92,9 +92,13 @@ class AgentController extends BaseController {
     public function updateStation($id, Request $request) {
         $me = Auth::guard('api')->user();
 
+        Log::info("Authenticated user: " . ($me ? $me->id : 'null'));
+
         $myRole = $me && $me->roles && $me->roles->count() > 0
             ? strtolower($me->roles[0]->name)
             : null;
+
+        Log::info("Authenticated user role: " . ($myRole ?? 'null'));
 
         if (!in_array($myRole, ['administrator', 'supervisor'])) {
             return $this->sendError('Unauthorized. Only Admin or Supervisor can change an agent station.', [], 403);
@@ -104,11 +108,15 @@ class AgentController extends BaseController {
             'station_id' => 'required|integer|exists:stations,id',
         ]);
 
+        Log::info($validator);
+
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
         $agent = Agent::find($id);
+
+        Log::info($agent);
 
         if (!$agent) {
             return $this->sendError('Agent not found.');
