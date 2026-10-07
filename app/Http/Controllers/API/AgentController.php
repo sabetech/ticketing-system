@@ -11,6 +11,7 @@ use App\Station;
 use App\StationUser;
 use Carbon\Carbon;
 use stdClass;
+use Illuminate\Support\Facades\Log;
 
 class AgentController extends BaseController {
 
@@ -90,6 +91,9 @@ class AgentController extends BaseController {
 
     public function updateStation($id, Request $request) {
         $me = Auth::guard('api')->user();
+
+        Log::info("Auth::guard::('api')->user()", ["user" => $me]);
+
         $myRole = $me && $me->roles && $me->roles->count() > 0
             ? strtolower($me->roles[0]->name)
             : null;
