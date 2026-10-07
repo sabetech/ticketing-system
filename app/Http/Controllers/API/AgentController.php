@@ -92,13 +92,9 @@ class AgentController extends BaseController {
     public function updateStation($id, Request $request) {
         $me = Auth::guard('api')->user();
 
-        Log::info("Auth::guard::('api')->user()", ["user" => $me]);
-
         $myRole = $me && $me->roles && $me->roles->count() > 0
             ? strtolower($me->roles[0]->name)
             : null;
-
-        Log::info("ROLE::", ["role" => $myRole]);
 
         if (!in_array($myRole, ['administrator', 'supervisor'])) {
             return $this->sendError('Unauthorized. Only Admin or Supervisor can change an agent station.', [], 403);
