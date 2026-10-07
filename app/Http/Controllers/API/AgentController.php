@@ -108,8 +108,6 @@ class AgentController extends BaseController {
             'station_id' => 'required|integer|exists:stations,id',
         ]);
 
-        Log::info($validator);
-
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
