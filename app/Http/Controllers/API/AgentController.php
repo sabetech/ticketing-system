@@ -100,7 +100,7 @@ class AgentController extends BaseController {
 
         Log::info("ROLE::", ["role" => $myRole]);
 
-        if (!in_array($myRole, ['admin', 'supervisor'])) {
+        if (!in_array($myRole, ['administrator', 'supervisor'])) {
             return $this->sendError('Unauthorized. Only Admin or Supervisor can change an agent station.', [], 403);
         }
 
