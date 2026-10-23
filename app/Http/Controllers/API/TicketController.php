@@ -8,6 +8,8 @@ use App\Agent;
 use App\Ticket;
 use App\Rate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use PDF;
 use stdClass;
 use DB;
@@ -435,6 +437,45 @@ class TicketController extends BaseController {
             }
         }
         return $this->sendError("An Error occured deleting tickets");
+    }
+
+    public function bulkEditAgent(Request $request) {
+        $me = Auth::guard('api')->user();
+
+        $myRole = $me && $me->roles && $me->roles->count() > 0
+            ? strtolower($me->roles[0]->name)
+            : null;
+
+        if (!in_array($myRole, ['administrator', 'supervisor'])) {
+            return $this->sendError('Unauthorized. Only Admin or Supervisor can bulk edit tickets.', [], 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'ticket_ids' => 'required|array|min:1',
+            'ticket_ids.*' => 'integer|exists:toll_tickets,id',
+            'agent_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
+
+        $agent = Agent::find($request->get('agent_id'));
+        if (!$agent) {
+            return $this->sendError('Validation Error.', ['agent_id' => 'The selected agent id is invalid.'], 422);
+        }
+
+        try {
+            $ticketIds = $request->get('ticket_ids');
+            Ticket::whereIn('id', $ticketIds)->update(['agent_name' => $agent->id]);
+
+            Log::info("Bulk agent edit: tickets updated to agent " . $agent->id, $ticketIds);
+
+            return $this->sendResponse(['ticket_ids' => $ticketIds, 'agent_id' => $agent->id], 'Tickets agent updated successfully!');
+        } catch (\Exception $e) {
+            Log::error("Bulk agent edit failed: " . $e->getMessage());
+            return $this->sendError("Could not update tickets agent");
+        }
     }
 
     public function editTicket($id, Request $request) {

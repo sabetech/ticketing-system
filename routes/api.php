@@ -78,6 +78,7 @@ Route::group(['prefix' => 'v2'], function() {
             Route::get('/third-party-tickets', "API\TicketController@getThirdPartyTickets");
             Route::get('/agentaggregates', "API\TicketController@getAgentAggregate");
             Route::post('/bulk-delete', "API\TicketController@bulkDeleteTickets");
+            Route::post('/bulk-edit-agent', "API\TicketController@bulkEditAgent");
             Route::delete('/{id}/delete', "API\TicketController@deleteTicket");
             Route::post('/{id}/edit', 'API\TicketController@editTicket');
             Route::get('/by-agents', 'API\TicketController@getTicketsByAgents');
