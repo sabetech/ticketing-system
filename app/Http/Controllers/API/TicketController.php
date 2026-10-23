@@ -460,7 +460,7 @@ class TicketController extends BaseController {
         }
 
         if ($agent = Agent::find($request->get('agent_id'))) {
-            $ticket->agent = $agent->id;
+            $ticket->agent_name = $agent->id;
         }
 
         $ticket->save();
