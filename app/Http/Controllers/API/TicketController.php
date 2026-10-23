@@ -459,7 +459,7 @@ class TicketController extends BaseController {
             $ticket->amount = floatval(str_replace(',', '', $request->get('amount')));
         }
 
-        if ($agent = Agent::find($request->get('agent'))) {
+        if ($agent = Agent::find($request->get('agent_id'))) {
             $ticket->agent = $agent->id;
         }
 
